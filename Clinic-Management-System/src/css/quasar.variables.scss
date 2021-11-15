@@ -1,0 +1,52 @@
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+
+// Check documentation for full list of Quasar variables
+
+// Your own variables (that are declared here) and Quasar's own
+// ones will be available out of the box in your .vue/.scss/.sass files
+
+// It's highly recommended to change the default colors
+// to match your app's branding.
+// Tip: Use the "Theme Builder" on Quasar's documentation website.
+
+$primary   : #0E86D4;
+$secondary : #D4F1F4;
+$accent    : #75E6DA;
+
+$dark-blue : #050A30;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+
+$navy-blue-1:    #05445E;
+$navy-blue-2:    #003060;
+$navy-blue-3 :   #000C66;
+
+$baby-blue-1:    #D4F1F4;
+$baby-blue-2:    #68BBE3;
+$baby-blue-3:    #7EC8E3;
+
+
+$blue-grotto-1:  #BFD7ED;
+$blue-grotto-2:  #189AB4;
+ 
+
+$royal-blue:     #0074B7;
+
+$midnight-blue:  #41729F;
+$blue-gray:      #5885AF;
+$dark-blue:      #274472;   
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+$typography-font-family: 'Nunito', sans-serif !default;
+$text-weights: (extra-light: 200, light: 300, regular: 400, semi-bold: 600, bold: 700, extra-bold: 800, black: 900) !default;
+$button-font-weight: 400;
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+$typography-font-family: 'Quicksand', sans-serif ;
+$text-weights: (light: 300, regular: 400, medium: 500, semi-bold: 600, bold: 700);
