@@ -2,7 +2,7 @@
   <q-page class="bg-secondary ">
     <div class="row fullscreen text-center items-center">
       <div class="col-6 gt-md self-center">
-        <div class="col self-center text-h1 " style="max-width:650px;margin: 0 auto 0 auto;">Welcome to Lorem ipsum</div>
+        <div class="col self-center text-h1 " style="max-width:650px;margin:auto;">Welcome to Lorem ipsum</div>
       </div>
       <div class="col-6 q-gutter-xl self-center " style="width: 750px;margin: 0 auto 0 auto;" >
         <div class=" items-center text-h2 q-pb-xl q-mr-xl" >Login as:</div>

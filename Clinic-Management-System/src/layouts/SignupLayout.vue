@@ -3,11 +3,11 @@
     <q-header reveal elevated>
       <q-toolbar class="glossy bg-primary">
       
-        <q-toolbar-title class="self" style="padding: 0.25em">
+        <q-toolbar-title style="padding: 0.25em">
             Sign Up
         </q-toolbar-title>
         <div class="text-h5"> Best <span class="text-accent ">Byte</span> <q-img src="icons\logo_white.png" alt="company logo"
-          style="width:2em;height:em;" /></div>
+          style="width:2em;height:2em;" /></div>
 
       </q-toolbar>
     </q-header>

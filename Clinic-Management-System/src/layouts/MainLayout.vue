@@ -3,11 +3,13 @@
     <q-header reveal elevated>
       <q-toolbar class="glossy bg-primary">
         
+        <div class="text-h5"><q-img src="icons\logo_white.png" alt="company logo"
+          style="width:2em;height:2em;" /> Best <span class="text-accent ">Byte</span> </div>
         <!-- Nav Bar -->
         <q-toolbar-title style="padding: 0.25em">
-            <q-img src="icons\logo_white.png" alt="company logo"
-          style="width:2em;height:2em;margin: auto;" /> Best <span class="text-accent ">Byte</span>
+            
         </q-toolbar-title>
+
 
         <div class="gt-sm">
           <q-btn outline rounded class="text-accent" size="1em" label="Dashboard"></q-btn>
