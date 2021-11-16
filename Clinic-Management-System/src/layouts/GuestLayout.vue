@@ -2,8 +2,9 @@
   <q-layout view="lHh Lpr lFf">
     <q-header reveal elevated>
       <q-toolbar class="glossy bg-primary">
-        <q-btn flat class="" icon="mdi-keyboard-backspace"/>
-
+        <router-link :to=" { path: '/Index'}" style="text-decoration:none">  
+          <q-btn flat class="" icon="mdi-keyboard-backspace"/>
+        </router-link>
         <q-space />
 
         <!-- Nav Bar -->

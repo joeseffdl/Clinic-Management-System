@@ -25,6 +25,7 @@
           class=""
           icon-right="mdi-login"
           label="Login"
+          type="submit"
           size="2em"
         />
       </div>
