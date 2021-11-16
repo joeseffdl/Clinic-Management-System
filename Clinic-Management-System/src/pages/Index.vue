@@ -1,8 +1,8 @@
 <template>
   <q-page class="bg-secondary ">
-    <div class="row text-center">
-      <div class="col-6 gt-md self-center q-mt-xl" >
-        <q-img src="icons\code.png" style="width:600px;height:600px;"></q-img>
+    <div class="row fullscreen text-center items-center content-center">
+      <div class="col-6 gt-md self-center">
+        <div class="col self-center text-h1 " style="margin: 0 auto 0 auto;">Welcome to Lorem ipsum</div>
       </div>
       <div class="col-6 q-gutter-xl self-center " style="max-width:650px;margin: 0 auto 0 auto;" >
         <div class="text-h2 ">Login as:</div>

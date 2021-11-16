@@ -5,8 +5,8 @@
         
         <!-- Nav Bar -->
         <q-toolbar-title style="padding: 0.25em">
-            <q-img src="icons\code.png" alt="company logo"
-          style="width:2.5em;height:2.5em;" /> Best <span class="text-accent ">Byte</span>
+            <q-img src="icons\logo_white.png" alt="company logo"
+          style="width:2em;height:3em;margin: auto;" /> Best <span class="text-accent ">Byte</span>
         </q-toolbar-title>
 
         <div class="gt-sm">

@@ -9,9 +9,16 @@ const routes = [
   },
   {
     path: '/dev',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/AdminLayout.vue'),
     children: [
       { path: '', component: () => import('src/pages/Dev.vue') }
+    ]
+  },
+  {
+    path: '/guest',
+    component: () => import('layouts/GuestLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/Guest.vue') }
     ]
   },
 
