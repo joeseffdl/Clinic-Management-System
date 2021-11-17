@@ -5,13 +5,13 @@
         <div class="text-h2 q-pb-xl">Welcome Back!</div>
         <q-input v-model="text" standout="bg-accent" bottom-slots label="Username"  :dense="dense">
     
-        <template v-slot:append>
+        <template #append>
           <q-icon round dense flat name="mdi-account" />
         </template>
       </q-input>
 
         <q-input v-model="password" standout="bg-accent" bottom-slots label="Password"  :type="isPwd ? 'password' : 'text'"  :dense="dense">
-        <template v-slot:append>
+        <template #append>
           <q-icon
             :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
             class="cursor-pointer"
@@ -49,7 +49,6 @@ export default {
     return {
       password: ref(''),
       isPwd: ref(true),
-
       email: ref(''),
       text: ref(''),
       ph: ref(''),
