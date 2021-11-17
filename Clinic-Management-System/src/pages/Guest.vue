@@ -2,7 +2,7 @@
   <q-page class="bg-secondary ">
     <div class="row fullscreen text-center items-center content-center">
       <div class="col-6 q-gutter-lg self-center " style="max-width:650px;margin: 0 auto 0 auto;" >
-        <div class="text-h2 q-pb-xl">Welcome Back!</div>
+        <div class="text-h2 q-pb-xl">Welcome!</div>
         <q-input v-model="text" standout="bg-accent" bottom-slots label="Username"  :dense="dense">
     
         <template v-slot:append>
