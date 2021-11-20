@@ -45,6 +45,7 @@
 import { ref } from 'vue'
 
 export default {
+  name: 'Admin',
   setup () {
     return {
       password: ref(''),

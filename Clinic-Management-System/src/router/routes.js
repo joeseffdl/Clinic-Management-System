@@ -8,10 +8,10 @@ const routes = [
     ]
   },
   {
-    path: '/dev',
+    path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/Dev.vue') }
+      { path: '', component: () => import('src/pages/Admin.vue') }
     ]
   },
   {
