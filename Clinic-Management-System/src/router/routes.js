@@ -28,6 +28,13 @@ const routes = [
       { path: '', component: () => import('src/pages/Signup.vue') }
     ]
   },
+  {
+    path: '/system',
+    component: () => import('layouts/SystemLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/System.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
