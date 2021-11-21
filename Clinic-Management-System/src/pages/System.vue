@@ -254,7 +254,7 @@
 
           </div>
         </div>
-      <div class="col-3 gt-md" style="border: 1px solid red">.col-4</div>
+      <div class="col-3 gt-md" style="border: 1px solid red">.col-3</div>
     </div>
 
     </div>
