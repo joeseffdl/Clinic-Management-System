@@ -3,12 +3,12 @@
     <div class="q-pa-lg">
 
       <div class="row">
-        <div class="col-9 q-mx-auto" >
+        <div class="col-9 q-mx-auto " >
           <div class="text-h4 text-bold q-my-md no-wrap">Appointments for today:</div>
-          <div class="row justify-center q-gutter-md ">
+          <div class="row q-gutter-md" style="border: 1px solid red">
             <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
               <q-card-section>
-                <div class="row items-center no-wrap">
+                <div class="row">
                   <div class="col">
                     <div class="text-h6">Patient</div>
                     <div class="text-subtitle2">(Patient Name)</div>
