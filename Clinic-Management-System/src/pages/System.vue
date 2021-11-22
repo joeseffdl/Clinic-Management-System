@@ -2,259 +2,273 @@
   <q-page class="bg-secondary">
     <div class="q-pa-lg">
 
-      <div class="row">
-        <div class="col-9 q-mx-auto " >
+      <div class="row ">
+        <div class="col-10 q-mx-auto" >
           <div class="text-h4 text-bold q-my-md no-wrap">Appointments for today:</div>
-          <div class="row q-gutter-md" style="border: 1px solid red">
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
+          <div class="row q-gutter-md q-px-auto" >
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
+                </q-card-section>
 
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
+            
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
-                </div>
-              </q-card-section>
+                </q-card-section>
 
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
 
-              <q-separator />
+                <q-separator />
 
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
 
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row items-center no-wrap">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
+                </q-card-section>
 
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
+
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
-                </div>
-              </q-card-section>
+                </q-card-section>
 
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
 
-              <q-separator />
+                <q-separator />
 
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
 
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row items-center no-wrap">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
+                </q-card-section>
 
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
+
+            <div class="col-auto" > 
+              <q-card flat bordered class="my-card bg-primary" style="width: 100%; max-width: 250px;">
+                <q-card-section>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-h6">Patient</div>
+                      <div class="text-subtitle2">(Patient Name)</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
+                        <q-menu cover auto-close>
+                          <q-list>
+                            <q-item clickable>
+                              <q-item-section>Remove Card</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Send Feedback</q-item-section>
+                            </q-item>
+                            <q-item clickable>
+                              <q-item-section>Share</q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-menu>
+                      </q-btn>
+                    </div>
                   </div>
-                </div>
-              </q-card-section>
+                </q-card-section>
 
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
+                <q-card-section>
+                  Procedure: ({{ lorem }})
+                </q-card-section>
 
-              <q-separator />
+                <q-separator />
 
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
+                <q-card-actions class="justify-around">
+                  <q-btn flat round color="red" icon="mdi-close" />
+                  <q-btn flat round color="accent" icon="mdi-comment" />
+                  <q-btn flat round color="secondary" icon="mdi-share" />
+                </q-card-actions>
+              </q-card>
+            </div> 
 
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row items-center no-wrap">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
-                  </div>
-
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
-                  </div>
-                </div>
-              </q-card-section>
-
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
-
-              <q-separator />
-
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
-
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row items-center no-wrap">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
-                  </div>
-
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
-                  </div>
-                </div>
-              </q-card-section>
-
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
-
-              <q-separator />
-
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
-
-            <q-card flat bordered class="my-card bg-primary" style="max-width: 225px">
-              <q-card-section>
-                <div class="row items-center no-wrap">
-                  <div class="col">
-                    <div class="text-h6">Patient</div>
-                    <div class="text-subtitle2">(Patient Name)</div>
-                  </div>
-
-                  <div class="col-auto">
-                    <q-btn color="grey-7" round flat icon="mdi-dots-vertical">
-                      <q-menu cover auto-close>
-                        <q-list>
-                          <q-item clickable>
-                            <q-item-section>Remove Card</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Send Feedback</q-item-section>
-                          </q-item>
-                          <q-item clickable>
-                            <q-item-section>Share</q-item-section>
-                          </q-item>
-                        </q-list>
-                      </q-menu>
-                    </q-btn>
-                  </div>
-                </div>
-              </q-card-section>
-
-              <q-card-section>
-                Procedure: ({{ lorem }})
-              </q-card-section>
-
-              <q-separator />
-
-              <q-card-actions class="justify-around">
-                <q-btn flat round color="red" icon="mdi-close" />
-                <q-btn flat round color="accent" icon="mdi-comment" />
-                <q-btn flat round color="secondary" icon="mdi-share" />
-              </q-card-actions>
-            </q-card>
-
+            
+  
           </div>
         </div>
-      <div class="col-3 gt-md" style="border: 1px solid red">.col-3</div>
+      <div class="col-2 gt-md" style="border: 1px solid red">.col-2</div>
     </div>
 
     </div>
