@@ -8,10 +8,10 @@ const routes = [
     ]
   },
   {
-    path: '/dev',
+    path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/Dev.vue') }
+      { path: '', component: () => import('src/pages/Admin.vue') }
     ]
   },
   {
@@ -26,6 +26,13 @@ const routes = [
     component: () => import('layouts/SignupLayout.vue'),
     children: [
       { path: '', component: () => import('src/pages/Signup.vue') }
+    ]
+  },
+  {
+    path: '/system',
+    component: () => import('layouts/SystemLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/System.vue') }
     ]
   },
 
