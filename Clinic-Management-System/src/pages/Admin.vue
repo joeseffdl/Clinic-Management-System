@@ -32,7 +32,7 @@
       <div class="col-6 gt-md self-center">
         <q-img 
         class="q-mt-xl"
-      src="icons\byte_black.jpg"
+      src="icons\byte_black.png"
       spinner-color="black"
       style="height:600px ; max-width:800px;"
     />
