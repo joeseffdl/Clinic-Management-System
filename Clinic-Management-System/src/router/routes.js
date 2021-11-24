@@ -36,6 +36,14 @@ const routes = [
     ]
   },
 
+  {
+    path: '/profilesettings',
+    component: () => import('layouts/ProfileSettingsLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/ProfileSettings.vue') }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
