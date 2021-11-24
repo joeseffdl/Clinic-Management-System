@@ -32,7 +32,7 @@ const routes = [
     path: '/system',
     component: () => import('layouts/SystemLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/System.vue') }
+      { path: '', component: () => import('src/pages/System.vue') },
     ]
   },
 
