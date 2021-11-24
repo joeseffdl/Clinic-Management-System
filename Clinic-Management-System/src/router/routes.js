@@ -1,3 +1,6 @@
+import SystemLayout from 'layouts/SystemLayout'
+import System from 'pages/System'
+import Profile from 'pages/ProfileSettings'
 
 const routes = [
   {
@@ -30,19 +33,14 @@ const routes = [
   },
   {
     path: '/system',
-    component: () => import('layouts/SystemLayout.vue'),
+    component: SystemLayout,
     children: [
-      { path: '', component: () => import('src/pages/System.vue') }
+      { path: '', component: System },
+      { path: '/profilesettings', component: Profile },
     ]
   },
 
-  {
-    path: '/profilesettings',
-    component: () => import('layouts/ProfileSettingsLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/ProfileSettings.vue') }
-    ]
-  },
+  
 
   // Always leave this as last one,
   // but you can also remove it

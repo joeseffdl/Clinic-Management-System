@@ -27,7 +27,7 @@
       >
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item v-ripple active clickable>
+            <q-item v-ripple clickable to="/system">
               <q-item-section avatar>
                 <q-icon name="mdi-home" />
               </q-item-section>
@@ -37,7 +37,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-ripple clickable>
+            <q-item v-ripple clickable to="/profilesettings">
               <q-item-section avatar>
                 <q-icon name="mdi-account" />
               </q-item-section>
