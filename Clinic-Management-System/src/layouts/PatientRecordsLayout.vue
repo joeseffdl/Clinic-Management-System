@@ -1,30 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf"> <!-- Be sure to play with the Layout demo on docs -->
-
-    <!-- (Optional) The Header -->
+  <q-layout view="lHh Lpr lFf" class="bg-secondary">
     <q-header reveal elevated>
-      
-      <q-toolbar class="glossy bg-primary text-h5">
-        <q-space />
-             Best <span class="text-accent">Byte</span> <q-img src="icons\logo_white.png" alt="company logo"
-          style="width:2em;height:2em;" />
-        <q-space />
+      <q-toolbar class="row glossy bg-primary items-center justify-center">
+        <div class="col">
+            <q-btn outline rounded style="width: 105px" color="secondary" label="Back" icon="mdi-arrow-left"/>
+        </div>
+        <q-toolbar-title class="col" style="padding: .25em;">
+            Patient Records
+        </q-toolbar-title>
+        <div class="text-h5"> Best<span class="text-accent ">Byte</span> <q-img src="icons\logo_white.png" alt="company logo"
+          style="width:2em;height:2em;"/>
+        </div>
       </q-toolbar>
     </q-header>
 
-    <!-- (Optional) The Footer
-    <q-footer reveal elevated >
-        <q-toolbar class="glossy bg-primary">
-          <q-space/>&copy; Snow Squirrel 2021<q-space/>
-        </q-toolbar>
-      </q-footer> -->
+
 
     <q-drawer
-        v-model="drawer"
-        show-if-above
-        :width="200"
-        :breakpoint="400"
-      >
+        v-model="drawer" show-if-above :width="200" :breakpoint="400">
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
             <q-item v-ripple clickable to="/system">

@@ -1,6 +1,7 @@
 import SystemLayout from 'layouts/SystemLayout'
 import System from 'pages/System'
 import Profile from 'pages/ProfileSettings'
+import PatientRec from 'pages/PatientRecords'
 
 const routes = [
   {
@@ -37,11 +38,10 @@ const routes = [
     children: [
       { path: '', component: System },
       { path: '/profilesettings', component: Profile },
+      { path: '/patientrecords', component: PatientRec },
     ]
   },
-
   
-
   // Always leave this as last one,
   // but you can also remove it
   {
