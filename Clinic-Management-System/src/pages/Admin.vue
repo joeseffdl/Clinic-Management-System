@@ -5,7 +5,7 @@
         <div class="text-h2 q-pb-xl">Welcome Back!</div>
         <q-input v-model="text" standout="bg-accent" bottom-slots label="Username"  :dense="dense">
     
-        <template #append>
+        <template #prepend>
           <q-icon round dense flat name="mdi-account" />
         </template>
       </q-input>

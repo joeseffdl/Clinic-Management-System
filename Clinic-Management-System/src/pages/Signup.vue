@@ -57,7 +57,6 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import axios from 'axios'
 
 export default defineComponent({
   name: "Signup",
@@ -94,19 +93,9 @@ export default defineComponent({
   },
 
    methods: {
-     async submitForm() 
+     submitForm() 
       {
-          //Pa edit na lang nito backend pipol hehe, hindi ko tinanggal para lang hindi mag error...
-          const response = await axios.post ('signup', {
-            first_name: this.formData.firstName,
-            last_name: this.formData.lastName,
-            email: this.formData.email,
-            password: this.formData.password,
-            password_confirm: this.formData.password_confirm
-          });
-          
-          console.log(response);
-          this.$router.push('/guest');
+          console.log("Submit form was clicked!");
         }
       }
     });

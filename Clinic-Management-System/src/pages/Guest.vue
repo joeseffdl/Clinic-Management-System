@@ -3,14 +3,14 @@
     <div class="row fullscreen text-center items-center content-center">
       <div class="col-6 q-gutter-lg self-center " style="max-width:650px;margin: 0 auto 0 auto;" >
         <div class="text-h2 q-pb-xl">Welcome Back!</div>
-        <q-input v-model="email" type="email" standout="bg-accent" bottom-slots label="Email"  :dense="dense">
+        <q-input v-model="email" type="email" standout="bg-accent" bottom-slots label="Email"  :dense="dense" clearable >
     
-          <template #append>
+          <template #prepend>
             <q-icon round dense flat name="mdi-account" />
           </template>
         </q-input>
 
-        <q-input v-model="password" standout="bg-accent" bottom-slots label="Password"  :type="isPwd ? 'password' : 'text'"  :dense="dense">
+        <q-input v-model="password" standout="bg-accent" bottom-slots label="Password"  :type="isPwd ? 'password' : 'text'"  clearable :dense="dense">
           <template #append>
             <q-icon
             :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"

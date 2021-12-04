@@ -1,15 +1,19 @@
+import MainLayout from 'layouts/MainLayout'
+import AboutUs from 'pages/AboutUs.vue'
+import Index from 'pages/Index'
 import SystemLayout from 'layouts/SystemLayout'
 import System from 'pages/System'
 import Profile from 'pages/ProfileSettings'
 import PatientRec from 'pages/PatientRecords'
+import PatientID from 'pages/PatientID'
 
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: MainLayout,
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: '/aboutus', component: () => import('pages/AboutUs.vue') }
+      { path: '', component: Index },
+      { path: '/bestbyte', component: AboutUs }
     ]
   },
   {
@@ -39,7 +43,8 @@ const routes = [
     children: [
       { path: '', component: System },
       { path: '/profilesettings', component: Profile },
-      { path: '/patientrecords', component: PatientRec },
+      { path: '/patientrecords', component: PatientRec},
+      {path: '/data', component: PatientID},
     ]
   },
   
