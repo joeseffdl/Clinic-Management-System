@@ -8,10 +8,6 @@
           <div class="row items-center justify-center" style="margin: 0 auto 0 auto; max-width: 1000px;">
             <div class="col" style="margin: 0 20px 0 20px;">
               <div class="column">
-                <div class="col self-center" style="margin: 0 0 -20px 0;">
-                  <div class="text-h6 text-center">Clinic Logo</div>
-                </div>
-
                 <div class="col self-center" style="margin: 0 0 -20px 0; width: 300px">
                   <q-img class="q-mt-md" src="icons\byte_black.png" spinner-color="black" style="height:300px; max-width: 300px;"/>
                 </div>

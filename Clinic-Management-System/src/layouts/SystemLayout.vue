@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf"> <!-- Be sure to play with the Layout demo on docs -->
+  <q-layout view="lHh Lpr lFf"> 
 
     <!-- (Optional) The Header -->
     <q-header reveal elevated>
@@ -21,6 +21,7 @@
 
     <q-drawer
         v-model="drawer"
+        class="shadow-5"
         show-if-above
         :width="200"
         :breakpoint="400"
@@ -107,6 +108,7 @@ export default {
   setup () {
     return {
       drawer: ref(false)
+
     }
   }
 }

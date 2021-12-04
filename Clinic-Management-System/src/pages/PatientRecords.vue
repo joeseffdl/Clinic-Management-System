@@ -25,7 +25,7 @@
           </h3>
       </div>
 
-      <div class="col-8 gt-sm" style="width: 800px">
+      <div class="col-8 gt-xs" style="width: 800px">
         <div class="" style="margin: 0 30px 10px 50px;">
           <q-virtual-scroll type="table" style="max-height: 550px" :virtual-scroll-item-size="10" :virtual-scroll-sticky-size-start="10" :virtual-scroll-sticky-size-end="10" :items="heavyList">
             <template #before>
@@ -40,11 +40,16 @@
             </template>
 
             <template #default="{ item: row, index }">
-              <tr :key="index">
-                <td>#{{ index }}</td>
-                <td v-for="col in columns" :key="index + '-' + col.name">
-                  {{ row[col.prop] }}
-                </td>
+              <tr :key="index" >
+                
+                  <td>{{ index }}</td>
+
+                  <td v-for="col in columns" :key="index + '-' + col.name">
+                  
+                    {{ row[col.prop] }}
+                  
+                  </td> 
+                
               </tr>
             </template>
           </q-virtual-scroll>
