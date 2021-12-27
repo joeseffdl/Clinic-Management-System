@@ -13,9 +13,7 @@
               </div>
             </div>
             <q-uploader url="http://localhost:8080/upload" class="q-mx-auto" label="Upload files" color="primary" square flat bordered style="max-width: 500px; height: 300px;"/>
-            <div class="row justify-center q-mt-lg">
-              <q-btn push color="primary" label="Save" size="lg" class="q-px-lg"/>
-            </div>
+            
           </div>
         </div>
         <div class="col-6 q-mx-auto justify-center no-wrap">
@@ -46,6 +44,9 @@
                   <q-icon :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'" class="cursor-pointer" @click="isPwd = !isPwd"/>
                 </template>
                 </q-input>
+            </div>
+            <div class="row justify-center q-mt-lg">
+              <q-btn push color="primary" label="Save" size="lg" class="q-px-lg"/>
             </div>
           </div>
           </q-form>

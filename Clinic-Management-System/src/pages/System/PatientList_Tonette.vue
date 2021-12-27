@@ -102,7 +102,7 @@ export default {
       heavyList,
       columns
     }
-  }
+  },
 }
 </script>
 

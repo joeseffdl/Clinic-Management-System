@@ -1,50 +1,54 @@
 import MainLayout from 'layouts/MainLayout'
-import AboutUs from 'pages/AboutUs.vue'
-import Index from 'pages/Index'
+import AboutUs from 'pages/Index/AboutUs'
+import Index from 'pages/Index/Index'
 import SystemLayout from 'layouts/SystemLayout'
-import System from 'pages/System'
-import Profile from 'pages/ProfileSettings'
-import PatientRec from 'pages/PatientRecords'
-import PatientID from 'pages/PatientID'
+import System from 'pages/System/System'
+import Profile from 'pages/System/ProfileSettings'
+import PatientDetails from 'pages/System/PatientDetails'
+import PatientList from 'pages/System/PatientList'
+import AddPatient from 'pages/System/AddPatient'
+import EditPatient from 'pages/System/EditPatient'
 
 const routes = [
   {
     path: '/',
     component: MainLayout,
     children: [
-      { path: '', component: Index },
-      { path: '/bestbyte', component: AboutUs }
+      { path: '/', name: 'Index', component: Index },
+      { path: '/bestbyte', name: 'About', component: AboutUs }
     ]
   },
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/Admin.vue') }
+      { path: '', name: 'Admin', component: () => import('src/pages/Index/Admin.vue') }
     ]
   },
   {
     path: '/guest',
     component: () => import('layouts/GuestLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/Guest.vue') }
+      { path: '', name: 'Guest', component: () => import('src/pages/Index/Guest.vue') }
     ]
   },
   {
     path: '/signup',
     component: () => import('layouts/SignupLayout.vue'),
     children: [
-      { path: '', component: () => import('src/pages/Signup.vue') }
+      { path: '', name: 'SignUp', component: () => import('src/pages/Index/Signup.vue') }
     ]
   },
   {
     path: '/system',
     component: SystemLayout,
     children: [
-      { path: '', component: System },
-      { path: '/profilesettings', component: Profile },
-      { path: '/patientrecords', component: PatientRec},
-      {path: '/data', component: PatientID},
+      { path: '', name: 'System', component: System },
+      { path: '/profile', name: 'Profile', component: Profile },
+      { path: '/patientlist/', name: 'List', component: PatientList,},
+      { path: '/patientlist/:name', name: 'PatientDetails', component: PatientDetails, props: true},
+      { path: '/add/', name: 'Add', component: AddPatient},
+      { path: '/edit', name: 'Edit', component: EditPatient},
     ]
   },
   

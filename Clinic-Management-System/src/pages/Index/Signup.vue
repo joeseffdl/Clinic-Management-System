@@ -5,7 +5,9 @@
         <div class="col self-center text-h1 " style="margin: 0 auto 0 auto;">Health is Wealth</div>
       </div>
       <div class="col-6 " style="width:750px;margin: 0 auto 0 auto;" >
+        
         <q-form class="q-ma-xl q-pa-xl" @submit="submitForm" >
+          <div class=" items-center text-h3 q-mb-lg" >Create your account</div>
           <div>
             <q-input  v-model="formData.firstName" type="text" square filled dense color="primary" 
             label="First Name" clearable clear-icon="mdi-close"

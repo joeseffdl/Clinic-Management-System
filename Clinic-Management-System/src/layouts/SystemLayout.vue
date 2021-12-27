@@ -21,7 +21,7 @@
 
     <q-drawer
         v-model="drawer"
-        class="shadow-5"
+        class="shadow-5 bg-secondary"
         show-if-above
         :width="200"
         :breakpoint="400"
@@ -38,7 +38,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-ripple clickable to="/profilesettings">
+            <q-item v-ripple clickable to="/profile">
               <q-item-section avatar>
                 <q-icon name="mdi-account" />
               </q-item-section>
@@ -58,7 +58,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-ripple clickable to="/patientrecords">
+            <q-item v-ripple clickable to="/patientlist">
               <q-item-section avatar>
                 <q-icon name="mdi-medical-bag" />
               </q-item-section>
