@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-secondary ">
-    <div class="q-pa-xl">
+    <div v-for="(client) in allClients" :key="client.id" class="q-pa-xl">
       <!-- First Row -->
       <q-card dark bordered>
         <q-card-section class="bg-accent">
@@ -9,7 +9,7 @@
               <div class="row justify-center q-my-xl">  
                 <div>
                   <q-avatar size="225px" color="primary">
-                  N
+                  {{client.name[0]}}
                   </q-avatar>
                 </div>
               </div>
@@ -19,7 +19,7 @@
               <div class="row justify-center text-black q-my-xl"> 
                 <div>
                   <h3 class="q-my-lg">Patient</h3>
-                  <h5 class="q-my-xs">Ms.Wu Man Nior</h5>
+                  <h5 class="q-my-xs" @click="updateClient({ id: client.id, updateName: client.name})">{{client.name}}</h5>
                   <q-btn class="q-my-lg q-mx-lg full-width" color="secondary" text-color="black" label="A button" />
                 </div>
               </div> 
@@ -30,22 +30,23 @@
                 <div class="col col-sm-4 col-xs-12" >
                   <div>Client since
                     <div class="text-body2">
-                      December 04, 2021
+                      {{client.clientSince}}
                     </div>
                   </div>
                 </div>
                 <div class="col col-sm-4 col-xs-12" >
                   <div>Sex
                     <div class="text-body2">
-                      Woman
+                      {{client.sex}}
+                      
                     </div>
                   </div>
                 </div>
-
+                
                 <div class="col col-sm-4 col-xs-12" >
                   <div>Age 
                     <div class="text-body2">
-                      30
+                      {{client.age}}
                     </div>
                   </div>
                 </div>
@@ -55,14 +56,14 @@
                 <div class="col col-sm-4 col-xs-12 ">
                   <div>Occupation 
                     <div class="text-body2">
-                      Engineer
+                      {{client.occupation}}
                     </div>
                   </div>
                 </div>
                 <div class="col col-sm-4 col-xs-12">
                   <div>Mobile No.
                     <div class="text-body2">
-                      09123456789
+                      {{client.mobileNo}}
                     </div>
                   </div>
                 </div>
@@ -70,7 +71,7 @@
                 <div class="col col-sm-4 col-xs-12">
                   <div>Telephone No.
                     <div class="text-body2">
-                      1234567
+                      {{client.telNo}}
                     </div>
                   </div>
                 </div>
@@ -81,7 +82,7 @@
                   <div class="text-center">
                     Home Address: 
                     <div class="text-body2">
-                      Polytechnic University of the Philippines
+                      {{client.address}}
                     </div>
                   </div>
                 </div> 
@@ -100,7 +101,7 @@
                   <h6>
                     Date and Time
                     <div class="text-body2">
-                      December 04, 2021
+                      {{client.recentSchedule}}
                     </div>
                   </h6>
                 </div>
@@ -109,7 +110,7 @@
                   <h6>
                     Procedure
                     <div class="text-body2">
-                      Tooth Extraction
+                      {{client.procedure}}
                     </div>
                   </h6>
                 </div>
@@ -118,7 +119,7 @@
                   <h6>
                     Diagnosis
                     <div class="text-body2">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                      {{client.diagnosis}}
                     </div>
                   </h6>
                 </div>
@@ -133,8 +134,16 @@
 </template>
 
 <script>
-export default {
+import { mapActions, mapGetters } from 'vuex'
 
-}
+export default {
+  computed: {
+    ...mapGetters('module_a', ['allClients'])
+  },
+  
+  methods: {
+    ...mapActions('module_a', ['updateClient'])
+  },
+};
 </script>
 
