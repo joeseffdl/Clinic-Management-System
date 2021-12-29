@@ -12,7 +12,6 @@ export function addClient (state, payload){
 export function removeClient (state,props){
     props = state.allClients.map(item => item.id).indexOf(props.id);
     state.allClients.splice(props, 1);
-    console.log(state.allClients)
 }
 
 export function updateClient (state, client){
