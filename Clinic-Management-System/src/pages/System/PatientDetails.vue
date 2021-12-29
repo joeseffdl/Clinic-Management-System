@@ -1,7 +1,8 @@
 <template>
   <q-page class="bg-secondary ">
-    <div v-for="(client) in allClients" :key="client.id" class="q-pa-xl">
+    <div v-for="(client,value) in allClients" :key="value" class="q-pa-xl">
       <!-- First Row -->
+      <pre>{{client}}</pre>
       <q-card dark bordered>
         <q-card-section class="bg-accent">
           <div class="row q-mx-auto justify-center" >
@@ -19,7 +20,7 @@
               <div class="row justify-center text-black q-my-xl"> 
                 <div>
                   <h3 class="q-my-lg">Patient</h3>
-                  <h5 class="q-my-xs" @click="updateClient({ id: client.id, updateName: client.name})">{{client.name}}</h5>
+                  <h5 class="q-my-xs">{{client.name}}</h5>
                   <q-btn class="q-my-lg q-mx-lg full-width" color="secondary" text-color="black" label="A button" />
                 </div>
               </div> 
@@ -137,6 +138,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
+  
   computed: {
     ...mapGetters('module_a', ['allClients'])
   },
