@@ -1,8 +1,6 @@
 <template>
   <q-page class="bg-secondary ">
-    <div v-for="(client,value) in allClients" :key="value" class="q-pa-xl">
       <!-- First Row -->
-      <pre>{{client}}</pre>
       <q-card dark bordered>
         <q-card-section class="bg-accent">
           <div class="row q-mx-auto justify-center" >
@@ -130,22 +128,16 @@
         </div>
     
       </div>
-    </div>
   </q-page>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  
-  computed: {
-    ...mapGetters('module_a', ['allClients'])
-  },
-  
-  methods: {
-    ...mapActions('module_a', ['updateClient'])
-  },
+  props: [
+    // eslint-disable-next-line vue/require-prop-types
+    'client',
+  ],
 };
 </script>
 
