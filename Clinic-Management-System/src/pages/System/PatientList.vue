@@ -9,21 +9,21 @@
             :filter="filter"
             no-data-label="I didn't find anything for you"
             no-results-label="The filter didn't uncover any results"
-            row-key="id"
+            row-key="allClients.id"
             card-class="bg-accent text-primary"
           >
 
             <template #body-cell="props">
               <q-td :props="props">
-                  <router-link :to="{ 
+                  <!-- <router-link :to="{ 
                     name: 'PatientDetails', 
                     params: { 
                       name: props.value}}" 
-                    style="text-decoration: none;" >   
-                    <tr>
+                    style="text-decoration: none;" >    -->
+                    <tr class="text-black text-bold" >
                       {{props.value}}   
                     </tr>
-                  </router-link>
+                  <!-- </router-link> -->
               </q-td>
             </template>
 
@@ -52,7 +52,6 @@
               />
             </template>
 
-            // eslint-disable-next-line vue/no-template-shadow
             <template #no-data="{ icon, message, filtered }">
               <div class="full-width row flex-center q-gutter-sm">
                 <q-icon size="2em" name="mdi-emoticon-dead" />
@@ -69,18 +68,17 @@
     </div>
     <!-- Dialog -->
     <q-dialog
-      v-model="viewToggle">
-      <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section class="q-px-lg">
-          <q-list>
-            <div v-for="(value, props) in allClients" :key="props">
-              <!-- <q-item v-if="props"> -->
-                <span class="text-bold">{{props}}:</span>&nbsp;<span>{{value}} </span>       
-              <!-- </q-item> -->
+      v-model="viewToggle" class="flex flex-center shadow-10">
+      <q-card style="width: 800; max-width: 100vw;">
+        <q-card-section class="q-pa-lg bg-accent">
+          <q-card class="bg-secondary q-px-xl q-py-lg">
+            <q-card-section class="row flex flex-center"><q-icon size="2rem" color="green-3" name="mdi-eye" ></q-icon> <span class="text-h6 text-bold" >PATIENT'S DATA</span></q-card-section>
+            <div v-for="(item, id) in currentItem" :key="id" class="q-my-md" >    
+              <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span>{{ item }} </span>       
             </div>
-          </q-list>
+          </q-card>
         </q-card-section>
-        <q-card-actions align="right" class="bg-white text-teal">
+        <q-card-actions align="right" class="bg-primary text-secondary">
           <q-btn v-close-popup flat label="OK" />
         </q-card-actions>
       </q-card>
@@ -92,7 +90,6 @@
 
 import { ref } from 'vue'
 import { mapActions, mapGetters } from 'vuex'
-
 
 const columns = [
   {
@@ -128,6 +125,7 @@ export default {
       rows,
       filter: ref(''),
       viewToggle: ref(true),
+      currentItem: ref(null),
     }
   },
   computed: {   
@@ -150,8 +148,8 @@ export default {
         this.removeClient(props)
       })
     },
-    view(props) {
-      allClients.value = props
+    view(row) {
+      this.currentItem = row
       this.viewToggle = true
     }
   },

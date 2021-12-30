@@ -1,8 +1,8 @@
 
-export function setCurrentClient (state, payload) {
-    state.currentClient = payload;
+// export function setCurrentClient (state, payload) {
+//     state.currentClient = payload;
     
-}
+// }
 
 export function addClient (state, payload){
     state.allClients.push(payload.newClient);
