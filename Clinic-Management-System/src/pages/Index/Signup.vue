@@ -97,8 +97,8 @@ export default defineComponent({
    methods: {
      submitForm() 
       {
-          console.log("Submit form was clicked!");
-        }
+        this.$router.push('/guest')
       }
-    });
+    }
+  });
 </script>

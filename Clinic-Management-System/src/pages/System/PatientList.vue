@@ -11,6 +11,7 @@
             no-results-label="The filter didn't uncover any results"
             row-key="allClients.id"
             card-class="bg-accent text-primary"
+            width="800px"
           >
 
             <template #body-cell="props">
@@ -30,6 +31,7 @@
             <template #body-cell-actions="props">
               <q-td :props="props">
                 <q-btn flat dense color="secondary" icon="mdi-eye" @click.stop="view(props.row)" />
+                <q-btn flat dense color="primary" icon="mdi-pen" @click.stop="update(props.row)" />
                 <q-btn flat dense color="red" icon="mdi-delete" @click.stop="remove(props.row)" />
               </q-td>
             </template>
@@ -66,20 +68,50 @@
         </div>
       </div>
     </div>
-    <!-- Dialog -->
+
+    <!-- View Dialog -->
     <q-dialog
       v-model="viewToggle" class="flex flex-center shadow-10">
-      <q-card style="width: 800; max-width: 100vw;">
+      <q-card bordered style="width: 800px; max-width: 60vw;">
         <q-card-section class="q-pa-lg bg-accent">
-          <q-card class="bg-secondary q-px-xl q-py-lg">
-            <q-card-section class="row flex flex-center"><q-icon size="2rem" color="green-3" name="mdi-eye" ></q-icon> <span class="text-h6 text-bold" >PATIENT'S DATA</span></q-card-section>
-            <div v-for="(item, id) in currentItem" :key="id" class="q-my-md" >    
-              <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span>{{ item }} </span>       
+          <q-card class="bg-secondary q-mx-xl q-py-lg">
+            <q-card-section class="row flex flex-center bg-primary"><q-icon class="q-mx-sm" size="2rem" color="green-3" name="mdi-eye" ></q-icon> <span class="text-h6 text-bold" >PATIENT'S DATA</span></q-card-section>
+            <div v-for="(item, id) in currentItem" :key="id" class="q-my-md q-mx-xl" >    
+              <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span>{{ item }} </span>        
             </div>
           </q-card>
         </q-card-section>
         <q-card-actions align="right" class="bg-primary text-secondary">
           <q-btn v-close-popup flat label="OK" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <!-- Update Dialog -->
+    <q-dialog
+      v-model="updateToggle" class="flex flex-center shadow-10" >
+      <q-card bordered style="width: 800px; max-width: 60vw;">
+        <q-card-section class="q-pa-lg bg-accent">
+          <q-card class="bg-secondary q-mx-xl q-py-lg">
+            <q-card-section class="row flex flex-center bg-primary"><q-icon class="q-mx-sm" size="2rem" color="green-3" name="mdi-pen" ></q-icon> <span class="text-h6 text-bold" > UPDATE PATIENT'S DATA</span></q-card-section>
+            <q-form class="q-my-md q-mx-xl" >    
+              <span class="text-bold text-uppercase">ID: {{ currentItemData.id }}</span>       
+              <q-input v-model="currentItemData.name" label="NAME" />
+              <q-input v-model="currentItemData.clientSince" type="date" label="CLIENT SINCE" />
+              <q-select v-model="currentItemData.sex" :options="options.sex" label="SEX" />
+              <q-input v-model="currentItemData.age" type="number" label="AGE" />
+              <q-input v-model="currentItemData.occupation" label="OCCUPATION" />
+              <q-input v-model="currentItemData.mobileNo" mask="(##) - ### - ### - ####" unmasked-value label="MOBILE NO" />
+              <q-input v-model="currentItemData.telNo" mask="### - ####" unmasked-value label="TEL NO" />
+              <q-input v-model="currentItemData.address" label="ADDRESS" />
+              <q-input v-model="currentItemData.recentSchedule" type="date" label="RECENT SCHEDULE" />
+              <q-select v-model="currentItemData.procedure" :options="options.procedure" label="PROCEDURE" />
+              <q-input v-model="currentItemData.diagnosis" label="DIAGNOSIS" />
+            </q-form>
+          </q-card>
+        </q-card-section>
+        <q-card-actions align="right" class="bg-primary text-secondary">
+          <q-btn v-close-popup type="submit" flat label="UPDATE" @click="updateItem" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -100,18 +132,19 @@ const columns = [
     field: row => row.name,
     format: val => `${val}`,
     sortable: true,
-    style: 'max-width: 100px',
+    style: 'max-width: 500px',
     headerClasses: 'bg-dark text-secondary',
-    headerStyle: 'max-width: 100px'
+
   },
+  
   { 
     name: 'actions', 
-    label: 'Action',
+    label: 'Actions',
     align: 'center',
-    style: 'max-width: 50px',
+    style: 'max-width: 80px',
     headerClasses: 'bg-dark text-secondary',
-    headerStyle: 'max-width: 50px'
-  }
+    
+  },
 ]
 
 const rows = [
@@ -124,15 +157,35 @@ export default {
       columns,
       rows,
       filter: ref(''),
-      viewToggle: ref(true),
+      viewToggle: ref(false),
+      updateToggle: ref(false),
       currentItem: ref(null),
+      currentItemData: ref(null),
+      options: {
+        sex: [
+          "Male",
+          "Female"
+        ],
+        procedure: [
+          "Teeth Cleaning",
+          "Teeth Whitening",
+          "Extraction",
+          "Veneers",
+          "Fillings",
+          "Crowns",
+          "Root Canal",
+          "Braces/Invisalign",
+          "Bonding",
+          "Dentures"
+        ]
+      }
     }
   },
   computed: {   
     ...mapGetters('module_a', ['allClients'])
   },
   methods: {
-    ...mapActions('module_a', ['removeClient']),
+    ...mapActions('module_a', ['removeClient','updateClient']),
     remove(props) {
       this.$q.dialog({
         title: 'Confirm',
@@ -151,6 +204,14 @@ export default {
     view(row) {
       this.currentItem = row
       this.viewToggle = true
+    },
+    update(props) {
+      // this.currentItem = props
+      this.currentItemData = {...props}
+      this.updateToggle = true
+    },
+    updateItem(currentItemData){
+      this.updateClient(this.currentItemData)
     }
   },
 };
