@@ -11,7 +11,7 @@
                   <q-avatar size="225px" color="primary"> </q-avatar>
 
                   <q-input
-                    v-model="allClients.name"
+                    v-model="Clients.name"
                     type="text"
                     square
                     filled
@@ -30,7 +30,7 @@
               <div class="row q-my-xl text-bold text-black">
                 <div class="col col-sm-4 col-xs-12">
                   <q-input
-                    v-model="allClients.clientSince"
+                    v-model="Clients.clientSince"
                     type="date"
                     square
                     filled
@@ -43,12 +43,12 @@
                 </div>
                 <div class="col col-sm-4 col-xs-12">
                   <q-select
-                    v-model="allClients.sex"
+                    v-model="Clients.sex"
                     type="text"
                     square
                     filled
                     label="Sex"
-                    :options="allClients.sex_opt"
+                    :options="options.sex"
                     clearable
                     clear-icon="mdi-close"
                     :rules="[(v) => !!v || 'Field is required!']"
@@ -57,7 +57,7 @@
 
                 <div class="col col-sm-4 col-xs-12">
                   <q-input
-                    v-model="allClients.age"
+                    v-model="Clients.age"
                     type="number"
                     square
                     filled
@@ -73,7 +73,7 @@
               <div class="row q-my-xl text-bold text-black q-gutter-y-md">
                 <div class="col col-sm-4 col-xs-12">
                   <q-input
-                    v-model="allClients.occupation"
+                    v-model="Clients.occupation"
                     type="text"
                     square
                     filled
@@ -86,7 +86,7 @@
                 </div>
                 <div class="col col-sm-4 col-xs-12">
                   <q-input
-                    v-model="allClients.mobileNo"
+                    v-model="Clients.mobileNo"
                     mask="(##) - ### - ### - ####"
                     unmasked-value
                     hint="(##) - ### - ### - ####"
@@ -102,7 +102,7 @@
 
                 <div class="col col-sm-4 col-xs-12">
                   <q-input
-                    v-model="allClients.telNo"
+                    v-model="Clients.telNo"
                     mask="### - ####"
                     unmasked-value
                     hint="### - ####"
@@ -120,7 +120,7 @@
               <div class="row q-mt-sm justify-center text-bold text-black">
                 <div class="col">
                   <q-input
-                    v-model="allClients.address"
+                    v-model="Clients.address"
                     type="text"
                     square
                     filled
@@ -144,7 +144,7 @@
               <div class="row text-center text-bold text-black q-gutter-y-md">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <q-input
-                    v-model="allClients.recentSchedule"
+                    v-model="Clients.recentSchedule"
                     type="date"
                     square
                     filled
@@ -158,11 +158,11 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <q-select
-                    v-model="allClients.procedure"
+                    v-model="Clients.procedure"
                     square
                     filled
                     label="Procedure"
-                    :options="allClients.options"
+                    :options="options.procedure"
                     clearable
                     clear-icon="mdi-close"
                     :rules="[(v) => !!v || 'Field is required!']"
@@ -171,7 +171,7 @@
 
                 <div class="col-lg-12 col-12 col-xs-12">
                   <q-input
-                    v-model="allClients.diagnosis"
+                    v-model="Clients.diagnosis"
                     type="textarea"
                     square
                     filled
@@ -201,25 +201,14 @@ import { mapActions } from 'vuex';
 
 
 export default {
-  data(){
+  setup(){
     return {
-      allClients: {
-        name:'',
-        clientSince:'',
-        sex:'',
-        sex_opt: [
+      options: {
+        sex: [
           "Male",
           "Female"
         ],
-        age:'',
-        occupation:'',
-        mobileNo:'',
-        telNo:'',
-        address:'',
-        recentSchedule:'',
-        procedure:'',
-        diagnosis:'',
-        options: [
+        procedure: [
           "Teeth Cleaning",
           "Teeth Whitening",
           "Extraction",
@@ -234,16 +223,35 @@ export default {
       }
     }
   },
+
+  data(){
+    return {
+      Clients: {
+        name:'',
+        clientSince:'',
+        sex:'',
+        age:'',
+        occupation:'',
+        mobileNo:'',
+        telNo:'',
+        address:'',
+        recentSchedule:'',
+        procedure:'',
+        diagnosis:'',
+      }
+    }
+  },
   
   methods: {
     ...mapActions('module_a', ['addClient']),
     submitForm(){
-      if(!this.allClients.hasError){
+      if(!this.Clients.hasError){
         this.submitClient()
       }
     },
     submitClient(){
-      this.addClient(this.allClients)
+      this.addClient(this.Clients)
+      
     }
   }
 }
