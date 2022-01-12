@@ -1,7 +1,4 @@
 
-// export function setCurrentClient (context, payload) {
-//     context.commit("setCurrentClient", payload);
-// }
 export function addClient( {commit},client) {
     commit("addClient", client);
 }

@@ -1,10 +1,7 @@
 import { uid } from 'quasar'
-// export function setCurrentClient (state, payload) {
-//     state.currentClient = payload;
 
 export function addClient (state, client){
     state.allClients.push({ id: uid(),...client});
-    //state.currentClient = state.allClients;
 }
 
 export function removeClient (state,props){
