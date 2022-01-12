@@ -6,8 +6,8 @@
         <q-card-section class="bg-accent">
           <div class="row q-mx-auto justify-center">
             <div class="col-md-6 col-sm-8 col-xs-12">
-              <div class="row justify-center q-my-xl" >
-                <div class="q-gutter-md" >
+              <div class="row justify-center q-my-xl">
+                <div class="q-gutter-md">
                   <q-avatar size="225px" color="primary"> </q-avatar>
 
                   <q-input
@@ -183,8 +183,14 @@
                     :rules="[(v) => !!v || 'Field is required!']"
                   />
                 </div>
-                <div class="col-12" >
-                    <q-btn class="justify-center" type="submit" label="Insert to List" color="primary" bordered />
+                <div class="col-12">
+                  <q-btn
+                    class="justify-center"
+                    type="submit"
+                    label="Insert to List"
+                    color="primary"
+                    bordered
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -196,18 +202,13 @@
 </template>
 
 <script>
-import { mapFields } from 'vuex-map-fields';
-import { mapActions } from 'vuex';
-
+import { mapActions } from "vuex";
 
 export default {
-  setup(){
+  setup() {
     return {
       options: {
-        sex: [
-          "Male",
-          "Female"
-        ],
+        sex: ["Male", "Female"],
         procedure: [
           "Teeth Cleaning",
           "Teeth Whitening",
@@ -218,41 +219,40 @@ export default {
           "Root Canal",
           "Braces/Invisalign",
           "Bonding",
-          "Dentures"
-        ]
-      }
-    }
+          "Dentures",
+        ],
+      },
+    };
   },
 
-  data(){
+  data() {
     return {
       Clients: {
-        name:'',
-        clientSince:'',
-        sex:'',
-        age:'',
-        occupation:'',
-        mobileNo:'',
-        telNo:'',
-        address:'',
-        recentSchedule:'',
-        procedure:'',
-        diagnosis:'',
-      }
-    }
+        name: "",
+        clientSince: "",
+        sex: "",
+        age: "",
+        occupation: "",
+        mobileNo: "",
+        telNo: "",
+        address: "",
+        recentSchedule: "",
+        procedure: "",
+        diagnosis: "",
+      },
+    };
   },
-  
+
   methods: {
-    ...mapActions('module_a', ['addClient']),
-    submitForm(){
-      if(!this.Clients.hasError){
-        this.submitClient()
+    ...mapActions("module_a", ["addClient"]),
+    submitForm() {
+      if (!this.Clients.hasError) {
+        this.submitClient();
       }
     },
-    submitClient(){
-      this.addClient(this.Clients)
-      
-    }
-  }
-}
+    submitClient() {
+      this.addClient(this.Clients);
+    },
+  },
+};
 </script>
