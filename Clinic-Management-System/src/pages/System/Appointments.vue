@@ -186,7 +186,7 @@
                     @click="showEvent(event)"
                   >
                     <div class="title q-calendar__ellipsis">
-                      {{ event.title  }}
+                      {{ event.title }}
                       <q-tooltip>{{ event.details }}</q-tooltip>
                     </div>
                   </div>
@@ -270,7 +270,7 @@ export default defineComponent({
         details: "",
         time: "",
         days: 1,
-        bgcolor: "",
+        bgcolor: "Red",
       },
       events: [
         {
@@ -417,34 +417,44 @@ export default defineComponent({
       if (this.events.includes(event)) {
         this.$q.notify({
           message: "Event not deleted due to an unknown error.",
-          color: 'red'
+          color: "red",
         });
       } else {
         this.$q.notify({
           message: "Event deleted successfully.",
-          color: 'green'
+          color: "green",
         });
       }
     },
     onSubmit() {
       this.addEvent = false;
       const form = { ...this.eventsForm };
-      const data = {
-        id: uid(),
-        title: form.title,
-        details: form.details,
-        bgcolor: form.bgcolor.toLowerCase(),
-        date: getCurrentDay(this.event.scope.timestamp.day),
-        time: form.time,
-        days: form.days,
-      };
+      const data =
+        form.days > 1
+          ? {
+              id: uid(),
+              title: form.title,
+              details: form.details,
+              bgcolor: form.bgcolor.toLowerCase(),
+              date: getCurrentDay(this.event.scope.timestamp.day),
+              time: form.time,
+              days: form.days,
+            }
+          : {
+              id: uid(),
+              title: form.title,
+              details: form.details,
+              bgcolor: form.bgcolor.toLowerCase(),
+              date: getCurrentDay(this.event.scope.timestamp.day),
+              time: form.time,
+            };
       this.events.push(data);
-      console.log("Data:", data, "Events", this.events);
+      console.log("Data:", data);
     },
     onEdit() {
       this.showEdit = false;
-      this.event.bgcolor = this.event.bgcolor.toLowerCase(),
-      console.log("Data:", this.event);
+      (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
+        console.log("Data:", this.event);
     },
   },
 });
