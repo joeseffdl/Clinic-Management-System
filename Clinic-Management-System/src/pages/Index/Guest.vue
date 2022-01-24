@@ -1,8 +1,12 @@
 <template>
-  <q-page class="bg-secondary ">
+  <q-page class="bg-secondary">
     <div class="row fullscreen text-center items-center content-center">
-      <div class="col-6 q-gutter-lg self-center " style="max-width:650px;margin: 0 auto 0 auto;" >
+      <div
+        class="col-6 q-gutter-lg self-center"
+        style="max-width: 650px; margin: 0 auto 0 auto"
+      >
         <div class="text-h2 q-pb-xl">Welcome Back!</div>
+
 
 
       <q-form class="q-ma-xl q-pa-xl" @submit.prevent="login" >
@@ -31,21 +35,22 @@
           
       </q-form>
           
+
       </div>
 
       <div class="col-6 gt-md self-center">
-        <q-img 
-        class="q-mt-xl"
-      src="icons\byte_black.png"
-      spinner-color="black"
-      style="height:600px ; max-width:800px;" />
-    
+        <q-img
+          class="q-mt-xl"
+          src="icons\byte_black.png"
+          spinner-color="black"
+          style="height: 600px; max-width: 800px"
+        />
       </div>
-      
     </div>
   </q-page>
 </template>
 <script>
+
 import { ref } from 'vue'
 import axios from 'axios'
 
@@ -160,5 +165,20 @@ export default {
   }
   
 
-}
+
+
+      onSubmit() {
+        {
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "mdi-account",
+            message: "Welcome!",
+          });
+          this.$router.push("/system");
+        }
+      },
+    };
+  },
+};
 </script>
