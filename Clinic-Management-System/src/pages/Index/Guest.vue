@@ -127,8 +127,6 @@ export default {
             )
           .catch(err => console.log(err))
 
-          
-
        /*if(this.formData.email != "" && this.formData.password != "") {
         if(this.formData.email == this.showEmail && this.formData.password == this.showPass) {
             console.log("Login Successfully!");
@@ -138,12 +136,6 @@ export default {
         }
       } else {
         console.log("A email and password must be present");*/
-      
-      
-
-     
-
-        
 
     },
 
@@ -162,12 +154,8 @@ export default {
       }
       
     }*/
-  }
-  
 
-
-
-      onSubmit() {
+    onSubmit() {
         {
           $q.notify({
             color: "green-4",
@@ -178,7 +166,7 @@ export default {
           this.$router.push("/system");
         }
       },
-    };
-  },
+  
+  }
 };
 </script>
