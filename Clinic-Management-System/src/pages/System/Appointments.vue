@@ -164,8 +164,9 @@
           <div style="display: flex; max-width: 800px; width: 100%">
             <q-calendar-month
               ref="calendar"
+              class="q-ma-xl"
               v-model="selectedDate"
-              dark
+              color="accent"
               show-day-of-year-label
               :month-label-size="size"
               date-align="right"

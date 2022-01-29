@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="q-pa-md gt-xs">
+    <div class="q-pa-md">
       <div class="absolute-center">
         <q-table
           :rows="allClients"
@@ -11,25 +11,21 @@
           row-key="allClients.id"
           card-class="bg-accent text-primary"
           bordered 
-          flat
+        >
+          <!-- 
+          Q-Table Add-ons
+          
           hide-pagination
           :rows-per-page-options="[0]"
-          wrap-cells
-          
-        >
+          wrap-cells -->
+
           <template #body-cell="props">
             <q-td :props="props">
-              <!-- <router-link :to="{ 
-                  name: 'PatientDetails', 
-                  params: { 
-                    name: props.value}}" 
-                  style="text-decoration: none;" > -->
               <tr class="text-black text-bold">
                 {{
                   props.value
                 }}
               </tr>
-              <!-- </router-link> -->
             </q-td>
           </template>
 
@@ -107,7 +103,8 @@
             <div
               v-for="(item, id) in currentItem"
               :key="id"
-              class="q-my-md q-mx-xl" 
+              class="q-my-md q-mx-lg"
+              style="overflow: hidden;" 
             >
               <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span
                 >{{ item }}
