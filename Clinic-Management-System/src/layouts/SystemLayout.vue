@@ -40,7 +40,7 @@
         "
       >
         <q-list padding>
-          <q-item v-ripple clickable to="/system">
+          <q-item v-ripple clickable to="/home">
             <q-item-section avatar>
               <q-icon name="mdi-home" />
             </q-item-section>
@@ -125,7 +125,7 @@
         "
       >
         <q-list padding>
-          <q-item v-ripple clickable to="/system">
+          <q-item v-ripple clickable to="/home">
             <q-item-section avatar>
               <q-icon name="mdi-home" />
             </q-item-section>

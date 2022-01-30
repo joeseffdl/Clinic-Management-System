@@ -1,7 +1,7 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="q-pa-md">
-      <div class="absolute-center">
+    <div class="q-pa-xl">
+      <div class="fit">
         <q-table
           :rows="allClients"
           :columns="columns"
@@ -220,7 +220,7 @@ const columns = [
     name: "sex",
     required: true,
     label: "Sex",
-    align: "center",
+    align: "left",
     field: (row) => row.sex,
     format: (val) => `${val}`,
     sortable: true,
@@ -232,7 +232,7 @@ const columns = [
     name: "procedure",
     required: true,
     label: "Procedure",
-    align: "center",
+    align: "left",
     field: (row) => row.procedure,
     format: (val) => `${val}`,
     sortable: true,
@@ -308,7 +308,7 @@ export default {
       this.currentItemData = { ...props };
       this.updateToggle = true;
     },
-    updateItem(currentItemData) {
+    updateItem() {
       this.updateClient(this.currentItemData);
     },
   },

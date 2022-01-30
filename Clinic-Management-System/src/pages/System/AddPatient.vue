@@ -8,10 +8,18 @@
             <div class="col-md-6 col-sm-8 col-xs-12">
               <div class="row justify-center q-my-xl">
                 <div class="q-gutter-md">
-                  <q-avatar size="225px" color="primary"> </q-avatar>
+                  <q-uploader
+                    url="http://localhost:8080/upload"
+                    class="q-mx-auto "
+                    label="Upload files"
+                    color="primary"
+                    
+                    style="max-width: 100%;height:300px;"
+                  />
 
                   <q-input
                     v-model="Clients.name"
+                    class="q-mx-auto"
                     type="text"
                     square
                     filled
@@ -187,7 +195,7 @@
                   <q-btn
                     class="justify-center"
                     type="submit"
-                    label="Insert to List"
+                    label="Add Patient Record"
                     color="primary"
                     bordered
                   />

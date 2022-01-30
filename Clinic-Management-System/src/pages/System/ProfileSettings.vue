@@ -14,7 +14,6 @@
             class="q-mx-auto "
             label="Upload files"
             color="primary"
-            bordered
             style="max-width: 100%;height:300px;"
           />
           </div>
