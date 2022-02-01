@@ -11,7 +11,7 @@ export default function () {
         mobileNo:'09123456789',
         telNo:'1234567',
         address:'Earth',
-        recentSchedule:'2021-25-12',
+        recentSchedule:'2022-01-31',
         procedure:'Crowns',
         diagnosis:'Crowning treatment',
       },
@@ -30,34 +30,5 @@ export default function () {
         diagnosis:'Teeth treatment',
       }
     ],
-    calendar:[
-      {
-        calendarView: 'day',
-        selectedDate: '2019-04-01',
-        locale: 'en-us',
-        maxDays: 1,
-        bordered: false,
-        fiveDayWorkWeek: false,
-        firstDayMonday: false,
-        shortMonthLabel: false,
-        showDayOfYearLabel: false,
-        shortWeekdayLabel: false,
-        shortIntervalLabel: false,
-        hour24Format: false,
-        hideHeader: false,
-        noScroll: false,
-        showMonthLabel: true,
-        showWorkWeeks: false,
-        noDefaultHeaderBtn: false,
-        noDefaultHeaderText: false,
-        intervalRange: { min: 0, max: 24 },
-        intervalRangeStep: 1,
-        intervalHeight: 60,
-        resourceHeight: 60,
-        resourceWidth: 100,
-        dayHeight: 100
-      }
-    ],
-    
   } 
 }

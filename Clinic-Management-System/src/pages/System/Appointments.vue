@@ -157,7 +157,7 @@
       </div>
     </q-dialog>
 
-    <div class="q-pt-xl">
+    <div class="q-pa-xl">
       <div class="subcontent">
         <navigation-bar @today="onToday" @prev="onPrev" @next="onNext" />
         <div class="row justify-center">
@@ -165,12 +165,12 @@
             <q-calendar-month
               ref="calendar"
               v-model="selectedDate"
-              dark
+              color="accent"
               show-day-of-year-label
               :month-label-size="size"
               date-align="right"
-              :now="nowDate"
               :day-min-height="80"
+              :style="blue"
               animated
               bordered
               @click-date="onClickDate"
@@ -255,6 +255,39 @@ export default defineComponent({
           "Blue-Grey",
         ],
       },
+      blue: {
+          '--calendar-border': '#64b5f6 1px solid',
+          '--calendar-border-dark': '#e3f2fd 1px solid',
+          '--calendar-border-section': '#90caf9 1px dashed',
+          '--calendar-border-section-dark': '#90caf9 1px dashed',
+          '--calendar-border-current': '#64b5f6 2px solid',
+          '--calendar-border-current-dark': '#2979ff 2px solid',
+          '--calendar-color': '#0d47a0',
+          '--calendar-color-dark': '#e3f2fd',
+          '--calendar-background': '#e3f2fd',
+          '--calendar-background-dark': '#0d47a0',
+          '--calendar-current-color': '#027BE3',
+          '--calendar-current-color-dark': '#2979ff',
+          '--calendar-current-background': '#00000000',
+          '--calendar-current-background-dark': '#0d47a0',
+          '--calendar-disabled-date-color': '#e3f2fd',
+          '--calendar-disabled-date-color-dark': '#bebebe',
+          '--calendar-disabled-date-background': '#90caf9',
+          '--calendar-disabled-date-background-dark': '#121212',
+          '--calendar-active-date-color': '#e3f2fd',
+          '--calendar-active-date-color-dark': '#ffff66',
+          '--calendar-active-date-background': '#2979ff',
+          '--calendar-active-date-background-dark': '#64b5f6',
+          '--calendar-outside-color': '#0d47a0',
+          '--calendar-outside-color-dark': '#bebebe',
+          '--calendar-outside-background': '#00000000',
+          '--calendar-outside-background-dark': '#121212',
+          '--calendar-selected-color': '#027BE3',
+          '--calendar-selected-color-dark': '#027BE3',
+          '--calendar-selected-background': '#cce7ff',
+          '--calendar-selected-background-dark': '#cce7ff',
+          
+        }
     };
   },
   data() {

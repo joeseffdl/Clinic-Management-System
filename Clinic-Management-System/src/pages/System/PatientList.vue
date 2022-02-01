@@ -1,7 +1,7 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="q-pa-md gt-xs">
-      <div class="absolute-center">
+    <div class="q-pa-xl">
+      <div class="fit">
         <q-table
           :rows="allClients"
           :columns="columns"
@@ -11,25 +11,21 @@
           row-key="allClients.id"
           card-class="bg-accent text-primary"
           bordered 
-          flat
+        >
+          <!-- 
+          Q-Table Add-ons
+          
           hide-pagination
           :rows-per-page-options="[0]"
-          wrap-cells
-          
-        >
+          wrap-cells -->
+
           <template #body-cell="props">
             <q-td :props="props">
-              <!-- <router-link :to="{ 
-                  name: 'PatientDetails', 
-                  params: { 
-                    name: props.value}}" 
-                  style="text-decoration: none;" > -->
               <tr class="text-black text-bold">
                 {{
                   props.value
                 }}
               </tr>
-              <!-- </router-link> -->
             </q-td>
           </template>
 
@@ -107,7 +103,8 @@
             <div
               v-for="(item, id) in currentItem"
               :key="id"
-              class="q-my-md q-mx-xl" 
+              class="q-my-md q-mx-lg"
+              style="overflow: hidden;" 
             >
               <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span
                 >{{ item }}
@@ -223,7 +220,7 @@ const columns = [
     name: "sex",
     required: true,
     label: "Sex",
-    align: "center",
+    align: "left",
     field: (row) => row.sex,
     format: (val) => `${val}`,
     sortable: true,
@@ -235,7 +232,7 @@ const columns = [
     name: "procedure",
     required: true,
     label: "Procedure",
-    align: "center",
+    align: "left",
     field: (row) => row.procedure,
     format: (val) => `${val}`,
     sortable: true,
@@ -311,7 +308,7 @@ export default {
       this.currentItemData = { ...props };
       this.updateToggle = true;
     },
-    updateItem(currentItemData) {
+    updateItem() {
       this.updateClient(this.currentItemData);
     },
   },

@@ -2,7 +2,7 @@ import MainLayout from 'layouts/MainLayout'
 import AboutUs from 'pages/Index/AboutUs'
 import Index from 'pages/Index/Index'
 import SystemLayout from 'layouts/SystemLayout'
-import System from 'pages/System/System'
+import Home from 'pages/System/Home'
 import Profile from 'pages/System/ProfileSettings'
 import PatientList from 'pages/System/PatientList'
 import AddPatient from 'pages/System/AddPatient'
@@ -39,10 +39,10 @@ const routes = [
     ]
   },
   {
-    path: '/system',
+    path: '/home',
     component: SystemLayout,
     children: [
-      { path: '', name: 'System', component: System },
+      { path: '', name: 'Home', component: Home },
       { path: '/profile', name: 'Profile', component: Profile },
       { path: '/patientlist', name: 'List', component: PatientList,},
       { path: '/add', name: 'Add', component: AddPatient},

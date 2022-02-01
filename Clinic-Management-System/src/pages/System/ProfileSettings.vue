@@ -1,31 +1,29 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="q-pa-xl">
-      <div class="row">
-        <div class="col-6 gt-md">
-          <div class="row-6">
-            <div class="text-h2 text-center q-mx-auto q-my-md">
-              Profile Information
-            </div>
-            <div class="row justify-center q-mx-auto">
-              <div class="text-h5 text-center q-my-lg">Profile Picture</div>
+    <div class="q-pa-xl window-height row">
+      <div class="col-4 q-mx-auto gt-md">
+        <div class="row fit q-pt-xl justify-center" >
+          
+          <div class="q-px-md text-h2 text-center" >
+            Profile Information
+            <div class="text-h5 text-center q-my-lg">
+              Profile Picture
             </div>
             <q-uploader
-              url="http://localhost:8080/upload"
-              class="q-mx-auto"
-              label="Upload files"
-              color="primary"
-              square
-              flat
-              bordered
-              style="max-width: 500px; height: 300px"
-            />
+            url="http://localhost:8080/upload"
+            class="q-mx-auto "
+            label="Upload files"
+            color="primary"
+            style="max-width: 100%;height:300px;"
+          />
           </div>
-        </div>
-        <div class="col-6 q-mx-auto justify-center no-wrap">
-          <q-form class="q-mt-xl q-pa-auto gt-xs">
-            <div class="col fit">
-              <div class="q-py-lg" style="max-width: 700px">
+        </div> 
+      </div>
+      <div class="col-6 q-mx-auto">
+        <div class="row fit items-center justify-center">
+          <q-form style="width: 75em;" >
+            <div>
+              <div class="q-py-lg">
                 <q-input
                   v-model="firstName"
                   type="text"
@@ -35,7 +33,7 @@
                   clear-icon="mdi-close-circle-outline"
                 />
               </div>
-              <div class="q-pb-lg" style="max-width: 700px">
+              <div class="q-pb-lg">
                 <q-input
                   v-model="lastName"
                   type="text"
@@ -45,7 +43,7 @@
                   clear-icon="mdi-close-circle-outline"
                 />
               </div>
-              <div class="q-pb-lg" style="max-width: 700px">
+              <div class="q-pb-lg">
                 <q-input
                   v-model="emailAddress"
                   type="text"
@@ -55,7 +53,7 @@
                   clear-icon="mdi-close-circle-outline"
                 />
               </div>
-              <div class="q-pb-lg" style="max-width: 700px">
+              <div class="q-pb-lg">
                 <q-input
                   v-model="contactNumber"
                   type="text"
@@ -65,7 +63,7 @@
                   clear-icon="mdi-close-circle-outline"
                 />
               </div>
-              <div class="q-pb-lg" style="max-width: 700px">
+              <div class="q-pb-lg">
                 <q-input
                   v-model="password"
                   standout="bg-primary text-white"
@@ -83,7 +81,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="q-pb-lg" style="max-width: 700px">
+              <div class="q-pb-lg">
                 <q-input
                   v-model="confirmPassword"
                   standout="bg-primary text-white"
