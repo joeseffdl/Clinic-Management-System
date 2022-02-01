@@ -72,14 +72,15 @@
             <q-item-section> Patient Records </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable>
-            <q-item-section avatar>
-              <q-icon name="mdi-cog" />
+          
+        </q-list>
+        <q-item v-ripple class="bg-red glossy absolute-bottom" clickable>
+            <q-item-section avatar >
+              <q-icon name="mdi-logout"/>
             </q-item-section>
 
             <q-item-section> Settings </q-item-section>
           </q-item>
-        </q-list>
       </q-scroll-area>
 
       <div class="q-mini-drawer-hide absolute" style="top: 15px; right: -17px">
@@ -149,12 +150,12 @@
             </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable>
-            <q-item-section avatar>
-              <q-icon name="mdi-cog" />
-            </q-item-section>
-          </q-item>
         </q-list>
+        <q-item v-ripple class="bg-red glossy absolute-bottom"  clickable>
+          <q-item-section avatar>
+            <q-icon name="mdi-logout" />
+          </q-item-section>
+        </q-item>
       </q-scroll-area>
       
       <q-img
