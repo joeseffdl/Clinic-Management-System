@@ -4,7 +4,7 @@
     <q-dialog v-model="displayEvent">
       <div>
         <q-card style="width: 550px">
-          <q-toolbar class="bg-secondary glossy" style="min-width: 200px">
+          <q-toolbar class="bg-accent glossy" style="min-width: 200px">
             <q-toolbar-title>
               {{ event.title }}
             </q-toolbar-title>
@@ -22,14 +22,14 @@
                 v-close-popup
                 flat
                 round
-                color="accent"
+                color="primary"
                 icon="mdi-pen"
                 @click.stop="editEvent(event)"
               />
               <q-btn v-close-popup flat round color="black" icon="mdi-close" />
             </q-btn-group>
           </q-toolbar>
-          <q-card-section class="inset-shadow bg-primary">
+          <q-card-section class="inset-shadow bg-secondary">
             <div>
               {{ (event.time ? event.time + " - " : "") + event.details }}
             </div>
@@ -44,12 +44,12 @@
     <q-dialog v-model="showEdit" persistent>
       <div>
         <q-card style="width: 500px">
-          <q-toolbar class="bg-secondary glossy" style="min-width: 400px">
+          <q-toolbar class="bg-accent glossy" style="min-width: 400px">
             <q-toolbar-title> Update Event </q-toolbar-title>
             <q-space />
             <q-btn v-close-popup flat round color="black" icon="mdi-close" />
           </q-toolbar>
-          <q-card-section class="bg-primary">
+          <q-card-section class="bg-secondary">
             <q-form class="q-ma-sm" @submit="onEdit">
               <q-input
                 v-model="event.title"

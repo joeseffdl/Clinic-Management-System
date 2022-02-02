@@ -12,9 +12,13 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary   : #0E86D4;
-$secondary : #D4F1F4;
-$accent    : #75E6DA;
+// $primary   : #0E86D4; 
+// $secondary : #D4F1F4;
+// $accent    : #75E6DA;
+
+$primary    : #0E86D4;
+$secondary  : #DAF3FF;
+$accent     : #67BBFF;
 
 $dark-blue : #050A30;
 
@@ -42,10 +46,10 @@ $midnight-blue:  #41729F;
 $blue-gray:      #5885AF;
 $dark-blue:      #274472;   
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
-$typography-font-family: 'Nunito', sans-serif !default;
-$text-weights: (extra-light: 200, light: 300, regular: 400, semi-bold: 600, bold: 700, extra-bold: 800, black: 900) !default;
-$button-font-weight: 400;
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;900&family=Source+Sans+Pro:wght@300;900&display=swap');
+$typography-font-family: 'Source Code Pro', sans-serif !default;
+$text-weights: (light: 300, regular: 400, bold: 900);
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 $typography-font-family: 'Quicksand', sans-serif ;

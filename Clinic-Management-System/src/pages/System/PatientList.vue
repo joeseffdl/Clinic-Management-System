@@ -66,7 +66,7 @@
           <template #top-right>
             <q-btn
               class="text-accent"
-              color="black"
+              color="primary"
               icon-right="mdi-plus"
               dense
               :to="{ name: 'Add' }"
@@ -212,7 +212,7 @@ const columns = [
     field: (row) => row.name,
     format: (val) => `${val}`,
     sortable: true,
-    headerClasses: "bg-dark text-secondary",
+    headerClasses: "bg-primary text-secondary",
     headerStyle: 'max-width: 800px',
     width: '800px'
   },
@@ -224,7 +224,7 @@ const columns = [
     field: (row) => row.sex,
     format: (val) => `${val}`,
     sortable: true,
-    headerClasses: "bg-dark text-secondary",
+    headerClasses: "bg-primary text-secondary",
     headerStyle: 'max-width: 800px',
     width: '800px'
   },
@@ -236,7 +236,7 @@ const columns = [
     field: (row) => row.procedure,
     format: (val) => `${val}`,
     sortable: true,
-    headerClasses: "bg-dark text-secondary",
+    headerClasses: "bg-primary text-secondary",
     headerStyle: 'max-width: 800px',
     width: '800px'
   },
@@ -245,7 +245,7 @@ const columns = [
     label: "Actions",
     align: "center",
     headerStyle: 'max-width: 800px',
-    headerClasses: "bg-dark text-secondary",
+    headerClasses: "bg-primary text-secondary",
   },
 ];
 

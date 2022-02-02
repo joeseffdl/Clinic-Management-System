@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
+  <q-layout view="hHh Lpr lff">
     <!-- (Optional) The Header -->
     <q-header reveal elevated>
       <q-toolbar class="glossy bg-primary text-h5">
@@ -79,7 +79,7 @@
               <q-icon name="mdi-logout"/>
             </q-item-section>
 
-            <q-item-section> Settings </q-item-section>
+            <q-item-section> Logout </q-item-section>
           </q-item>
       </q-scroll-area>
 
@@ -96,7 +96,7 @@
       </div>
       <q-img
         class="absolute-top"
-        src="https://cdn.quasar.dev/img/material.png"
+        src="url"
         style="height: 150px" 
       >
         <div class="absolute-bottom bg-transparent">
@@ -106,6 +106,9 @@
           <div class="text-weight-bold">Profile Name</div>
           <div>@bestbyte</div>
         </div>
+        <template #loading>
+          <q-spinner-gears color="accent" />
+        </template>
       </q-img>
     </q-drawer>
     <q-drawer   
@@ -160,7 +163,7 @@
       
       <q-img
         class="absolute-top"
-        src="https://cdn.quasar.dev/img/material.png"
+        src="url"
         style="height: 150px" 
       >
         <div class="absolute-center bg-transparent">
@@ -168,6 +171,9 @@
             <img src="icons\logo_black.png" />
           </q-avatar>
         </div>
+        <template #loading>
+          <q-spinner-gears color="accent" />
+        </template>
       </q-img>
     </q-drawer>
     <q-page-container>
@@ -185,11 +191,15 @@ export default {
 
   setup () {
     const miniState = ref(true)
+    const url = ref('https://picsum.photos/150')
 
     return {
       drawer: ref(false),
       miniState,
-
+      url,
+      refresh () {
+        url.value = 'https://picsum.photos/150' + Math.random()
+      },
       drawerClick (e) {
         // if in "mini" state and user
         // click on drawer, we switch it to "normal" mode

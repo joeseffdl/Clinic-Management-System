@@ -1,5 +1,5 @@
 import MainLayout from 'layouts/MainLayout'
-import AboutUs from 'pages/Index/AboutUs'
+import About from 'pages/Index/About'
 import Index from 'pages/Index/Index'
 import SystemLayout from 'layouts/SystemLayout'
 import Home from 'pages/System/Home'
@@ -7,6 +7,7 @@ import Profile from 'pages/System/ProfileSettings'
 import PatientList from 'pages/System/PatientList'
 import AddPatient from 'pages/System/AddPatient'
 import Appointments from 'pages/System/Appointments'
+import BestByte from 'pages/Index/BestByte'
 
 const routes = [
   {
@@ -14,35 +15,36 @@ const routes = [
     component: MainLayout,
     children: [
       { path: '/', name: 'Index', component: Index },
-      { path: '/bestbyte', name: 'About', component: AboutUs }
+      { path: '/about', name: 'About', component: About },
+      { path: '/bestbyte', name: 'BestByte', component: BestByte }
     ]
   },
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', name: 'Admin', component: () => import('src/pages/Index/Admin.vue') }
+      { path: '/admin', name: 'Admin', component: () => import('src/pages/Index/Admin.vue') }
     ]
   },
   {
     path: '/guest',
     component: () => import('layouts/GuestLayout.vue'),
     children: [
-      { path: '', name: 'Guest', component: () => import('src/pages/Index/Guest.vue') }
+      { path: '/guest', name: 'Guest', component: () => import('src/pages/Index/Guest.vue') }
     ]
   },
   {
     path: '/signup',
     component: () => import('layouts/SignupLayout.vue'),
     children: [
-      { path: '', name: 'SignUp', component: () => import('src/pages/Index/Signup.vue') }
+      { path: '/signup', name: 'SignUp', component: () => import('src/pages/Index/Signup.vue') }
     ]
   },
   {
     path: '/home',
     component: SystemLayout,
     children: [
-      { path: '', name: 'Home', component: Home },
+      { path: '/home', name: 'Home', component: Home },
       { path: '/profile', name: 'Profile', component: Profile },
       { path: '/patientlist', name: 'List', component: PatientList,},
       { path: '/add', name: 'Add', component: AddPatient},
