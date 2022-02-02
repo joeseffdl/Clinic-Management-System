@@ -2,7 +2,12 @@
   <q-page class="bg-secondary">
     <div class="column fit q-pa-xl" style="padding-top: 60px">
       <div class="col-1 fit" style="margin: 0 0 60px 0">
-        <div class="text-h2 text-center" style="">About Us</div>
+        <div class="text-h2 text-center" style="">About <q-img
+                  class="q-mt-md"
+                  src="icons\byte_black.png"
+                  spinner-color="black"
+                  style="height: 300px; max-width: 300px"
+                /></div>
       </div>
       <div class="col-8 fit">
         <div
@@ -15,12 +20,7 @@
                 class="col self-center"
                 style="margin: 0 0 -20px 0; width: 300px"
               >
-                <q-img
-                  class="q-mt-md"
-                  src="icons\byte_black.png"
-                  spinner-color="black"
-                  style="height: 300px; max-width: 300px"
-                />
+                
               </div>
 
               <div class="col self-center">

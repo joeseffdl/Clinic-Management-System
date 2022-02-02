@@ -5,11 +5,9 @@
         class="col-6 q-gutter-lg self-center"
         style="max-width: 650px; margin: 0 auto 0 auto"
       >
-        <div class="text-h2 q-pb-xl">Welcome Back!</div>
+        <div class="text-h1 text-center q-pb-md">Welcome Back!</div>
 
-
-
-      <q-form class="q-ma-xl q-pa-xl" @submit.prevent="login" >
+      <q-form style="border: 1px solid red" @submit.prevent="login">
         <q-input v-model="formData.email" type="email" standout="bg-accent" bottom-slots label="Email"  :dense="dense" clearable >
     
           <template #prepend>
@@ -43,7 +41,7 @@
           class="q-mt-xl"
           src="icons\byte_black.png"
           spinner-color="black"
-          style="height: 600px; max-width: 800px"
+          style="height: 100%; max-width: 100%"
         />
       </div>
     </div>

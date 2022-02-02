@@ -13,6 +13,7 @@
             row-key="allClients.id"
             :filter="dateNow"
             no-data-label="No Appointments for today"
+            no-results-label="No Appointments for today"
             hide-header
             hide-pagination
             :rows-per-page-options="[0]"
