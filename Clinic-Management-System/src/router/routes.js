@@ -41,7 +41,7 @@ const routes = [
     ]
   },
   {
-    path: '/home',
+    path: '/',
     component: SystemLayout,
     children: [
       { path: '/home', name: 'Home', component: Home },

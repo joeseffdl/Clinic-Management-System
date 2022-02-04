@@ -3,6 +3,7 @@
     <!-- (Optional) The Header -->
     <q-header reveal elevated>
       <q-toolbar class="glossy bg-primary text-h5">
+        
         <q-btn flat round dense icon="mdi-menu" @click="drawer = !drawer" />
         <q-space />
         Best <span class="text-accent">Byte</span>
@@ -30,7 +31,7 @@
       :width="200"
       :breakpoint="600"
       :mini="!drawer || miniState"
-        @click.capture="drawerClick"
+      @click.capture="drawerClick"
     >
       <q-scroll-area
         style="
@@ -40,7 +41,7 @@
         "
       >
         <q-list padding>
-          <q-item v-ripple clickable to="/home">
+          <q-item v-ripple clickable to="/home" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-home" />
             </q-item-section>
@@ -48,7 +49,7 @@
             <q-item-section> Home Page </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/profile">
+          <q-item v-ripple clickable to="/profile" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-account" />
             </q-item-section>
@@ -56,7 +57,7 @@
             <q-item-section> Profile </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/appointments">
+          <q-item v-ripple clickable to="/appointments" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-timetable" />
             </q-item-section>
@@ -64,7 +65,7 @@
             <q-item-section> Appointments </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/patientlist">
+          <q-item v-ripple clickable to="/patientlist" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-medical-bag" />
             </q-item-section>
@@ -129,32 +130,32 @@
         "
       >
         <q-list padding>
-          <q-item v-ripple clickable to="/home">
+          <q-item v-ripple clickable to="/home" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-home" />
             </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/profile">
+          <q-item v-ripple clickable to="/profile" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-account" />
             </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/appointments">
+          <q-item v-ripple clickable to="/appointments" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-timetable" />
             </q-item-section>
           </q-item>
 
-          <q-item v-ripple clickable to="/patientlist">
+          <q-item v-ripple clickable to="/patientlist" active-class="my-menu-link">
             <q-item-section avatar>
               <q-icon name="mdi-medical-bag" />
             </q-item-section>
           </q-item>
 
         </q-list>
-        <q-item v-ripple class="bg-red glossy absolute-bottom"  clickable>
+        <q-item v-ripple class="bg-red glossy absolute-bottom" clickable>
           <q-item-section avatar>
             <q-icon name="mdi-logout" />
           </q-item-section>
@@ -191,14 +192,14 @@ export default {
 
   setup () {
     const miniState = ref(true)
-    const url = ref('https://picsum.photos/150')
+    const url = ref('https://picsum.photos/200')
 
     return {
       drawer: ref(false),
       miniState,
       url,
       refresh () {
-        url.value = 'https://picsum.photos/150' + Math.random()
+        url.value = 'https://picsum.photos/200' + Math.random()
       },
       drawerClick (e) {
         // if in "mini" state and user
@@ -216,3 +217,8 @@ export default {
   }
 };
 </script>
+<style lang="sass">
+.my-menu-link
+  color: white
+  background: #67BBFF
+</style>

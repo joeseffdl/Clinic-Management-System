@@ -1,15 +1,17 @@
 <template>
   <q-layout view="hhh lpR fff">
     <q-header reveal elevated>
-      <q-toolbar class="glossy bg-primary">
-        <div class="text-h5">
-          <q-img
-            src="icons\logo_white.png"
-            alt="company logo"
-            style="width: 2em; height: 2em"
-          />
-          Best <span class="text-accent">Byte</span>
-        </div>
+      <q-toolbar id="toolbar" class="glossy bg-primary">
+        <q-item dense :to="{ name: 'Index' }">
+          <div class="text-h5 text-white">
+            <q-img
+              src="icons\logo_white.png"
+              alt="Best Byte Logo"
+              style="width: 2em; height: 2em"
+            />
+            Best <span class="text-accent">Byte</span>
+          </div>
+        </q-item>
         <q-space />
         <div class="gt-sm">
           <q-btn flat :to="{ name: 'Index' }" icon="mdi-home" label="Home" /> 
@@ -55,7 +57,7 @@
         v-model="drawerRight"
         side="right"           
         overlay
-        :width="200"
+        :width="300"
         elevated
         :mini ="$q.screen.md"
         :mini-width="0"
@@ -67,7 +69,7 @@
             <q-separator color="accent" />
             <q-btn flat :to="{ name: 'About' }" icon="mdi-information" class="fit" align="left" label="About" /> 
             <q-separator color="accent" />
-            <q-btn flat icon="mdi-account-group" class="fit" align="left" label="Meet the Team" /> 
+            <q-btn flat :to="{ name: 'BestByte' }" icon="mdi-account-group" class="fit" align="left" label="Meet the Team" /> 
             <q-separator color="accent" />
             <q-btn-dropdown flat icon="mdi-account-plus" class="fit" align="left" label="Sign In"> 
               <q-list>
@@ -130,3 +132,11 @@ export default {
   },
 }
 </script>
+<style>
+
+@media (min-width: 60em){
+#toolbar{
+    padding: 0 6em;
+  }
+}
+</style>
