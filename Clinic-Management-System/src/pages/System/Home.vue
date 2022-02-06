@@ -8,9 +8,9 @@
             class="q-px-md"
             card-class="bg-primary text-secondary"
             title="Appointments for Today"
-            :rows="allClients"
+            :rows="events"
             :columns="columns"
-            row-key="allClients.id"
+            row-key="events.id"
             :filter="dateNow"
             no-data-label="No Appointments for today"
             no-results-label="No Appointments for today"
@@ -123,17 +123,17 @@ const columns = [
     format: (val) => `${val}`,
   },
   {
-    name: "diagnosis",
-    label: "Diagnosis",
+    name: "time",
+    label: "Time",
     align: "left",
-    field: (row) => row.diagnosis,
+    field: (row) => row.time,
     format: (val) => `${val}`,
   },
   {
     name: "schedule",
     label: "Schedule",
     align: "left",
-    field: (row) => row.recentSchedule,
+    field: (row) => row.date,
     format: (val) => `${val}`,
   },
 ];
@@ -155,7 +155,7 @@ export default {
       };
   },
   computed: {
-    ...mapGetters("module_a", ["allClients"]),  
+    ...mapGetters("module_a", ["events"]),  
   },
   // methods: {
   //   ...mapActions("module_a", ["removeClient"]),
