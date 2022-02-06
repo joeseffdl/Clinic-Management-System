@@ -6,7 +6,7 @@
         <q-card style="width: 550px">
           <q-toolbar class="bg-accent glossy" style="min-width: 200px">
             <q-toolbar-title>
-              {{ event.title }}
+              {{ event.name }}
             </q-toolbar-title>
             <q-space />
             <q-btn-group flat>
@@ -31,7 +31,7 @@
           </q-toolbar>
           <q-card-section class="inset-shadow bg-secondary">
             <div>
-              {{ (event.time ? event.time + " - " : "") + event.details }}
+              {{ (event.time ? event.time + " - " : "") + event.procedure }}
             </div>
             <q-card-actions align="right">
               <q-btn v-close-popup flat label="OK" color="secondary" />
@@ -52,17 +52,19 @@
           <q-card-section class="bg-secondary">
             <q-form class="q-ma-sm" @submit="onEdit">
               <q-input
-                v-model="event.title"
+                v-model="event.name"
                 color="accent"
-                label="TITLE"
+                label="NAME"
                 clearable
               />
 
-              <q-input
-                v-model="event.details"
+              <q-select
+                v-model="event.procedure"
                 color="accent"
-                label="DETAILS"
-                clearable
+                label="Procedure"
+                :options="options.procedure"
+                autofocus
+                :rules="[(v) => !!v || 'Field is required!']"
               />
 
               <q-input
@@ -88,7 +90,7 @@
                 label="COLOR"
               />
               <q-card-actions align="right">
-                <q-btn flat label="OK" type="submit" color="secondary" />
+                <q-btn flat label="OK" type="submit" color="primary" />
               </q-card-actions>
             </q-form>
           </q-card-section>
@@ -107,21 +109,21 @@
           <q-card-section class="bg-primary">
             <q-form class="q-ma-sm" @submit="onSubmit">
               <q-input
-                v-model="eventsForm.title"
+                v-model="eventsForm.name"
                 color="accent"
-                label="TITLE"
+                label="NAME"
                 autofocus
                 :rules="[(v) => (v && v.length > 0) || 'Field cannot be empty']"
                 clearable
               />
 
-              <q-input
-                v-model="eventsForm.details"
+              <q-select
+                v-model="eventsForm.procedure"
                 color="accent"
-                label="DETAILS"
+                label="Procedure"
+                :options="options.procedure"
                 autofocus
-                :rules="[(v) => (v && v.length > 0) || 'Field cannot be empty']"
-                clearable
+                :rules="[(v) => !!v || 'Field is required!']"
               />
 
               <q-input
@@ -186,8 +188,8 @@
                     @click="showEvent(event)"
                   >
                     <div class="title q-calendar__ellipsis">
-                      {{ event.title }}
-                      <q-tooltip>{{ event.details }}</q-tooltip>
+                      {{ event.name }}
+                      <q-tooltip>{{ event.procedure }}</q-tooltip>
                     </div>
                   </div>
                 </template>
@@ -212,9 +214,11 @@ import {
 import "@quasar/quasar-ui-qcalendar/src/QCalendarVariables.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarTransitions.sass";
 import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
+import NavigationBar from "src/components/NavigationBar.vue";
 
 import { defineComponent } from "vue";
-import NavigationBar from "src/components/NavigationBar.vue";
+import { mapActions, mapGetters } from "vuex";
+
 
 const CURRENT_DAY = new Date();
 function getCurrentDay(day) {
@@ -254,6 +258,18 @@ export default defineComponent({
           "Grey",
           "Blue-Grey",
         ],
+        procedure: [
+          "Teeth Cleaning",
+          "Teeth Whitening",
+          "Extraction",
+          "Veneers",
+          "Fillings",
+          "Crowns",
+          "Root Canal",
+          "Braces/Invisalign",
+          "Bonding",
+          "Dentures",
+        ],
       },
       blue: {
           '--calendar-border': '#64b5f6 1px solid',
@@ -285,8 +301,7 @@ export default defineComponent({
           '--calendar-selected-color': '#027BE3',
           '--calendar-selected-color-dark': '#027BE3',
           '--calendar-selected-background': '#cce7ff',
-          '--calendar-selected-background-dark': '#cce7ff',
-          
+          '--calendar-selected-background-dark': '#cce7ff', 
         }
     };
   },
@@ -299,97 +314,17 @@ export default defineComponent({
       showEdit: false,
       nowDate: addToDate(parseTimestamp(today()), { day: 1 }).date,
       eventsForm: {
-        title: "",
-        details: "",
-        time: "",
+        name: "",
+        procedure: "",
+        time: "All Day",
         days: 1,
         bgcolor: "Red",
       },
-      events: [
-        {
-          id: 1,
-          title: "1st of the Month",
-          details:
-            "Everything is funny as long as it is happening to someone else",
-          date: getCurrentDay(1),
-          bgcolor: "orange",
-        },
-        {
-          id: 2,
-          title: "Sisters Birthday",
-          details: "Buy a nice present",
-          date: getCurrentDay(4),
-          bgcolor: "green",
-        },
-        {
-          id: 3,
-          title: "Meeting",
-          details: "Time to pitch my idea to the company",
-          date: getCurrentDay(10),
-          time: "10:00",
-          bgcolor: "red",
-        },
-        {
-          id: 4,
-          title: "Lunch",
-          details: "Company is paying!",
-          date: getCurrentDay(10),
-          time: "11:30",
-          bgcolor: "teal",
-        },
-        {
-          id: 5,
-          title: "Visit mom",
-          details: "Always a nice chat with mom",
-          date: getCurrentDay(20),
-          time: "17:00",
-          bgcolor: "grey",
-        },
-        {
-          id: 6,
-          title: "Conference",
-          details: "Teaching Javascript 101",
-          date: getCurrentDay(22),
-          time: "08:00",
-          bgcolor: "blue",
-        },
-        {
-          id: 7,
-          title: "Girlfriend",
-          details: "Meet GF for dinner at Swanky Restaurant",
-          date: getCurrentDay(22),
-          time: "19:00",
-          bgcolor: "teal",
-        },
-        {
-          id: 8,
-          title: "Rowing",
-          details: "Stay in shape!",
-          date: getCurrentDay(27),
-          bgcolor: "purple",
-          days: 2,
-        },
-        {
-          id: 9,
-          title: "Fishing",
-          details: "Time for some weekend R&R",
-          date: getCurrentDay(27),
-          bgcolor: "purple",
-          days: 2,
-        },
-        {
-          id: 10,
-          title: "Vacation",
-          details:
-            "Trails and hikes, going camping! Don't forget to bring bear spray!",
-          date: getCurrentDay(29),
-          bgcolor: "purple",
-          days: 10,
-        },
-      ],
     };
   },
   computed: {
+    ...mapGetters("module_a", ["events"]),
+
     eventsMap() {
       const map = {};
       if (this.events.length > 0) {
@@ -410,9 +345,14 @@ export default defineComponent({
         });
       }
       return map;
+      
     },
   },
   methods: {
+    // Vuex
+    ...mapActions("module_a", ["addSchedule", "removeSchedule", "updateSchedule"]),
+
+    // Badge
     badgeClasses(event, type) {
       return {
         [`text-white bg-${event.bgcolor}`]: true,
@@ -420,6 +360,7 @@ export default defineComponent({
       };
     },
 
+    // Calendar
     onToday() {
       this.$refs.calendar.moveToToday();
     },
@@ -439,14 +380,15 @@ export default defineComponent({
     showEvent(event) {
       this.event = event;
       this.displayEvent = true;
-      console.log(event);
+      console.log("showEvent clicked", event);
     },
     editEvent(event) {
-      this.event = event;
       this.showEdit = true;
+      console.log("Edit", event)
     },
     deleteEvent(event) {
-      this.events = this.events.filter((item) => item !== event);
+      this.events = this.removeSchedule(event);
+      // this.events = this.events.filter((item) => item !== event);
       if (this.events.includes(event)) {
         this.$q.notify({
           message: "Event not deleted due to an unknown error.",
@@ -458,36 +400,39 @@ export default defineComponent({
           color: "green",
         });
       }
+      console.log("Removed", event, "Events", this.events)
     },
     onSubmit() {
       this.addEvent = false;
-      const form = { ...this.eventsForm };
-      const data =
+      let dateNow = getCurrentDay(this.event.scope.timestamp.day)
+      let form = { ...this.eventsForm };
+      let data =
         form.days > 1
           ? {
               id: uid(),
-              title: form.title,
-              details: form.details,
-              bgcolor: form.bgcolor.toLowerCase(),
-              date: getCurrentDay(this.event.scope.timestamp.day),
+              name: form.name,
+              procedure: form.procedure,
               time: form.time,
+              date: dateNow,
               days: form.days,
+              bgcolor: form.bgcolor.toLowerCase(),
             }
           : {
               id: uid(),
-              title: form.title,
-              details: form.details,
-              bgcolor: form.bgcolor.toLowerCase(),
-              date: getCurrentDay(this.event.scope.timestamp.day),
+              name: form.name,
+              procedure: form.procedure,
               time: form.time,
+              date: dateNow,
+              bgcolor: form.bgcolor.toLowerCase(),
             };
-      this.events.push(data);
-      console.log("Data:", data);
+      this.addSchedule(data);
+      console.log("Events:", this.events);
     },
-    onEdit() {
+    onEdit(event) {
       this.showEdit = false;
-      (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
-        console.log("Data:", this.event);
+      // (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
+      this.updateSchedule(event);
+      console.log("Data:", this.event);
     },
   },
 });
