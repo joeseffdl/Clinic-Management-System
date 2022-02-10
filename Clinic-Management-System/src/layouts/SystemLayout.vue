@@ -97,7 +97,7 @@
       </div>
       <q-img
         class="absolute-top"
-        src="url"
+        src="https://cdn.quasar.dev/img/parallax2.jpg"
         style="height: 150px" 
       >
         <div class="absolute-bottom bg-transparent">
@@ -163,12 +163,11 @@
       </q-scroll-area>
       
       <q-img
-        class="absolute-top"
-        src="url"
-        style="height: 150px" 
+        class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px"
       >
+      
         <div class="absolute-center bg-transparent">
-          <q-avatar size="50px" class="">
+          <q-avatar >
             <img src="icons\logo_black.png" />
           </q-avatar>
         </div>

@@ -22,9 +22,9 @@
               <div class="row justify-center">
                 <h4>‘‘You’re never fully dressed without a smile’’</h4>         
               </div>
-              <div class="row justify-center">
+              <!-- <div class="row justify-center">
                 <h6> -Martin Charnin</h6>           
-              </div>
+              </div> -->
               <div class="row justify-center">
                 <q-btn 
                 color="accent"
@@ -132,7 +132,7 @@
           <div class="row absolute-full items-center">
             <div class="col section-col-1 text-white">
               <div class="row justify-center">
-                <h1 class="text-center"><span class="text-accent">Start</span> now <span class="text-accent">@</span> Best&nbsp;<span class="text-accent">Byte</span>!</h1>
+                <h1 class="text-center">Start now @ Best&nbsp;<span class="text-accent">Byte</span>!</h1>
               </div>
               <div class="row justify-center">
                 <q-btn 
@@ -180,6 +180,7 @@ section {
 
 h1 { 
   font-weight: bold;
+  line-height: 1.125
 }
 
 /* Section 1 */
@@ -188,7 +189,7 @@ h1 {
 }
 
 .section-col-1 > * {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 /* Section 2 */

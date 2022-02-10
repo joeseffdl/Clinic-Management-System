@@ -16,7 +16,7 @@
         <div class="gt-sm">
           <q-btn flat :to="{ name: 'Index' }" icon="mdi-home" label="Home" /> 
           <q-btn flat :to="{ name: 'About' }" icon="mdi-information" label="About" /> 
-          <q-btn flat :to="{ name: 'BestByte' }" icon="mdi-account-group" class="q-pr-md" label="Meet the Team" /> 
+          <!-- <q-btn flat :to="{ name: 'BestByte' }" icon="mdi-account-group" class="q-pr-md" label="Meet the Team" />  -->
           <q-btn-dropdown flat icon="mdi-account-plus" class="q-pr-md" label="Sign In"> 
             <q-list>
               <q-item v-close-popup clickable :to="{ name: 'Guest' }">
@@ -69,8 +69,8 @@
             <q-separator color="accent" />
             <q-btn flat :to="{ name: 'About' }" icon="mdi-information" class="fit" align="left" label="About" /> 
             <q-separator color="accent" />
-            <q-btn flat :to="{ name: 'BestByte' }" icon="mdi-account-group" class="fit" align="left" label="Meet the Team" /> 
-            <q-separator color="accent" />
+            <!-- <q-btn flat :to="{ name: 'BestByte' }" icon="mdi-account-group" class="fit" align="left" label="Meet the Team" /> 
+            <q-separator color="accent" /> -->
             <q-btn-dropdown flat icon="mdi-account-plus" class="fit" align="left" label="Sign In"> 
               <q-list>
                 <q-item v-close-popup clickable :to="{ name: 'Guest' }">

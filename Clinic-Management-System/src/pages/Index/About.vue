@@ -1,5 +1,7 @@
 <template>
   <q-page class="bg-secondary">
+    
+    <!-- Section 1 -->
     <section style="background: linear-gradient(#0E86D4,#0E86D4,#0E86D4,#DAF3FF)">
       <div class="row full-height justify-center">
         <div id="about-section" class="col self-center text-white text-center">
@@ -16,6 +18,7 @@
       </div>
     </section>
 
+    <!-- Section 2 -->
     <section id="about-section-2">
       <div class="column fit justify-center text-center">
         <div class="row justify-center">
@@ -38,6 +41,7 @@
       </div>
     </section>
 
+    <!-- Section 3 -->
     <section id="about-section-3-4" class="column" >
       <div class="row fit justify-end">  
         <div class="col-12 col-md-5 self-center">
@@ -63,6 +67,7 @@
       </div>
     </section>
 
+    <!-- Section 4 -->
     <section id="about-section-4">
       <div class="row reverse-wrap fit">
         <div class="col-12 col-md-6">
@@ -87,7 +92,8 @@
         </div>
       </div>
     </section>
-
+ 
+    <!-- Section 5 -->
     <section id="about-section-5" style="background: linear-gradient(#0E86D4,#DAF3FF,#DAF3FF,#0E86D4)">
       <div class="column fit justify-center text-center">
         <div class="row justify-center">
@@ -99,6 +105,83 @@
               Quisque pharetra dapibus bibendum. 
               Integer ullamcorper nisl id pellentesque laoreet.
             </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section id="about-section-6" class="row justify-center">
+      <div class="row items-center justify-center" style="width: 100%;">
+        <h3>
+          Meet the <span class="text-primary">Team</span>!
+        </h3>
+      </div>
+      <div class="col-12 col-sm-10 col-md-5">
+        <div class="about-section-6-div fit column items-center justify-center">
+          <div class="image row">
+            <q-avatar size="200px">
+              <img src="images\Rosero.jpg" fit="scale-down">
+            </q-avatar>
+          </div>
+          <div class="desc text-center">
+            <div class="row">
+              <h4 class="text-bold">
+                Rosero, Ann Catherine 
+              </h4>
+            </div> 
+            <p>Project Manager / Back-End Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-10 col-md-5">
+        <div class="about-section-6-div-2 fit column items-center justify-center">
+          <div class="image row">
+            <q-avatar size="200px">
+              <img src="images\De Leon.jpg" fit="scale-down">
+            </q-avatar>
+          </div>
+          <div class="desc text-center">
+            <div class="row">
+              <h4 class="text-bold">
+                De Leon, Joseph 
+              </h4>
+            </div> 
+            <p>Lead Front-End Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-10 col-md-5">
+        <div class="about-section-6-div fit column items-center justify-center">
+          <div class="image row">
+            <q-avatar size="200px">
+              <img src="images\Canarejo.jpg" fit="contain">
+            </q-avatar>
+          </div>
+          <div class="desc text-center">
+            <div class="row">
+              <h4 class="text-bold">
+                Cañarejo, Elijah
+              </h4>
+            </div> 
+            <p>Lead Back-End Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-10 col-md-5">
+        <div class="about-section-6-div-2 fit column items-center justify-center">
+          <div class="image row">
+            <q-avatar size="200px">
+              <img src="images\Guillermo.jpg" fit="scale-down">
+            </q-avatar>
+          </div>
+          <div class="desc text-center">
+            <div class="row">
+              <h4 class="text-bold">
+                Guillermo, Antoinette 
+              </h4>
+            </div> 
+            <p>Quality Assurance / Front-End Developer</p>
           </div>
         </div>
       </div>
@@ -315,4 +398,133 @@ section {
     padding: 1em 10em;
   }
 }
+
+/* Section 6 */
+.image {
+  filter: grayscale(1);
+}
+
+.image:hover {
+  filter: grayscale(0);
+}
+
+#about-section-6 {
+  height: 260vh;
+  
+}
+
+@media (min-width:37.5em){
+  .about-section-6-div {
+    display: grid;
+    grid-template: 
+    'image desc';
+    column-gap: 5em;
+  }
+
+  .about-section-6-div-2 {
+    display: grid;
+    grid-template: 
+    'desc image';
+    column-gap: 5em;
+  }
+
+  .image {
+    grid-area: image;
+  }
+
+  .desc {
+    grid-area: desc;
+  }
+
+  .about-section-6-div > .desc ,
+  .about-section-6-div-2 > .desc {
+    width: 20em;
+    
+  }
+}
+
+@media (min-width:64em){
+  #about-section-6 {
+  height: 120vh;  
+  }
+
+  .about-section-6-div {
+    display: grid;
+    grid-template: 
+    'image desc .';
+  }
+
+  .about-section-6-div-2 {
+    display: grid;
+    grid-template: 
+    '. image desc'; 
+  }
+}
+
+
+
+
+/* @media (min-width:37.5em){
+  #about-section-6 {
+  height: 150vh;  
+  }
+
+  .about-section-6-div {
+    display: grid;
+    grid-template: 
+    'image ... desc';
+    border: 1px solid red;
+  }
+
+  .about-section-6-div-2 {
+    display: grid;
+    border: 1px solid red;
+    grid-template: 
+    'desc ... image';
+  }
+
+  .image {
+    grid-area: image;
+
+  }
+
+  .desc {
+    grid-area: desc;
+  }
+
+  .about-section-6-div > * ,
+  .about-section-6-div-2 > * {
+    border: 1px solid blue;
+    width: 22.5em;
+    
+  }
+
+  
+
+  
+} */
+
+/* @media (min-width:64em){
+  .about-section-6-div {
+    display: grid;
+    grid-template: 
+    'image'
+    'desc';
+  }
+
+  .image {
+    grid-area: image;
+  }
+
+  .desc {
+    grid-area: desc;
+  }
+
+  .about-section-6-div > * > * {
+    border: 1px solid red;
+    height: 100%;
+    margin: 0 .15em;
+    white-space: nowrap;
+  }
+} */
 </style>
