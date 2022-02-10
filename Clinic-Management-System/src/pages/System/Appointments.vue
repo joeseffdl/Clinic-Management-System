@@ -430,7 +430,7 @@ export default defineComponent({
     },
     onEdit(event) {
       this.showEdit = false;
-      // (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
+      (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
       this.updateSchedule(event);
       console.log("Data:", this.event);
     },

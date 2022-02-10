@@ -34,5 +34,7 @@ export function updateSchedule (state, events){
         (i) => i.id == events.id);
     if (index != -1) {
         state.events[index] = events;
+        
+        console.log(events)
     }
 }
