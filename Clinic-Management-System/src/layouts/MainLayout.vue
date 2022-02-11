@@ -132,8 +132,8 @@ export default {
   },
 }
 </script>
-<style>
 
+<style>
 @media (min-width: 60em){
 #toolbar{
     padding: 0 6em;

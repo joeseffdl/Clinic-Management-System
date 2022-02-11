@@ -1,14 +1,13 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="row fullscreen text-center items-center q-pb-xl">
-      <div class="col-6 gt-md self-center">
+    <div class="row justify-center text-center items-center q-pb-xl">
+      <div class="col-5 gt-md self-center">
         <div class="col self-center text-h1" style="margin: 0 auto 0 auto">
           Health is Wealth
         </div>
       </div>
 
-      <div class="col-6 " style="width:750px;margin: 0 auto 0 auto;" >
-        
+      <div class="col-5 " style="width:750px;margin: 0 auto 0 auto;" >
         <q-form class="q-ma-xl q-pa-xl" @submit.prevent="submitForm" >
           <div class=" items-center text-h3 q-mb-lg" >Create your account</div>
 
@@ -187,11 +186,8 @@ export default defineComponent({
           } catch (err) {
             console.log(err);
           }
-
         }
-    
       }
-
-      }
-    });
+    }
+  });
 </script>
