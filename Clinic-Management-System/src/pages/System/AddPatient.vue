@@ -211,6 +211,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import axios from 'axios';
 
 export default {
   setup() {
@@ -248,16 +249,70 @@ export default {
         procedure: "",
         diagnosis: "",
       },
-    };
+
+      showDrId: [],
+    }
   },
 
+  async created(){
+    this.getDoctor();
+  },
+
+
   methods: {
-    ...mapActions("module_a", ["addClient"]),
-    submitForm() {
-      if (!this.Clients.hasError) {
-        this.submitClient();
+
+    async addPatient(){
+        try{
+            await axios.post("http://localhost:5000/patientProfile", {
+                name: this.Clients.name,
+                client_since: this.Clients.clientSince,
+                sex: this.Clients.sex,
+                age: this.Clients.age,
+                occupation: this.Clients.occupation,
+                mobile_no: this.Clients.mobileNo,
+                tel_no: this.Clients.telNo,
+                address: this.Clients.address,
+                recent_schedule: this.Clients.recentSchedule,
+                procedure: this.Clients.procedure,
+                diagnosis: this.Clients.diagnosis,
+                doctor_id: this.showDrId,
+            });
+
+            console.log("New Patient Successfully Added!")
+
+        }catch (err) {
+            console.log(err);
+          }
+     },
+
+
+      async getDoctor(){
+       try {
+        const response = await axios.get("http://localhost:5000/login");
+        this.showDrId = response.data[0].doctor_id;
+  
+        if(this.showDrId == undefined ){
+          console.log('Unauthorized User!')
+        }
+      } 
+      catch (err) {
+        console.log(err);
       }
     },
+
+
+     async submitForm(){
+       this.addPatient();
+    
+
+
+        if (!this.Clients.hasError) {
+        this.submitClient();
+      }
+     },
+
+    ...mapActions("module_a", ["addClient"]),
+
     submitClient() {
       this.addClient(this.Clients);
     },

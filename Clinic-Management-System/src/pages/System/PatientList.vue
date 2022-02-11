@@ -202,6 +202,7 @@
 <script>
 import { ref } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import axios from 'axios';
 
 const columns = [
   {
@@ -278,6 +279,17 @@ export default {
       },
     };
   },
+
+  data() {
+    return{
+      Clients: {
+        patients: [],
+      }
+    }
+  },
+
+
+
   computed: {
     ...mapGetters("module_a", ["allClients"]),
   },

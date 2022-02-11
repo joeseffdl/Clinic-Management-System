@@ -11,7 +11,7 @@ urlpatterns = [
    # path('post_test/', postListTest.as_view(), name = 'Post test'), 
     path('doctorprofile/', ListDoctorProfile.as_view(), name = 'Doctor Profile List'),
     path('patientprofile/', ListPatientProfile.as_view(), name = 'Patient Profile List'),
-    path('quotes/', ListQuotes.as_view(), name = 'Quotes'), #baka d need
+    path('quotes/', ListQuotes.as_view(), name = 'Quotes'), 
     path('login/', ListLogin.as_view(), name = 'Login Records'),
 
 
