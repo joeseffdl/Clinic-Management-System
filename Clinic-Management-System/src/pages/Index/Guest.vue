@@ -7,15 +7,16 @@
       >
         <div class="text-h1 text-center q-pb-md">Welcome Back!</div>
 
-      <q-form style="border: 1px solid red" @submit.prevent="login">
-        <q-input v-model="formData.email" type="email" standout="bg-accent" bottom-slots label="Email"  :dense="dense" clearable >
+
+      <q-form class="q-ma-xl q-pa-xl" @submit.prevent="login" >
+        <q-input v-model="formData.email" type="email"  bottom-slots label="Email"  :dense="dense" clearable :rules="[v => !!v || 'Field is required!']"  >
     
           <template #prepend>
             <q-icon round dense flat name="mdi-account" />
           </template>
         </q-input>
 
-        <q-input v-model="formData.password" standout="bg-accent" bottom-slots label="Password"  :type="isPwd ? 'password' : 'text'"  clearable :dense="dense">
+        <q-input v-model="formData.password"  bottom-slots label="Password"  :type="isPwd ? 'password' : 'text'"  clearable :dense="dense" :rules="[v => !!v || 'Field is required!']" >
           <template #append>
             <q-icon
             :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
@@ -49,6 +50,7 @@
 </template>
 <script>
 
+
 import { ref } from 'vue'
 import axios from 'axios'
 
@@ -70,89 +72,58 @@ export default {
       isPwd: ref(true),
       dense: ref(false),
 
-
-      showEmail: [],
       showPass: [],
+      showId:[],
      
     }
-
   },
 
-  /*async created(){
-    await this.getEmail();
-    await this.getPass();
-  },*/
+   methods: {
+
+     async addLogin(){
+        try{
+            await axios.post("http://localhost:5000/login", {
+                doctor_id: this.showId,
+                email : this.formData.email,
+                userType: 1
+            });
+
+        }catch (err) {
+            console.log(err);
+          }
+        
+     },
 
 
-  
+    async show_doctorProfile() {
+      try {
+        const response = await axios.get(`http://localhost:5000/login/` + this.formData.email);
+        this.showPass = response.data.password;
+        this.showId = response.data.id;
+          if(this.showPass == this.formData.password){
+            console.log("Login Successfully")
+            this.$router.push("/home");
+            this.addLogin()
+          }
+          else if (this.showPass == undefined){
+            console.log("Invalid email")
+          }
+          else{
+            console.log("Invalid password")
+          }
+      } 
+      catch (err) {
+        console.log(err);
+      }
+    },
 
-  methods: {
-  
-
-    /*async getEmail(){
-      await axios.getEmail(`http://127.0.0.1:8000/api/doctorprofile/${this.formData.email}`);
-      this.showEmail = response.json();
-      },*/
-
-    
-    /*async getEmail(){
-      var response = await fetch('http://127.0.0.1:8000/api/doctorprofile/');
-      this.showEmail = await response.json();
-      },
-
-    async getPass(){
-      var response = await fetch('http://127.0.0.1:8000/api/doctorprofile/' + this.formData.password);
-      this.showPass = await response.json();
-      },*/
-
-      
-    /*async getPass(){
-      await axios.getPass(`http://127.0.0.1:8000/api/doctorprofile/${this.formData.password}`);
-      this.showPass = response.json();
-      },*/
   
     async login() {
 
-
-      await axios.post('http://127.0.0.1:8000/api/login/', {
-             email: this.formData.email,
-             password: this.formData.password,
-          })
-          .then(
-            resp => console.log(resp,"Login successfully"),
-            
-            
-            )
-          .catch(err => console.log(err))
-
-       /*if(this.formData.email != "" && this.formData.password != "") {
-        if(this.formData.email == this.showEmail && this.formData.password == this.showPass) {
-            console.log("Login Successfully!");
-       
-        } else {
-            console.log(this.showEmail,this.formData.email,"The email and / or password is incorrect");
-        }
-      } else {
-        console.log("A email and password must be present");*/
-
+      this.show_doctorProfile();
     },
 
-    /*checkLogin(){
-      
-      if(this.formData.email != "" && this.formData.password != "") {
-        if(this.formData.email == this.getEmail && this.formData.password == this.getPass) {
-            console.log("Login Successfully!");
-            this.$router.push({ name: "system" });
-        
-        } else {
-            console.log("The email and / or password is incorrect");
-        }
-      } else {
-        console.log("A email and password must be present");
-      }
-      
-    }*/
-
+    
     onSubmit() {
         {
           $q.notify({
@@ -161,7 +132,7 @@ export default {
             icon: "mdi-account",
             message: "Welcome!",
           });
-          this.$router.push("/system");
+          this.$router.push("/home");
         }
       },
   

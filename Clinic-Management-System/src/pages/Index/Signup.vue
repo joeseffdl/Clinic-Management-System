@@ -145,7 +145,6 @@ export default defineComponent({
         password_confirm:''
         },
 
-        doctorprofile : []
     }
 
   },
@@ -155,8 +154,7 @@ export default defineComponent({
     Confirm() {
       return [
         (v) => !!v || "Field is required!",
-
-        /*(v) => v == this.$refs.FieldPassword.value || "Password do not match!"*/
+        //(v) => v == this.$refs.FieldPassword.value || "Password do not match!"
       ]
 
     },
@@ -166,52 +164,34 @@ export default defineComponent({
   },
 
 
-  async created(){
-    await this.getData();
-  },
-
    methods: {
-
-     async getData(){
-      var response = await fetch('http://127.0.0.1:8000/api/doctorprofile/');
-      this.doctorprofile = await response.json();
-      },
-
-
+ 
       async submitForm(){
 
-        await axios.post('http://127.0.0.1:8000/api/doctorprofile/',this.formData)
-        .then(
-          res => {
-            console.log(res)
+        //Check password and password_confirm 
+        if (this.formData.password != this.formData.password_confirm){
+          console.log("Passwords do not match. Try again!")
+        }
+
+        else{
+          try{
+            await axios.post("http://localhost:5000/doctorProfile", {
+              firstName: this.formData.firstName,
+              lastName: this.formData.lastName,
+              email: this.formData.email,
+              password: this.formData.password
+            });
+            this.$router.push("/guest");
+            console.log("Data Added Successfully!")
+            
+          } catch (err) {
+            console.log(err);
           }
 
-        ).catch(
-          err => {
-            console.log(err)
-          }
-        )
-
-
+        }
+    
       }
 
-
-     
-     /*async submitForm() 
-      {
-          await this.getData();
-
-          await fetch('http://127.0.0.1:8000/api/doctorprofile/', {
-              method: 'post',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(this.formData)
-          });
-
-          console.log("Submit form was clicked!");
-
-        }*/
       }
     });
 </script>
