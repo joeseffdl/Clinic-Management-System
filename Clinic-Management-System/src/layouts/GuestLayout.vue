@@ -34,7 +34,7 @@
   </q-layout>
 </template>
 
-<style>
+<style scoped>
 #toolbar {
   padding: 1.75em 1em;
 }
