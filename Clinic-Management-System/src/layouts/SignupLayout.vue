@@ -1,13 +1,24 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header reveal elevated>
-      <q-toolbar class="glossy bg-primary">
-      
-        <q-toolbar-title style="padding: 0.25em">
-            Sign Up
-        </q-toolbar-title>
-        <div class="text-h5"> Best <span class="text-accent ">Byte</span> <q-img src="icons\logo_white.png" alt="company logo"
-          style="width:2em;height:2em;" /></div>
+  <q-layout view="hHh LpR fFf">
+    <q-header >
+      <q-toolbar id="toolbar" class="bg-secondary">
+        <q-item dense :to="{ name: 'Index' }">
+          <div class="text-h5 text-white">
+            <q-img
+              src="icons\logo_white.png"
+              alt="Best Byte Logo"
+              style="width: 2em; height: 2em"
+            />
+          </div>
+        </q-item>
+
+        <q-space />
+        
+        <q-item clickable :to="{ name: 'Guest' }">
+          <q-item-section>
+            <q-item-label class="text-black">LOG IN</q-item-label>
+          </q-item-section>
+        </q-item>
 
       </q-toolbar>
     </q-header>
@@ -15,14 +26,16 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer reveal elevated >
-        <q-toolbar class="glossy bg-primary">
+    <q-footer>
+        <q-toolbar class="bg-secondary text-black">
           <q-space/>&copy; Snow Squirrel 2021<q-space/>
         </q-toolbar>
       </q-footer>
   </q-layout>
 </template>
 
-<script>
-
-</script>
+<style scoped>
+#toolbar {
+  padding: 1.75em 1em;
+}
+</style>
