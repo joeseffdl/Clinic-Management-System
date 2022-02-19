@@ -10,7 +10,7 @@
             title="Appointments for Today"
             :rows="events"
             :columns="columns"
-            row-key="events.sched_id"
+            row-key="events.id"
             :filter="dateNow"
             no-data-label="No Appointments for today"
             no-results-label="No Appointments for today"
@@ -104,37 +104,36 @@
 
 <script>
 import { ref } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import { date } from 'quasar'
-import axios from 'axios';
-
 
 const columns = [
   {
     name: "name",
     label: "Name",
     align: "left",
-    field: (row) => row.sched_title,
+    field: (row) => row.name,
     format: (val) => `${val}`,
   },
   {
     name: "procedure",
     label: "Procedure",
     align: "left",
-    field: (row) => row.sched_detail,
+    field: (row) => row.procedure,
     format: (val) => `${val}`,
   },
   {
     name: "time",
     label: "Time",
     align: "left",
-    field: (row) => row.sched_time,
+    field: (row) => row.time,
     format: (val) => `${val}`,
   },
   {
     name: "schedule",
     label: "Schedule",
     align: "left",
-    field: (row) => row.sched_date,
+    field: (row) => row.date,
     format: (val) => `${val}`,
   },
 ];
@@ -155,71 +154,30 @@ export default {
         time: ref("01:50"),
       };
   },
-
-
-  data() {
-    return{
-
-      events: []
-
-    }
+  computed: {
+    ...mapGetters("module_a", ["events"]),  
   },
-
-
-  async created(){
-    this.getAppointments_Data();
-  },
-
-
-  methods: {
-
-    //Show Appointments
-      async getAppointments_Data(){
-        try {
-          const response = await axios.get("http://localhost:5000/appointments");
-          this.events = response.data;
+  // methods: {
+  //   ...mapActions("module_a", ["removeClient"]),
+  //   remove(props) {
+  //     this.$q
+  //       .dialog({
+  //         title: "Confirm",
+  //         message: "Are you sure to Delete this event?",
+  //         ok: {
+  //           push: true,
+  //         },
+  //         cancel: {
+  //           color: "negative",
+  //         },
+  //         persistent: true,
+  //       })
+  //       .onOk(() => {
+  //         this.removeClient(props);
+  //       });
+  //   },
     
-          if(this.events == undefined ){
-            console.log('No Records Found')
-          }
-
-        } 
-        catch (err) {
-          console.log(err);
-        }
-      },
-
- 
-  }
-
-
-
-
-
-
-
-  /*
-  methods: {
-   ...mapActions("module_a", ["removeClient"]),
-    remove(props) {
-      this.$q
-        .dialog({
-          title: "Confirm",
-          message: "Are you sure to Delete this event?",
-          ok: {
-          push: true,
-          },
-          cancel: {
-          color: "negative",
-          },
-          persistent: true,
-        })
-         .onOk(() => {
-           this.removeClient(props);
-         });
-     },
-    
-  }*/
+  // }
 };
 </script>
 

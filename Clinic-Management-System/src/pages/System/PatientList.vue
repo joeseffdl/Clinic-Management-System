@@ -3,12 +3,12 @@
     <div class="q-pa-xl">
       <div class="fit">
         <q-table
-          :rows= "patientList"
+          :rows="allClients"
           :columns="columns"
           :filter="filter"
           no-data-label="I didn't find anything for you"
           no-results-label="The filter didn't uncover any results"
-          row-key="patientList.patient_id"
+          row-key="allClients.id"
           card-class="bg-accent text-primary"
           bordered 
         >
@@ -101,12 +101,12 @@
               ></q-card-section
             >
             <div
-              v-for="(item, patient_id) in currentItem"
-              :key="patient_id"
+              v-for="(item, id) in currentItem"
+              :key="id"
               class="q-my-md q-mx-lg"
               style="overflow: hidden;" 
             >
-              <span class="text-bold text-uppercase">{{ patient_id }}:</span>&nbsp;<span
+              <span class="text-bold text-uppercase">{{ id }}:</span>&nbsp;<span
                 >{{ item }}
               </span>
             </div>
@@ -136,11 +136,11 @@
             >
             <q-form class="q-my-md q-mx-xl">
               <span class="text-bold text-uppercase"
-                >ID: {{ currentItemData.patient_id }}</span
+                >ID: {{ currentItemData.id }}</span
               >
-              <q-input v-model="currentItemData.patient_name" label="NAME" />
+              <q-input v-model="currentItemData.name" label="NAME" />
               <q-input
-                v-model="currentItemData.client_since"
+                v-model="currentItemData.clientSince"
                 type="date"
                 label="CLIENT SINCE"
               />
@@ -159,25 +159,25 @@
                 label="OCCUPATION"
               />
               <q-input
-                v-model="currentItemData.mobile_no"
+                v-model="currentItemData.mobileNo"
                 mask="(##) - ### - ### - ####"
                 unmasked-value
                 label="MOBILE NO"
               />
               <q-input
-                v-model="currentItemData.tel_no"
+                v-model="currentItemData.telNo"
                 mask="### - ####"
                 unmasked-value
                 label="TEL NO"
               />
               <q-input v-model="currentItemData.address" label="ADDRESS" />
               <q-input
-                v-model="currentItemData.recent_schedule"
+                v-model="currentItemData.recentSchedule"
                 type="date"
                 label="RECENT SCHEDULE"
               />
               <q-select
-                v-model="currentItemData.patient_procedure"
+                v-model="currentItemData.procedure"
                 :options="options.procedure"
                 label="PROCEDURE"
               />
@@ -191,7 +191,7 @@
             type="submit"
             flat
             label="UPDATE"
-            @click="updatePatient_Data"
+            @click="updateItem"
           />
         </q-card-actions>
       </q-card>
@@ -201,6 +201,7 @@
 
 <script>
 import { ref } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import axios from 'axios';
 
 const columns = [
@@ -209,7 +210,7 @@ const columns = [
     required: true,
     label: "Name",
     align: "left",
-    field: (row) => row.patient_name,
+    field: (row) => row.name,
     format: (val) => `${val}`,
     sortable: true,
     headerClasses: "bg-primary text-secondary",
@@ -233,7 +234,7 @@ const columns = [
     required: true,
     label: "Procedure",
     align: "left",
-    field: (row) => row.patient_procedure,
+    field: (row) => row.procedure,
     format: (val) => `${val}`,
     sortable: true,
     headerClasses: "bg-primary text-secondary",
@@ -281,93 +282,24 @@ export default {
 
   data() {
     return{
-
-      patientList: [],
-
+      Clients: {
+        patients: [],
+      }
     }
   },
 
-  created(){
-    this.show_PatientProfile();
+
+
+  computed: {
+    ...mapGetters("module_a", ["allClients"]),
   },
-
   methods: {
-
-    //View PatientList
-    async show_PatientProfile() {
-      try {
-        const response = await axios.get("http://localhost:5000/patientProfile");
-        this.patientList = response.data;
-
-        if(this.patientList == [] ){
-          console.log('No Records Found')
-        }
-        else if (this.patientList == undefined){
-          console.log('Error')
-        }
-
-      } 
-      catch (err) {
-        console.log(err);
-      }
-    },
-
-    view(row) {
-      this.currentItem = row;
-      this.viewToggle = true;
-    },
-
-
-    //Update Patient Record in patientlist
-    async updatePatient_Data() {
-      try {
-        await axios.put(`http://localhost:5000/patientProfile/`+ this.currentItemData.patient_id,
-          {
-                patient_name: this.currentItemData.patient_name,
-                client_since: this.currentItemData.client_since,
-                sex: this.currentItemData.sex,
-                age: this.currentItemData.age,
-                occupation: this.currentItemData.occupation,
-                mobile_no: this.currentItemData.mobile_no,
-                tel_no: this.currentItemData.tel_no,
-                address: this.currentItemData.address,
-                recent_schedule: this.currentItemData.recent_schedule,
-                patient_procedure: this.currentItemData.patient_procedure,
-                diagnosis: this.currentItemData.diagnosis
-          }
-        );
-        console.log("Updated Successfully!")
-        window.location.reload();
-      } 
-      catch (err) {
-        console.log(err);
-      }
-    },
-
-    update(props) {
-      this.currentItemData = { ...props };
-      this.updateToggle = true;
-    },
-
-
-    //Delete Patient Record
-    async deletePatient_Data() {
-      try {
-        await axios.delete(`http://localhost:5000/patientProfile/` + this.currentItemData.patient_id);
-        console.log('Deleted Successfully!')
-        window.location.reload();
-      } 
-      catch (err) {
-        console.log(err);
-      }
-    },
-
+    ...mapActions("module_a", ["removeClient", "updateClient"]),
     remove(props) {
-      this.currentItemData = { ...props };
       this.$q
         .dialog({
           title: "Confirm",
-          message: "Are you sure to Delete this patient?",
+          message: "Are you sure to Delete this user?",
           ok: {
             push: true,
           },
@@ -377,14 +309,20 @@ export default {
           persistent: true,
         })
         .onOk(() => {
-          this.deletePatient_Data();
+          this.removeClient(props);
         });
     },
-    
-
-  }
-
-
+    view(row) {
+      this.currentItem = row;
+      this.viewToggle = true;
+    },
+    update(props) {
+      this.currentItemData = { ...props };
+      this.updateToggle = true;
+    },
+    updateItem() {
+      this.updateClient(this.currentItemData);
+    },
+  },
 };
-
 </script>
