@@ -37,63 +37,38 @@
           </q-table>
         </div>
         <div class="col-2 gt-md">
-          <div class="row flex flex-center q-my-md">
-            <div class="text-h6">Time</div>
-            <q-card class="flex flex-center" rounded>
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
-
-              <q-input v-model="time" filled mask="time" :rules="['time']">
-                <template #append>
-                  <q-icon name="mdi-clock-outline">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-time v-model="time" color="primary">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="secondary"
-                            flat
-                          />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
+          <div class="row column flex flex-center q-mb-xl">
+            <div class="col text-h4 text-center text-bold q-py-sm">Time</div>
+            <q-card class="col flex flex-center q-ma-md" style="margin-top: 0px;" rounded>
+               <div id="clock">
+                 <div class="clockbox">{{time}}</div>
+               </div>
             </q-card>
           </div>
 
-          <div class="row flex flex-center q-my-xl">
-            <div class="text-h6 ">Weather</div>
-            <q-card class="flex flex-center">
-              <img src="https://cdn.quasar.dev/img/mountains.jpg" />
 
-              <q-input v-model="time" filled mask="time" :rules="['time']">
-                <template #append>
-                  <q-icon name="mdi-clock-outline">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-time v-model="time" color="primary">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="secondary"
-                            flat
-                          />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
+          <div class="row flex flex-center q-my-xl">
+            <div class="text-h4 text-bold q-py-sm">Weather</div>
+            <q-card class="flex flex-center">
+              <div id="weather" :class="typeof weather != 'undefined' && weathertemp > cool ? 'warm' : ''">
+                <main>
+                  <div class="search-box">
+                    <input v-model="query" type="text" class="search-bar" placeholder="Enter location..." @keypress="fetchWeather"/>
+                  </div>
+
+                  <div class="weather-wrap">
+                    <div class="location-box">
+                      <div class="location">{{weathercity}} {{weathercountry}}</div>
+                      <div class="date">{{ dateBuilder() }}</div>
+                    </div>
+
+                    <div class="weather-box">
+                      <div class="temp">{{Math.round(weathertemp)}}°C</div>
+                      <div class="weather">{{weather}}</div>
+                    </div>
+                  </div>
+                </main>
+              </div>    
             </q-card>
           </div>
         </div>
@@ -151,11 +126,42 @@ export default {
         dateNow: formattedString,
         rows,
         columns,
-        time: ref("01:50"),
       };
   },
+
+ data () {
+    return {
+      api_key: 'f4e9d4ec221c78509ccaf1ee2ac4967d',
+      url_base: 'https://api.openweathermap.org/data/2.5/',
+      query: '',
+      weathertemp: Number( ),
+      weathercity:'',
+      weathercountry: '',
+      weather:'',
+      cool: Number(27),
+      interval: null,
+      time: null,
+    }
+  },
+
   computed: {
-    ...mapGetters("module_a", ["events"]),  
+    ...mapGetters("module_a", ["events"]),
+  },
+
+  beforeUnmount() {
+    // prevent memory leak
+    clearInterval(this.interval)
+  },
+  
+  created() {
+    // update the time every second
+    this.interval = setInterval(() => {
+      this.time = Intl.DateTimeFormat(navigator.language, {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      }).format()
+    }, 1000)
   },
   // methods: {
   //   ...mapActions("module_a", ["removeClient"]),
@@ -178,6 +184,147 @@ export default {
   //   },
     
   // }
-};
+  methods: {
+    fetchWeather (e) {
+      if (e.key == "Enter") {
+        fetch(`${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}`)
+          .then(res => {
+            return res.json();
+          }).then(this.setResults);
+      }
+    },
+
+    setResults (results) {
+      console.log(results);
+      this.weathercity = results.name;
+      this.weathercountry= results.sys.country;
+      this.weathertemp = results.main.temp;
+      this.weather = results.weather[0].description;
+    },
+
+    dateBuilder () {
+      let d = new Date();
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let day = days[d.getDay()];
+      let date = d.getDate();
+      let month = months[d.getMonth()];
+      let year = d.getFullYear();
+      return `${day}, ${date} ${month} ${year}`;
+    },
+
+ }
+}
 </script>
 
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+}
+
+#weather {
+  background-color: #0E86D4;
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4s;
+}
+
+#weather.warm {
+  background-color: #FC8171;
+}
+
+.search-box {
+  width: 100%;
+  margin-bottom: 25px;
+  padding-top: 8px;
+}
+
+.search-box .search-bar {
+  display: block;
+  width: 85%;
+  padding: 15px;
+  margin: 15px auto;
+  
+  color: black;
+  font-size: 20px;
+  appearance: none;
+  border:none;
+  outline: none;
+  background: none;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  background-color: #D4F1F4;
+  border-radius: 0px 16px 0px 16px;
+  transition: 0.4s;
+}
+
+.search-box .search-bar:focus {
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+  background-color: #FFFF;
+  border-radius: 16px 0px 16px 0px;
+}
+
+.location-box .location {
+  color: #FFFF;
+  padding: 5px 20px;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.location-box .date {
+  color: #FFFF;
+  padding: 5px 20px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.weather-box {
+  text-align: center;
+  padding: 0px 8px 37px 8px;
+
+}
+
+.weather-box .temp {
+  display: inline-block;
+  padding: 3px 15px;
+  color: #05445E;
+  font-size: 65px;
+  font-weight: 900;
+  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  background-color: #D4F1F4;
+  border-radius: 16px;
+  margin: 30px 0px;
+  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+.weather-box .weather {
+  color: #FFFF;
+  font-size: 30px;
+  font-weight: 700;
+  padding: 0px 10px 0px 10px;
+}
+
+#clock{
+  background-color: #0E86D4; 
+  padding: 15px 15px 15px 15px;
+  border-radius: 5px;
+}
+
+.clockbox{
+  background-color:#D4F1F4;
+  color: #05445E; 
+  font-size: 30px;
+  font-weight: 600; 
+  padding: 0px 10px 0px 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+</style>
