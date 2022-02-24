@@ -1,116 +1,176 @@
 <template>
   <q-page class="bg-secondary">
-    <div class="q-pa-xl window-height row">
-      <div class="col-4 q-mx-auto gt-md">
-        <div class="row fit q-pt-xl justify-center" >
-          
-          <div class="q-px-md text-h2 text-center" >
-            Profile Information
-            <div class="text-h5 text-center q-my-lg">
+    <div class="column q-pa-xl window-height row">
+      <div class="col-auto">
+        <div id="profile-header">
+          <div class="q-px-md">
+              Profile <span style="color: black">Information</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto row">
+        <div class="col-auto q-px-md gt-md">
+          <div id="left-card" class="column row fit items-center">
+            <div class="row-auto text-center profile-img">
               Profile Picture
             </div>
-            <q-uploader
-            class="q-mx-auto "
-            label="Upload files"
-            color="primary"
-            style="max-width: 100%;height:300px;"
-            url='http://localhost:5000/profilePic'
-            @added = "selectFile"
-          />
+            <div class="row-auto uploader">
+              <q-uploader
+              url="http://localhost:8080/upload"
+              class="q-mx-auto"
+              label="Upload files"
+              color="accent"
+              style="max-width: 100%;height:300px; box-shadow: 4px 5px rgba(0, 0, 0, 0.25);"
+              @added = "selectFile"
+            />
+          </div>
+          <div class="row-auto q-pa-md text-center carousel">
+            <div>
+              <q-carousel
+                v-model="slide"
+                vertical
+                transition-prev="slide-down"
+                transition-next="slide-up"
+                swipeable
+                animated
+                :control-type="controlType"
+                control-color="white"
+                padding
+                arrows
+                height="230px"
+                class="bg-primary text-white rounded-borders"
+                style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border: 1px solid white; border-radius: 10px; border: 2px solid #0E86D4;"
+              >
+                <q-carousel-slide name="style" class="column no-wrap flex-center">
+                  <q-icon name="mdi-tooth-outline" size="25px" />
+                  <div class="q-mt-md text-center" style="font-size: 16px; font-weight: 600; margin-bottom: 18px;">
+                    “Every tooth in a man's head is more valuable than a diamond.” <br><span style="color: black">- Miguel de Cervantes</span>
+                  </div>
+                </q-carousel-slide>
+                <q-carousel-slide name="tv" class="column no-wrap flex-center">
+                  <q-icon name="mdi-tooth-outline" size="25px" />
+                   <div class="q-mt-md text-center" style="font-size: 16px; font-weight: 600; margin-bottom: 18px;">
+                     “A smile remains the most inexpensive gift...” <br><span style="color: black">- Og Mandino</span>
+                  </div>
+                </q-carousel-slide>
+                <q-carousel-slide name="layers" class="column no-wrap flex-center">
+                  <q-icon name="mdi-tooth-outline" size="25px" />
+                  <div class="q-mt-md text-center" style="font-size: 16px; font-weight: 600; margin-bottom: 18px;">
+                    “No one can take our smiles away when dental decay is kept miles away.” <br><span style="color: black">- Prof. Dr. Ninad Moon</span>
+                  </div>
+                </q-carousel-slide>
+                <q-carousel-slide name="map" class="column no-wrap flex-center">
+                  <q-icon name="mdi-tooth-outline" size="25px"/>
+                  <div class="q-mt-md text-center" style="font-size: 16px; font-weight: 600; margin-bottom: 18px;">
+                    “Happiness is your dentist telling you it won’t hurt and then having him catch his hand in the drill.” <br><span style="color: black">- Johnny Carson</span>
+                  </div>
+                </q-carousel-slide>
+              </q-carousel>
+            </div>
           </div>
         </div> 
       </div>
-      <div class="col-6 q-mx-auto">
-        <div class="row fit items-center justify-center">
-          <q-form style="width: 75em;" >
-            <div>
-              <div class="q-py-lg"> 
-                <q-input
-                  v-model="firstName"
-                  type="text"
-                  standout="bg-primary text-white"
-                  label="First Name"
-                  clearable
-                  clear-icon="mdi-close-circle-outline" 
-                />
+      <div class="col q-mx-auto">
+          <div id="right-card" class="row fit items-center justify-center">
+            <q-form id="q-form" style="width: 75em;">
+              <div>
+                <div class="q-py-lg">
+                  <q-input
+                    v-model="firstName"
+                    type="text"
+                    standout="bg-secondary text-black"
+                    label="First Name"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                  />
+                </div>
+                <div class="q-pb-lg">
+                  <q-input
+                    v-model="lastName"
+                    type="text"
+                    standout="bg-secondary text-black"
+                    label="Last Name"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                  />
+                </div>
+                <div class="q-pb-lg">
+                  <q-input
+                    v-model="email"
+                    type="text"
+                    standout="bg-secondary text-black"
+                    label="Email Address"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                  />
+                </div>
+                <div class="q-pb-lg">
+                  <q-input
+                    v-model="contactNo"
+                    type="text"
+                    standout="bg-secondary text-black"
+                    label="Contact Number"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                  />
+                </div>
+                <div class="q-pb-lg">
+                  <q-input
+                    v-model="password"
+                    standout="bg-secondary text-black"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                    label="Password"
+                    :type="isPwd ? 'password' : 'text'"
+                  >
+                    <template #append>
+                      <q-icon
+                        :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+                <div class="q-pb-lg">
+                  <q-input
+                    v-model="confirmPassword"
+                    standout="bg-secondary text-black"
+                    style="box-shadow: 4px 5px rgba(0, 0, 0, 0.25); border-radius: 5px;"
+                    clearable
+                    clear-icon="mdi-close-circle-outline"
+                    label="Confirm Password"
+                    :type="isPwd ? 'password' : 'text'"
+                  >
+                    <template #append>
+                      <q-icon
+                        :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+                <div class="row justify-center q-mt-lg">
+                  <q-btn
+                    push
+                    glossy
+                    color="primary"
+                    text-color="white"
+                    label="Save"
+                    size="lg"
+                    class="q-px-lg"
+                    @click="saveChanges"
+                  />
+                </div>
               </div>
-              <div class="q-pb-lg">
-                <q-input
-                  v-model="lastName"
-                  type="text"
-                  standout="bg-primary text-white"
-                  label="Last Name"
-                  clearable
-                  clear-icon="mdi-close-circle-outline"
-                />
-              </div>
-              <div class="q-pb-lg">
-                <q-input
-                  v-model="email"
-                  standout="bg-primary text-white"
-                  label="Email Address"
-                  clearable
-                  clear-icon="mdi-close-circle-outline"
-                />
-              </div>
-              <div class="q-pb-lg">
-                <q-input
-                  v-model="contactNo"
-                  type="text"
-                  standout="bg-primary text-white"
-                  label="Contact Number"
-                  clearable
-                  clear-icon="mdi-close-circle-outline"
-                />
-              </div>
-              <div class="q-pb-lg">
-                <q-input
-                  v-model="password"
-                  standout="bg-primary text-white"
-                  clearable
-                  clear-icon="mdi-close-circle-outline"
-                  label="Password"
-                  :type="isPwd ? 'password' : 'text'"
-                >
-                  <template #append>
-                    <q-icon
-                      :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-              </div>
-              <div class="q-pb-lg">
-                <q-input
-                  v-model="confirmPassword"
-                  standout="bg-primary text-white"
-                  clearable
-                  clear-icon="mdi-close-circle-outline"
-                  label="Confirm Password"
-                  :type="isPwd ? 'password' : 'text'"
-                >
-                  <template #append>
-                    <q-icon
-                      :name="isPwd ? 'mdi-eye' : 'mdi-eye-off'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-              </div>
-              <div class="row justify-center q-mt-lg">
-                <q-btn
-                  push
-                  color="primary"
-                  label="Save"
-                  size="lg"
-                  class="q-px-lg"
-                  @click="saveChanges"
-                />
-              </div>
-            </div>
-          </q-form>
+            </q-form>
+          </div>
         </div>
       </div>
     </div>
@@ -126,6 +186,8 @@ export default {
   setup() {
     return {
       text: ref(""),
+      slide: ref('style'),
+      controlType: ref('flat'),
       file: "",
       firstName: ref(""),
       lastName: ref(""),
@@ -244,3 +306,55 @@ export default {
 };
 
 </script>
+
+<style>
+
+#profile-header {
+  font-size: 35px;
+  font-weight: 600; 
+  margin: 0px 0px 40px 0px;
+  border: 2px solid #0E86D4;
+  border-radius: 10px;
+  color: #0E86D4;
+}
+
+.profile-img {
+  font-size: 18px;
+  font-weight: 700; 
+  margin: 0px 10px 0px 0px 0px;
+}
+
+.uploader {
+  padding: 23px 20px 23px 20px;
+  margin: 0px 0px 0px 0px;
+  border-radius: 10px;
+  border: 2px solid #0E86D4;
+}
+
+#right-card {
+  padding: 23px 0px 23px 0px;
+  margin: 0px 0px 0px 0px;
+  border-radius: 10px;
+}
+
+#left-card {
+  margin: 0px 0px 0px 0px;
+}
+
+#q-form {
+  padding: 0px 30px 30px 30px;
+  background:#67BBFF;
+  border-radius: 10px;
+  border: 2px solid #0E86D4;
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 700; 
+}
+
+.carousel {
+  width: 350px;
+}
+
+</style>
