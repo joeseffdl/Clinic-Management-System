@@ -10,7 +10,7 @@
             title="Appointments for Today"
             :rows="events"
             :columns="columns"
-            row-key="events.id"
+            row-key="events.sched_id"
             :filter="dateNow"
             no-data-label="No Appointments for today"
             no-results-label="No Appointments for today"
@@ -79,36 +79,36 @@
 
 <script>
 import { ref } from "vue";
-import { mapActions, mapGetters } from "vuex";
 import { date } from 'quasar'
+import axios from 'axios';
 
 const columns = [
   {
     name: "name",
     label: "Name",
     align: "left",
-    field: (row) => row.name,
+    field: (row) => row.sched_title,
     format: (val) => `${val}`,
   },
   {
     name: "procedure",
     label: "Procedure",
     align: "left",
-    field: (row) => row.procedure,
+    field: (row) => row.sched_detail,
     format: (val) => `${val}`,
   },
   {
     name: "time",
     label: "Time",
     align: "left",
-    field: (row) => row.time,
+    field: (row) => row.sched_time,
     format: (val) => `${val}`,
   },
   {
     name: "schedule",
     label: "Schedule",
     align: "left",
-    field: (row) => row.date,
+    field: (row) => row.sched_date,
     format: (val) => `${val}`,
   },
 ];
@@ -141,19 +141,20 @@ export default {
       cool: Number(27),
       interval: null,
       time: null,
+
+       events: []
     }
   },
-
-  computed: {
-    ...mapGetters("module_a", ["events"]),
-  },
-
   beforeUnmount() {
     // prevent memory leak
     clearInterval(this.interval)
   },
   
   created() {
+    //get today's appointment from db
+    this.getAppointments_Data();
+   
+
     // update the time every second
     this.interval = setInterval(() => {
       this.time = Intl.DateTimeFormat(navigator.language, {
@@ -162,29 +163,30 @@ export default {
         second: 'numeric'
       }).format()
     }, 1000)
+
   },
-  // methods: {
-  //   ...mapActions("module_a", ["removeClient"]),
-  //   remove(props) {
-  //     this.$q
-  //       .dialog({
-  //         title: "Confirm",
-  //         message: "Are you sure to Delete this event?",
-  //         ok: {
-  //           push: true,
-  //         },
-  //         cancel: {
-  //           color: "negative",
-  //         },
-  //         persistent: true,
-  //       })
-  //       .onOk(() => {
-  //         this.removeClient(props);
-  //       });
-  //   },
-    
-  // }
+ 
+
+
   methods: {
+
+    //Show Appointments
+    async getAppointments_Data(){
+       try {
+        const response = await axios.get("http://localhost:5000/appointments");
+        this.events = response.data;
+
+         if(this.events == undefined ){
+            console.log('No Records Found')
+          }
+        } 
+        catch (err) {
+          console.log(err);
+        }
+    },
+    
+
+        
     fetchWeather (e) {
       if (e.key == "Enter") {
         fetch(`${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}`)
@@ -215,6 +217,31 @@ export default {
 
  }
 }
+
+    
+  /*
+  methods: {
+   ...mapActions("module_a", ["removeClient"]),
+    remove(props) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Are you sure to Delete this event?",
+          ok: {
+          push: true,
+          },
+          cancel: {
+          color: "negative",
+          },
+          persistent: true,
+        })
+         .onOk(() => {
+           this.removeClient(props);
+         });
+     },*/
+
+    
+
 </script>
 
 <style>

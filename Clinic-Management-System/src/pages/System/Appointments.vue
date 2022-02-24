@@ -6,7 +6,7 @@
         <q-card style="width: 550px">
           <q-toolbar class="bg-accent glossy" style="min-width: 200px">
             <q-toolbar-title>
-              {{ event.name }}
+              {{ event.sched_title }}
             </q-toolbar-title>
             <q-space />
             <q-btn-group flat>
@@ -24,14 +24,14 @@
                 round
                 color="primary"
                 icon="mdi-pen"
-                @click.stop="editEvent(event)"
+                @click.stop="editEvent()"
               />
               <q-btn v-close-popup flat round color="black" icon="mdi-close" />
             </q-btn-group>
           </q-toolbar>
           <q-card-section class="inset-shadow bg-secondary">
             <div>
-              {{ (event.time ? event.time + " - " : "") + event.procedure }}
+              {{ (event.sched_time ? event.sched_time + " - " : "") + event.sched_detail}}
             </div>
             <q-card-actions align="right">
               <q-btn v-close-popup flat label="OK" color="secondary" />
@@ -52,14 +52,14 @@
           <q-card-section class="bg-secondary">
             <q-form class="q-ma-sm" @submit="onEdit">
               <q-input
-                v-model="event.name"
+                v-model="event.sched_title"
                 color="accent"
                 label="NAME"
                 clearable
               />
 
               <q-select
-                v-model="event.procedure"
+                v-model="event.sched_detail"
                 color="accent"
                 label="Procedure"
                 :options="options.procedure"
@@ -68,7 +68,7 @@
               />
 
               <q-input
-                v-model="event.time"
+                v-model="event.sched_time"
                 color="accent"
                 type="time"
                 label="TIME"
@@ -76,7 +76,7 @@
               />
 
               <q-input
-                v-model="event.days"
+                v-model="event.duration_days"
                 color="accent"
                 type="number"
                 label="DURATION IN DAYS"
@@ -180,16 +180,16 @@
             >
               <template #day="{ scope: { timestamp } }">
                 <template
-                  v-for="event in eventsMap[timestamp.date]"
-                  :key="event.id"
+                  v-for="event in eventsMap[timestamp.date]" 
+                  :key="event['sched_id']"
                 >
                   <div
                     :class="badgeClasses(event, 'day')"
                     @click="showEvent(event)"
                   >
                     <div class="title q-calendar__ellipsis">
-                      {{ event.name }}
-                      <q-tooltip>{{ event.procedure }}</q-tooltip>
+                      {{ event['sched_title'] }}
+                      <q-tooltip>{{ event['sched_detail'] }}</q-tooltip>
                     </div>
                   </div>
                 </template>
@@ -203,7 +203,6 @@
 </template>
 
 <script>
-import { uid } from "quasar";
 import {
   QCalendarMonth,
   addToDate,
@@ -217,7 +216,7 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import NavigationBar from "src/components/NavigationBar.vue";
 
 import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
+import axios from 'axios';
 
 
 const CURRENT_DAY = new Date();
@@ -234,6 +233,7 @@ export default defineComponent({
     NavigationBar,
     QCalendarMonth,
   },
+  
   setup() {
     return {
       options: {
@@ -305,6 +305,7 @@ export default defineComponent({
         }
     };
   },
+
   data() {
     return {
       size: "md",
@@ -320,19 +321,23 @@ export default defineComponent({
         days: 1,
         bgcolor: "Red",
       },
+
+      showDrId: [],
+      events:[],
+
     };
   },
+  
   computed: {
-    ...mapGetters("module_a", ["events"]),
 
     eventsMap() {
       const map = {};
       if (this.events.length > 0) {
         this.events.forEach((event) => {
-          (map[event.date] = map[event.date] || []).push(event);
-          if (event.days !== undefined) {
-            let timestamp = parseTimestamp(event.date);
-            let days = event.days;
+          (map[event.sched_date] = map[event.sched_date] || []).push(event);
+          if (event.duration_days !== undefined) {
+            let timestamp = parseTimestamp(event.sched_date);
+            let days = event.duration_days;
 
             do {
               timestamp = addToDate(timestamp, { day: 1 });
@@ -348,47 +353,123 @@ export default defineComponent({
       
     },
   },
+
+  
+  async created(){
+    this.getDoctor();
+    this.getAppointments_Data();
+  },
+
+
   methods: {
-    // Vuex
-    ...mapActions("module_a", ["addSchedule", "removeSchedule", "updateSchedule"]),
 
-    // Badge
-    badgeClasses(event, type) {
-      return {
-        [`text-white bg-${event.bgcolor}`]: true,
-        "rounded-border": true,
-      };
+      //Get Doctor ID
+      async getDoctor(){
+        try {
+          const response = await axios.get("http://localhost:5000/login");
+          this.showDrId = response.data[0].doctor_id;
+    
+          if(this.showDrId == undefined ){
+            console.log('Unauthorized User!')
+          }
+        } 
+        catch (err) {
+          console.log(err);
+        }
+      },
+
+
+      //Show Appointments
+      async getAppointments_Data(){
+        try {
+          const response = await axios.get("http://localhost:5000/appointments");
+          this.events = response.data;
+    
+          if(this.events == undefined ){
+            console.log('No Records Found')
+          }
+
+        } 
+        catch (err) {
+          console.log(err);
+        }
+      },
+
+
+      //Insert new appointment
+      async addAppointment_Data(){
+        try{
+            await axios.post("http://localhost:5000/appointments", 
+            {
+                doctor_id: this.showDrId,
+                sched_title: this.eventsForm.name,
+                sched_detail: this.eventsForm.procedure,
+                sched_date: getCurrentDay(this.event.scope.timestamp.day),
+                sched_time: this.eventsForm.time,
+                duration_days: this.eventsForm.days,
+                bgcolor:this.eventsForm.bgcolor.toLowerCase(),
+            });
+            
+            console.log("Appointment Successfully Added!")
+            window.location.reload();
+
+        }catch (err) {
+            console.log(err);
+          }
+     },
+
+      onSubmit() {
+      this.addEvent = false;
+      this.addAppointment_Data();
+      window.location.reload();
     },
 
-    // Calendar
-    onToday() {
-      this.$refs.calendar.moveToToday();
+    //Update Appointment
+    async updateAppointment_Data() {
+      try {
+        await axios.put(`http://localhost:5000/appointments/`+ this.event.sched_id,
+          {
+                sched_title: this.event.sched_title,
+                sched_detail: this.event.sched_detail,
+                sched_time: this.event.sched_time,
+                duration_days: this.event.duration_days,
+                bgcolor:this.event.bgcolor.toLowerCase(),
+          }
+        );
+        console.log("Updated Successfully!")
+        window.location.reload();
+      } 
+      catch (err) {
+        console.log(err);
+      }
     },
-    onPrev() {
-      this.$refs.calendar.prev();
-    },
-    onNext() {
-      this.$refs.calendar.next();
-    },
-    onClickDate(event) {
-      this.event = event;
-      this.addEvent = true;
-    },
-    onClickDay(event) {
-      //console.log(typeof(event.scope.timestamp.day))
-    },
-    showEvent(event) {
-      this.event = event;
-      this.displayEvent = true;
-      console.log("showEvent clicked", event);
-    },
-    editEvent(event) {
+
+    editEvent() {
       this.showEdit = true;
-      console.log("Edit", event)
     },
+
+    onEdit() {
+      this.showEdit = false;
+      this.updateAppointment_Data();
+    },
+
+
+    //Delete Appointment
+    async deleteAppointment_Data() {
+      try {
+        await axios.delete(`http://localhost:5000/appointments/` + this.event.sched_id);
+        console.log('Deleted Successfully!')
+        window.location.reload();
+      } 
+      catch (err) {
+        console.log(err);
+      }
+    },
+    
     deleteEvent(event) {
-      this.events = this.removeSchedule(event);
       // this.events = this.events.filter((item) => item !== event);
+      this.events = this.deleteAppointment_Data();
+
       if (this.events.includes(event)) {
         this.$q.notify({
           message: "Event not deleted due to an unknown error.",
@@ -400,40 +481,48 @@ export default defineComponent({
           color: "green",
         });
       }
-      console.log("Removed", event, "Events", this.events)
+
     },
-    onSubmit() {
-      this.addEvent = false;
-      let dateNow = getCurrentDay(this.event.scope.timestamp.day)
-      let form = { ...this.eventsForm };
-      let data =
-        form.days > 1
-          ? {
-              id: uid(),
-              name: form.name,
-              procedure: form.procedure,
-              time: form.time,
-              date: dateNow,
-              days: form.days,
-              bgcolor: form.bgcolor.toLowerCase(),
-            }
-          : {
-              id: uid(),
-              name: form.name,
-              procedure: form.procedure,
-              time: form.time,
-              date: dateNow,
-              bgcolor: form.bgcolor.toLowerCase(),
-            };
-      this.addSchedule(data);
-      console.log("Events:", this.events);
+    
+
+    // Badge
+    badgeClasses(event, type) {
+      return {
+        [`text-white bg-${event.bgcolor}`]: true,
+        "rounded-border": true,
+      };
     },
-    onEdit(event) {
-      this.showEdit = false;
-      (this.event.bgcolor = this.event.bgcolor.toLowerCase()),
-      this.updateSchedule(event);
-      console.log("Data:", this.event);
+
+
+    // Calendar
+    showEvent(event) {
+        this.event = event;
+        this.displayEvent = true;
+        console.log("showEvent clicked", event);
     },
+    
+    onToday() {
+      this.$refs.calendar.moveToToday();
+    },
+
+    onPrev() {
+      this.$refs.calendar.prev();
+    },
+    
+    onNext() {
+      this.$refs.calendar.next();
+    },
+
+    onClickDate(event) {
+      this.event = event;
+      this.addEvent = true;
+    },
+
+    onClickDay(event) {
+      //console.log(typeof(event.scope.timestamp.day))
+    },
+
+    
   },
 });
 </script>
