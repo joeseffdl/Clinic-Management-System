@@ -10,11 +10,12 @@
               Profile Picture
             </div>
             <q-uploader
-            url="http://localhost:8080/upload"
             class="q-mx-auto "
             label="Upload files"
             color="primary"
             style="max-width: 100%;height:300px;"
+            url='http://localhost:5000/profilePic'
+            @added = "selectFile"
           />
           </div>
         </div> 
@@ -23,14 +24,14 @@
         <div class="row fit items-center justify-center">
           <q-form style="width: 75em;" >
             <div>
-              <div class="q-py-lg">
+              <div class="q-py-lg"> 
                 <q-input
                   v-model="firstName"
                   type="text"
                   standout="bg-primary text-white"
                   label="First Name"
                   clearable
-                  clear-icon="mdi-close-circle-outline"
+                  clear-icon="mdi-close-circle-outline" 
                 />
               </div>
               <div class="q-pb-lg">
@@ -45,8 +46,7 @@
               </div>
               <div class="q-pb-lg">
                 <q-input
-                  v-model="emailAddress"
-                  type="text"
+                  v-model="email"
                   standout="bg-primary text-white"
                   label="Email Address"
                   clearable
@@ -55,7 +55,7 @@
               </div>
               <div class="q-pb-lg">
                 <q-input
-                  v-model="contactNumber"
+                  v-model="contactNo"
                   type="text"
                   standout="bg-primary text-white"
                   label="Contact Number"
@@ -106,6 +106,7 @@
                   label="Save"
                   size="lg"
                   class="q-px-lg"
+                  @click="saveChanges"
                 />
               </div>
             </div>
@@ -118,19 +119,128 @@
 
 <script>
 import { ref } from "vue";
+import axios from 'axios';
+
 
 export default {
   setup() {
     return {
       text: ref(""),
+      file: "",
       firstName: ref(""),
       lastName: ref(""),
-      emailAddress: ref(""),
-      contactNumber: ref(""),
+      email: ref(""),
+      contactNo: ref(""),
       password: ref(""),
       isPwd: ref(true),
       confirmPassword: ref(""),
+      profilePic:"",
+      selectedFile:'',
+      check_if_document_upload: false,
+
+      drprofile:[],
     };
   },
+  
+
+  async created(){
+    this.show_DrProfile();
+  },
+
+  methods: {
+
+  //Display
+  async show_DrProfile() {
+    try {
+      const response = await axios.get("http://localhost:5000/doctorProfile").then(res => {
+        this.firstName = res.data[0].firstName
+        this.lastName = res.data[0].lastName
+        this.email= res.data[0].email
+        this.contactNo = res.data[0].contactNo
+        this.password = res.data[0].password
+        this.confirmPassword = res.data[0].confirmPassword
+        this.selectedFile = res.data[0].profile_pic
+      });
+
+    } 
+    catch (err) {
+      console.log(err);
+    }
+  },
+
+  //Upload Photo
+  selectFile(file){
+    this.selectedFile = file[0];
+    this.check_if_document_upload= true;
+    console.log(file[0])
+  },
+
+  selectFile1(file){
+    this.selectedFile = file[0];
+    this.check_if_document_upload= true;
+    console.log(file[0])
+  },
+
+  //Update 
+  async updateProfile() {
+    try {
+      await axios.put("http://localhost:5000/doctorProfile",
+        {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          contactNo: this.contactNo,
+          password: this.password,
+          confirmPassword: this.confirmPassword,
+          profile_pic: this.selectedFile.name,
+        }
+      );
+      console.log("Updated Successfully!")
+      window.location.reload();
+    } 
+    catch (err) {
+      console.log(err);
+    }
+  },
+
+  async saveChanges(){
+    const fileData = new FormData()
+    fileData.append('profile_pic',this.selectedFile)
+
+    this.$axios.put('http://localhost:5000/profilePic', fileData,{
+      headers: {
+        'Content-Type':'multipart/form-data'
+      }
+    }).then(function(){
+      console.log('SUCCESS')
+    }).catch(function(){
+      console.log('FAILED')
+    })
+
+    /*
+    try {
+      await axios.put("http://localhost:5000/profilePic",
+        {
+          profile_pic: this.selectedFile,
+        }
+      );
+      console.log("Updated Successfully!")
+    } 
+    catch (err) {
+      console.log(err);
+    }
+    */
+
+  }
+
+
+
+
+
+
+
+
+}
 };
+
 </script>
