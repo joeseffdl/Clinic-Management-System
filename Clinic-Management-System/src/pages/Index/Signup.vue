@@ -189,7 +189,8 @@ export default defineComponent({
               firstName: this.formData.firstName,
               lastName: this.formData.lastName,
               email: this.formData.email,
-              password: this.formData.password
+              password: this.formData.password,
+              confirmPassword: this.formData.password_confirm,
             });
             this.$router.push("/guest");
             console.log("Data Added Successfully!")

@@ -10,7 +10,7 @@
             title="Appointments for Today"
             :rows="events"
             :columns="columns"
-            row-key="events.id"
+            row-key="events.sched_id"
             :filter="dateNow"
             no-data-label="No Appointments for today"
             no-results-label="No Appointments for today"
@@ -38,8 +38,8 @@
         </div>
         <div class="col-2 gt-md">
           <div class="row column flex flex-center q-mb-xl">
-            <div class="col text-h4 text-center text-bold q-py-sm">Time</div>
-            <q-card class="col flex flex-center q-ma-md" style="margin-top: 0px;" rounded>
+            <div class="col text-h4 text-center text-bold q-py-sm flex-center">Time</div>
+            <q-card id="timeqcard" class="col flex flex-center q-ma-md" rounded>
                <div id="clock">
                  <div class="clockbox">{{time}}</div>
                </div>
@@ -49,24 +49,25 @@
 
           <div class="row flex flex-center q-my-xl">
             <div class="text-h4 text-bold q-py-sm">Weather</div>
-            <q-card class="flex flex-center">
-              <div id="weather" :class="typeof weather != 'undefined' && weathertemp > cool ? 'warm' : ''">
-                <main>
-                  <div class="search-box">
-                    <input v-model="query" type="text" class="search-bar" placeholder="Enter location..." @keypress="fetchWeather"/>
-                  </div>
-
-                  <div class="weather-wrap">
+            <q-card id="weatherqcard" class="flex flex-center">
+              <div id="weather">
+                <main id="weather-sub" :class="typeof weather != 'undefined' && weathertemp > cool ? 'warm' : ''">
+                  <div id="upper" :class="typeof weather != 'undefined' && weathertemp > cool ? 'warm' : ''">
+                    <div class="search-box">
+                      <input v-model="query" type="text" class="search-bar" placeholder="Enter location..." @keypress="fetchWeather"/>
+                    </div>
+                  
                     <div class="location-box">
                       <div class="location">{{weathercity}} {{weathercountry}}</div>
-                      <div class="date">{{ dateBuilder() }}</div>
+                      <div class="date">{{date}}</div>
                     </div>
-
+                  </div>
+                  <div id="lower" :class="typeof weather != 'undefined' && weathertemp > cool ? 'warm' : ''">
                     <div class="weather-box">
                       <div class="temp">{{Math.round(weathertemp)}}°C</div>
                       <div class="weather">{{weather}}</div>
                     </div>
-                  </div>
+                  </div>    
                 </main>
               </div>    
             </q-card>
@@ -79,36 +80,36 @@
 
 <script>
 import { ref } from "vue";
-import { mapActions, mapGetters } from "vuex";
 import { date } from 'quasar'
+import axios from 'axios';
 
 const columns = [
   {
     name: "name",
     label: "Name",
     align: "left",
-    field: (row) => row.name,
+    field: (row) => row.sched_title,
     format: (val) => `${val}`,
   },
   {
     name: "procedure",
     label: "Procedure",
     align: "left",
-    field: (row) => row.procedure,
+    field: (row) => row.sched_detail,
     format: (val) => `${val}`,
   },
   {
     name: "time",
     label: "Time",
     align: "left",
-    field: (row) => row.time,
+    field: (row) => row.sched_time,
     format: (val) => `${val}`,
   },
   {
     name: "schedule",
     label: "Schedule",
     align: "left",
-    field: (row) => row.date,
+    field: (row) => row.sched_date,
     format: (val) => `${val}`,
   },
 ];
@@ -135,25 +136,27 @@ export default {
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query: '',
       weathertemp: Number( ),
-      weathercity:'',
+      weathercity:'What is the Weather today?',
       weathercountry: '',
-      weather:'',
+      weather:'Search Here!',
+      date: '',
       cool: Number(27),
       interval: null,
       time: null,
+
+       events: []
     }
   },
-
-  computed: {
-    ...mapGetters("module_a", ["events"]),
-  },
-
   beforeUnmount() {
     // prevent memory leak
     clearInterval(this.interval)
   },
   
   created() {
+    //get today's appointment from db
+    this.getAppointments_Data();
+   
+
     // update the time every second
     this.interval = setInterval(() => {
       this.time = Intl.DateTimeFormat(navigator.language, {
@@ -162,35 +165,37 @@ export default {
         second: 'numeric'
       }).format()
     }, 1000)
+
   },
-  // methods: {
-  //   ...mapActions("module_a", ["removeClient"]),
-  //   remove(props) {
-  //     this.$q
-  //       .dialog({
-  //         title: "Confirm",
-  //         message: "Are you sure to Delete this event?",
-  //         ok: {
-  //           push: true,
-  //         },
-  //         cancel: {
-  //           color: "negative",
-  //         },
-  //         persistent: true,
-  //       })
-  //       .onOk(() => {
-  //         this.removeClient(props);
-  //       });
-  //   },
-    
-  // }
+ 
+
+
   methods: {
+
+    //Show Appointments
+    async getAppointments_Data(){
+       try {
+        const response = await axios.get("http://localhost:5000/appointments");
+        this.events = response.data;
+
+         if(this.events == undefined ){
+            console.log('No Records Found')
+          }
+        } 
+        catch (err) {
+          console.log(err);
+        }
+    },
+    
+
+        
     fetchWeather (e) {
       if (e.key == "Enter") {
         fetch(`${this.url_base}weather?q=${this.query}&units=metric&appid=${this.api_key}`)
           .then(res => {
             return res.json();
           }).then(this.setResults);
+          this.date = this.dateBuilder()
       }
     },
 
@@ -215,6 +220,31 @@ export default {
 
  }
 }
+
+    
+  /*
+  methods: {
+   ...mapActions("module_a", ["removeClient"]),
+    remove(props) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "Are you sure to Delete this event?",
+          ok: {
+          push: true,
+          },
+          cancel: {
+          color: "negative",
+          },
+          persistent: true,
+        })
+         .onOk(() => {
+           this.removeClient(props);
+         });
+     },*/
+
+    
+
 </script>
 
 <style>
@@ -232,11 +262,67 @@ body {
   background-color: #0E86D4;
   background-size: cover;
   background-position: bottom;
-  transition: 0.4s;
+  transition: 0.3s;
+  padding: 11px 10px 11px 10px;
+  min-width: 210px;
+  max-width: 250px;
 }
 
-#weather.warm {
-  background-color: #FC8171;
+#weather-sub {
+  color: #FFFF; 
+  background-color: #5885AF;
+  border: 0.3rem solid #fff;
+  border-radius: 10px;
+}
+
+#weather-sub.warm {
+  color: #FFFF; 
+  background-color: #fda194;
+  border: 0.3rem solid #fff;
+  border-radius: 10px;
+}
+
+#timeqcard{
+  border-radius: 10px;
+  margin: -5px auto 0px auto;
+  box-shadow: 4px 5px rgba(0, 0, 0, 0.25);
+  
+}
+
+#weatherqcard{
+  border-radius: 10px;
+  box-shadow: 4px 5px rgba(0, 0, 0, 0.25);
+  margin-top: -5px;
+}
+
+#upper {
+  background: #41729F;
+  color: #FFFF; 
+  border-radius: 10px 10px 0px 0px;
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+}
+
+#upper.warm {
+  background: #e96f6b;
+  color: #FFFF; 
+  border-radius: 10px 10px 0px 0px;
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+}
+
+#lower {
+  background: #5885AF;
+  color: #FFFF; 
+  border-radius: 0px 0px 10px 10px;
+  padding-top: 15px;
+}
+
+#lower.warm {
+  background: #fda194;
+  color: #FFFF; 
+  border-radius: 0px 0px 10px 10px;
+  padding-top: 15px;
 }
 
 .search-box {
@@ -254,7 +340,7 @@ body {
   color: black;
   font-size: 20px;
   appearance: none;
-  border:none;
+  border: solid white;
   outline: none;
   background: none;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
@@ -267,64 +353,71 @@ body {
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
   background-color: #FFFF;
   border-radius: 16px 0px 16px 0px;
+  color: #05445E;
+  font-size: 20px;
 }
 
 .location-box .location {
   color: #FFFF;
-  padding: 5px 20px;
-  font-size: 30px;
+  padding: 0px 20px 5px 20px;
+  margin-top: -10px;
+  font-size: 25px;
   font-weight: 600;
   text-align: center;
-  text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
+  text-shadow: 2px 3px rgba(0, 0, 0, 0.25);
 }
 
 .location-box .date {
   color: #FFFF;
-  padding: 5px 20px;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
+  margin: 10px 5px 0px 5px;
 }
 
 .weather-box {
   text-align: center;
-  padding: 0px 8px 37px 8px;
-
+  padding: 0px 8px 30px 8px;
+  margin-top: -10px;
 }
 
 .weather-box .temp {
   display: inline-block;
   padding: 3px 15px;
   color: #05445E;
-  font-size: 65px;
+  font-size: 50px;
   font-weight: 900;
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  text-shadow: 2px 3px rgba(0, 0, 0, 0.25);
   background-color: #D4F1F4;
   border-radius: 16px;
-  margin: 30px 0px;
-  box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+  margin: 20px 0px 0px 0px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
 }
 
 .weather-box .weather {
   color: #FFFF;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
-  padding: 0px 10px 0px 10px;
+  padding: 10px 5px 0px 5px;
+  font-style: italic;
 }
 
 #clock{
   background-color: #0E86D4; 
-  padding: 15px 15px 15px 15px;
-  border-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  min-width: 225px;
 }
 
 .clockbox{
-  background-color:#D4F1F4;
-  color: #05445E; 
-  font-size: 30px;
+  background: linear-gradient(to bottom, #41729F 50%, #5885AF 50%);;
+  color: #FFFF; 
+  border: 0.3rem solid #fff;
+  border-radius: 10px;
+  font-size: 35px;
   font-weight: 600; 
+  text-shadow: 0px 0px 16px rgba(0, 0, 0, 0.30);
   padding: 0px 10px 0px 10px;
   text-align: center;
-  border-radius: 5px;
 }
 </style>
