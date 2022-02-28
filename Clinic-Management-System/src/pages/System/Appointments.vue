@@ -335,10 +335,10 @@ export default defineComponent({
       if (this.events.length > 0) {
         this.events.forEach((event) => {
           (map[event.sched_date] = map[event.sched_date] || []).push(event);
-          if (event.duration_days !== undefined) {
+          if (event.duration_days !== 1) {
             let timestamp = parseTimestamp(event.sched_date);
             let days = event.duration_days;
-
+            
             do {
               timestamp = addToDate(timestamp, { day: 1 });
               if (!map[timestamp.date]) {
@@ -350,7 +350,6 @@ export default defineComponent({
         });
       }
       return map;
-      
     },
   },
 
@@ -401,27 +400,24 @@ export default defineComponent({
         try{
             await axios.post("http://localhost:5000/appointments", 
             {
-                doctor_id: this.showDrId,
-                sched_title: this.eventsForm.name,
-                sched_detail: this.eventsForm.procedure,
-                sched_date: getCurrentDay(this.event.scope.timestamp.day),
-                sched_time: this.eventsForm.time,
-                duration_days: this.eventsForm.days,
-                bgcolor:this.eventsForm.bgcolor.toLowerCase(),
+              doctor_id: this.showDrId,
+              sched_title: this.eventsForm.name,
+              sched_detail: this.eventsForm.procedure,
+              sched_date: getCurrentDay(this.event.scope.timestamp.day),
+              sched_time: this.eventsForm.time,
+              duration_days: this.eventsForm.days,
+              bgcolor:this.eventsForm.bgcolor.toLowerCase(),
             });
-            
             console.log("Appointment Successfully Added!")
             window.location.reload();
-
         }catch (err) {
             console.log(err);
           }
-     },
+    },
 
       onSubmit() {
       this.addEvent = false;
       this.addAppointment_Data();
-      window.location.reload();
     },
 
     //Update Appointment
@@ -429,11 +425,11 @@ export default defineComponent({
       try {
         await axios.put(`http://localhost:5000/appointments/`+ this.event.sched_id,
           {
-                sched_title: this.event.sched_title,
-                sched_detail: this.event.sched_detail,
-                sched_time: this.event.sched_time,
-                duration_days: this.event.duration_days,
-                bgcolor:this.event.bgcolor.toLowerCase(),
+            sched_title: this.event.sched_title,
+            sched_detail: this.event.sched_detail,
+            sched_time: this.event.sched_time,
+            duration_days: this.event.duration_days,
+            bgcolor:this.event.bgcolor.toLowerCase(),
           }
         );
         console.log("Updated Successfully!")
