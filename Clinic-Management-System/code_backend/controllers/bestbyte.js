@@ -1,8 +1,7 @@
 // Import function from Product Model
-import { getDrProfile, getDrProfileId, insertDrProfile, updateDrProfileId, deleteDrProfileId, 
-    getPassword, insertLogin,insertPatient,getLogin,getPatient,getPatientList,updatePatientData,
+import { getDrProfile, getDrProfileId, insertDrProfile, updateDrProfileId, deleteDrProfileId, getPassword, insertLogin,insertPatient,getLogin,getPatient,getPatientList,updatePatientData,
     deletePatientData, insertAppointment, getAppointments, updateAppointments, deleteAppointments,
-    updateDrProfilePic,getPicture, insertPic} from "../models/bestbyteModel.js";
+    updateDrProfilePic,getPicture, insertPic, getAdminPassword, showAdmins, showAdminLogin, insertAdminLogin} from "../models/bestbyteModel.js";
  
 
     //SIGN UP VUE
@@ -248,9 +247,46 @@ import { getDrProfile, getDrProfileId, insertDrProfile, updateDrProfileId, delet
             }
         });
     }
+    
+    export const showAdminPassword = (req, res) => {
+        getAdminPassword(req.params.admin_email, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 
+    // Get All data from admin_tb table
+    export const showAdmin = (req, res) => {
+        showAdmins((err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 
+    export const showAdminLogins = (req, res) => {
+        showAdminLogin((err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 
+    export const createAdminLogin = (req, res) => {
+        const data = req.body;
+        insertAdminLogin(data, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 
-
- 

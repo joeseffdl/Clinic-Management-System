@@ -218,16 +218,11 @@ export const insertPic = (data, result) => {
     });  
 }
 
-
-
-
-
-
 //UNUSED
 
 // Get All doctor_profile by id
 export const getDrProfileId = (id, result) => {
-    db.query("SELECT * FROM doctor_profile WHERE id = ?", [id], (err, results) => {             
+    db.query("SELECT * FROM doctor_profile WHERE id = ?", [id], (err, results) => { 
         if(err) {
             console.log(err);
             result(err, null);
@@ -237,7 +232,6 @@ export const getDrProfileId = (id, result) => {
     });   
 }
 
-
 // Get patient data
 export const getPatient = (id, result) => {
     db.query("SELECT * FROM patient_profile WHERE doctor_id = ?", [id], (err, results) => {             
@@ -245,16 +239,12 @@ export const getPatient = (id, result) => {
             console.log(err);
             result(err, null);
         } else {
+
             result(null, results);
         }
     });   
 }
 
-
-
- 
-
- 
 // Delete doctor_profile by id
 export const deleteDrProfileId = (id, result) => {
     db.query("DELETE FROM doctor_profile WHERE id = ?", [id], (err, results) => {             
@@ -264,8 +254,66 @@ export const deleteDrProfileId = (id, result) => {
         } else {
             result(null, results);
         }
+
     });   
 }
+
+// get admin password
+export const getAdminPassword = (email, result) => {
+    db.query("SELECT admin_password FROM admin_tb WHERE admin_email = ?", [email], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const showAdmins = (result) => {
+    db.query("SELECT * FROM admin_tb", (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const showAdminLogin = (result) => {
+    db.query("SELECT * FROM admin_login", (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const getAdminLoginPassword = (result) => {
+    db.query("SELECT login_pw FROM admin_login WHERE login_email = ?", [email], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const insertAdminLogin = (data, result) => {
+    db.query("INSERT INTO admin_login SET ?", [data], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });  
+}
+
 
 
 

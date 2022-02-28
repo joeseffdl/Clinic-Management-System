@@ -2,12 +2,10 @@
 import express from "express";
  
 // import function from controller
-import { showDrProfile, showDrProfileId, createDrProfile, updateDrProfile, 
-    deleteDrProfile, showPassword,createLogin,addPatient,showLogin, showPatientList,showDrPatientList,
+import { showDrProfile, showDrProfileId, createDrProfile, updateDrProfile, deleteDrProfile, showPassword,createLogin,addPatient,showLogin, showPatientList,showDrPatientList,
     updatePatientProfile, deletePatientProfile, addAppointment, showAppointments, updateAppointment, deleteAppointment,
-    updateDrProfile_Pic,
-    showPic,
-    addPic} from "../controllers/bestbyte.js";
+    updateDrProfile_Pic, showPic,addPic,showAdminPassword, showAdmin, showAdminLogins, createAdminLogin} from "../controllers/bestbyte.js";
+
 
  
 // init express router
@@ -58,6 +56,15 @@ router.get('/patientProfile/:id', showPatientList);
 
 
 
+
+router.get('/admin/:admin_email', showAdminPassword);
+
+// Get All data from admin_tb
+router.get('/admintb', showAdmin);
+
+router.get('/adminlogin', showAdminLogins);
+
+router.post('/adminlogin', createAdminLogin);
 
 // export default router
 export default router;
