@@ -100,6 +100,15 @@
                 >PATIENT'S DATA</span
               ></q-card-section
             >
+            <div>
+              <q-avatar class="q-mx-auto q-my-md flex flex-center" size="10em" color="primary">
+                <!-- <img src="https://www.nicepng.com/png/full/433-4338371_surprised-pikachu-meme.png"> -->
+                <!-- {{currentItem.patient_id}} -->
+                <q-img >
+                {{currentItem.patient_id}}
+                </q-img>
+              </q-avatar>
+            </div>
             <div
               v-for="(item, patient_id) in currentItem"
               :key="patient_id"
@@ -134,10 +143,19 @@
                 UPDATE PATIENT'S DATA</span
               ></q-card-section
             >
+
             <q-form class="q-my-md q-mx-xl">
               <span class="text-bold text-uppercase"
-                >ID: {{ currentItemData.patient_id }}</span
-              >
+                >ID: {{ currentItemData.patient_id }}
+              </span>
+              <q-uploader
+              v-model="currentItemData.patient_id"
+              class="q-mx-auto"
+              label="Upload files"
+              color="accent"
+              style="max-width: 100%;height:300px; box-shadow: 4px 5px rgba(0, 0, 0, 0.25);"
+              hide-upload-btn
+              />
               <q-input v-model="currentItemData.patient_name" label="NAME" />
               <q-input
                 v-model="currentItemData.client_since"
@@ -316,8 +334,7 @@ export default {
       this.currentItem = row;
       this.viewToggle = true;
     },
-
-
+    
     //Update Patient Record in patientlist
     async updatePatient_Data() {
       try {
