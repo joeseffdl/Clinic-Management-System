@@ -1,0 +1,15 @@
+{
+    "mysql": {
+        "database": "bestbyte_db",
+        "user": "root",
+        "password": "ej042101"
+    },
+    "server": {
+        "port": 3000
+    },
+    "app": {
+        "layouts": true,
+        "themes": true,
+        "languages": true
+    }
+}

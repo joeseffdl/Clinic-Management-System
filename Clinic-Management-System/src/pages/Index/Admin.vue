@@ -35,18 +35,86 @@
   </q-page>
 </template>
 <script>
+
+
 import { ref } from "vue";
+import axios from 'axios'
 
 export default {
   name: "Admin",
-  setup() {
+  components:{
+
+  },
+  data () {
     return {
       formData: {
         email: ref(''),
         password: ref(''),
       },
+      text: ref(''),
       isPwd: ref(true),
+      showPass: [],
+      showId:[],
+      
     };
   },
+
+  methods: {
+    
+    async addLogin(){
+        try{
+            await axios.post("http://localhost:5000/adminlogin", {
+                login_email : this.formData.email,
+                login_pw : this.formData.password,
+            });
+
+        }catch (err) {
+            console.log(err);
+          }
+        
+     },
+
+     async show_admin() {
+      try {
+        const response = await axios.get(`http://localhost:5000/admin/` + this.formData.email);
+        this.showPass = response.data.admin_password;
+          if(this.showPass == this.formData.password){
+            console.log("Login Successfully")
+            window.open('http://localhost:3000/')
+            /*this.$router.push("/home");*/
+            this.addLogin()
+          }
+          else if (this.showPass == undefined){
+            console.log("Invalid email")
+          }
+          else{
+            console.log("Invalid password")
+          }
+      } 
+      catch (err) {
+        console.log(err);
+      }
+    },
+
+    async login() {
+
+      this.show_admin();
+    },
+
+    
+    onSubmit() {
+        {
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "mdi-account",
+            message: "Welcome!",
+          });
+          this.$router.push("/home");
+        }
+      },
+
+
+  }
 };
 </script>

@@ -3,7 +3,7 @@ import express from "express";
  
 // import function from controller
 import { showDrProfile, showDrProfileId, createDrProfile, updateDrProfile, 
-    deleteDrProfile, showPassword,createLogin,addPatient,showLogin, showPatientList} from "../controllers/bestbyte.js";
+    deleteDrProfile, showPassword,createLogin,addPatient,showLogin, showPatientList, showAdminPassword, showAdmin, showAdminLogins, createAdminLogin} from "../controllers/bestbyte.js";
  
 // init express router
 const router = express.Router();
@@ -37,6 +37,15 @@ router.get('/patientProfile/:doctorId', showPatientList);
 
 // add new patient
 router.post('/patientProfile', addPatient);
+
+router.get('/admin/:admin_email', showAdminPassword);
+
+// Get All data from admin_tb
+router.get('/admintb', showAdmin);
+
+router.get('/adminlogin', showAdminLogins);
+
+router.post('/adminlogin', createAdminLogin);
 
 // export default router
 export default router;

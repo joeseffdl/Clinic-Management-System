@@ -138,3 +138,59 @@ export const insertPatient = (data, result) => {
     });  
 }
 
+// get admin password
+export const getAdminPassword = (email, result) => {
+    db.query("SELECT admin_password FROM admin_tb WHERE admin_email = ?", [email], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const showAdmins = (result) => {
+    db.query("SELECT * FROM admin_tb", (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const showAdminLogin = (result) => {
+    db.query("SELECT * FROM admin_login", (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const getAdminLoginPassword = (result) => {
+    db.query("SELECT login_pw FROM admin_login WHERE login_email = ?", [email], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const insertAdminLogin = (data, result) => {
+    db.query("INSERT INTO admin_login SET ?", [data], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });  
+}
+

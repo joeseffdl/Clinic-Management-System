@@ -1,6 +1,6 @@
 // Import function from Product Model
 import { getDrProfile, getDrProfileId, insertDrProfile, updateDrProfileId, deleteDrProfileId, 
-    getPassword, insertLogin,insertPatient,getLogin,getPatient} from "../models/bestbyteModel.js";
+    getPassword, insertLogin,insertPatient,getLogin,getPatient, getAdminPassword, showAdmins, showAdminLogin, insertAdminLogin,} from "../models/bestbyteModel.js";
  
 // Get All data from doctor_profile table
 export const showDrProfile = (req, res) => {
@@ -116,4 +116,45 @@ export const addPatient = (req, res) => {
         }
     });
 }
- 
+
+export const showAdminPassword = (req, res) => {
+    getAdminPassword(req.params.admin_email, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+
+// Get All data from admin_tb table
+export const showAdmin = (req, res) => {
+    showAdmins((err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+
+export const showAdminLogins = (req, res) => {
+    showAdminLogin((err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+
+export const createAdminLogin = (req, res) => {
+    const data = req.body;
+    insertAdminLogin(data, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
