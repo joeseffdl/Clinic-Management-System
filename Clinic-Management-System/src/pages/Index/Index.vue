@@ -82,6 +82,7 @@
             arrows
             height="100%"
             class="carousel bg-primary text-white"
+            style="width: 100%"
           >
             <template #navigation-icon="{ active, btnProps, onClick }">
               <q-btn v-if="active" size="lg" icon="mdi-tooth" color="secondary" flat round dense @click="onClick" />
