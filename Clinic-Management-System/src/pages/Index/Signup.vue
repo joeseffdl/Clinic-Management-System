@@ -10,7 +10,7 @@
             By creating an account, you agree to our&nbsp;<a href="terms-of-service/" target="blank">Terms of Service</a> 
           </div>
           <div class="row fit justify-center align-center">
-            and have read and understand the&nbsp;<a href="privacy/" target="blank">Privacy Policy.</a> 
+            and have read and understand the&nbsp;<a href="privacy-policy/" target="blank">Privacy Policy.</a> 
           </div>
         </div>
         <q-form class="q-mt-lg" @submit.prevent="submitForm" >
