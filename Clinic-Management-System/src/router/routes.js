@@ -1,13 +1,15 @@
 import MainLayout from 'layouts/MainLayout'
+import SystemLayout from 'layouts/SystemLayout'
 import About from 'pages/Index/About'
 import Index from 'pages/Index/Index'
-import SystemLayout from 'layouts/SystemLayout'
+import BestByte from 'pages/Index/BestByte'
+import TermsOfService from 'pages/Index/TOS'
+import PrivacyPolicy from 'pages/Index/PrivacyPolicy'
 import Home from 'pages/System/Home'
 import Profile from 'pages/System/ProfileSettings'
 import PatientList from 'pages/System/PatientList'
 import AddPatient from 'pages/System/AddPatient'
 import Appointments from 'pages/System/Appointments'
-import BestByte from 'pages/Index/BestByte'
 
 const routes = [
   {
@@ -16,7 +18,9 @@ const routes = [
     children: [
       { path: '/', name: 'Index', component: Index },
       { path: '/about', name: 'About', component: About },
-      { path: '/bestbyte', name: 'BestByte', component: BestByte }
+      { path: '/bestbyte', name: 'BestByte', component: BestByte },
+      { path: '/terms-of-service', name: 'TOS', component: TermsOfService },
+      { path: '/privacy-policy', name: 'PrivacyPolicy', component: PrivacyPolicy },
     ]
   },
   {
