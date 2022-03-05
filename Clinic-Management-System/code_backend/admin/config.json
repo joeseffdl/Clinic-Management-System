@@ -2,7 +2,7 @@
     "mysql": {
         "database": "bestbyte_db",
         "user": "root",
-        "password": "ej042101"
+        "password": "root"
     },
     "server": {
         "port": 3000

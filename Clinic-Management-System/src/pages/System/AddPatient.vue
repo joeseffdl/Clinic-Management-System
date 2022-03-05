@@ -9,14 +9,15 @@
               <div class="row justify-center q-my-xl">
                 <div class="q-gutter-md">
                   <q-uploader
-                    url="http://localhost:8080/upload"
-                    class="q-mx-auto "
+                    hide-upload-btn
+                    name="patient"
+                    class="q-mx-auto"
                     label="Upload files"
                     color="primary"
-                    
-                    style="max-width: 100%;height:300px;"
+                    style="max-width: 100%; height: 300px"
+                    accept=".jpeg, .jpg, .png"
+                    @added="selectFile"
                   />
-
                   <q-input
                     v-model="Clients.name"
                     class="q-mx-auto"
@@ -210,8 +211,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   setup() {
@@ -248,63 +248,83 @@ export default {
         recentSchedule: "",
         procedure: "",
         diagnosis: "",
+        selectedFile: "",
+        picture_extension: "",
       },
 
       showDrId: [],
-    }
+    };
   },
 
-  async created(){
+  async created() {
     this.getDoctor();
   },
 
-
   methods: {
-
-    async getDoctor(){
-       try {
+    async getDoctor() {
+      try {
         const response = await axios.get("http://localhost:5000/login");
         this.showDrId = response.data[0].doctor_id;
-  
-        if(this.showDrId == undefined ){
-          console.log('Unauthorized User!')
+
+        if (this.showDrId == undefined) {
+          console.log("Unauthorized User!");
         }
-      } 
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     },
 
-    async addPatient(){
-        try{
-            await axios.post("http://localhost:5000/patientProfile", {
-                patient_name: this.Clients.name,
-                client_since: this.Clients.clientSince,
-                sex: this.Clients.sex,
-                age: this.Clients.age,
-                occupation: this.Clients.occupation,
-                mobile_no: this.Clients.mobileNo,
-                tel_no: this.Clients.telNo,
-                address: this.Clients.address,
-                recent_schedule: this.Clients.recentSchedule,
-                patient_procedure: this.Clients.procedure,
-                diagnosis: this.Clients.diagnosis,
-                doctor_id: this.showDrId,
-            });
-            
-            console.log("New Patient Successfully Added!")
-            this.$router.push("/patientlist");
-
-        }catch (err) {
-            console.log(err);
-          }
-     },
-
-    async submitForm(){
-       this.addPatient();
-      
+    //Upload Photo
+    selectFile(file) {
+      this.Clients.selectedFile = file[0];
     },
 
+    async submitForm() {
+      const fd = new FormData();
+
+      fd.append("patient_name", this.Clients.name);
+      fd.append("client_since", this.Clients.clientSince);
+      fd.append("sex", this.Clients.sex);
+      fd.append("age", this.Clients.age);
+      fd.append("occupation", this.Clients.occupation);
+      fd.append("mobile_no", this.Clients.mobileNo);
+      fd.append("tel_no", this.Clients.telNo);
+      fd.append("address", this.Clients.address);
+      fd.append("recent_schedule", this.Clients.recentSchedule);
+      fd.append("patient_procedure", this.Clients.procedure);
+      fd.append("diagnosis", this.Clients.diagnosis);
+      fd.append("doctor_id", this.showDrId);
+
+      if (this.Clients.selectedFile != "") {
+        if (this.Clients.selectedFile.type == "image/jpeg") {
+          this.Clients.picture_extension = ".jpeg";
+        } else if (this.Clients.selectedFile.type == "image/jpg") {
+          this.Clients.picture_extension = ".jpg";
+        } else if (this.Clients.selectedFile.type == "image/png") {
+          this.Clients.picture_extension = ".png";
+        } else {
+          console.log("Upload jpeg, jpg, and png only");
+        }
+
+        fd.append("patient", this.Clients.selectedFile);
+        const new_name =
+          "patient" +
+          "-" +
+          this.Clients.selectedFile.name +
+          this.Clients.picture_extension;
+        fd.append("patient_pic", "patient_pictures\\" + new_name);
+      }
+
+      this.$axios
+        .post("http://localhost:5000/patientProfile", fd, {})
+        .then(function () {
+          console.log("New Patient Successfully Added!");
+          window.location.reload();
+        })
+        .catch(function (err) {
+          console.log("Something went wrong", err);
+        });
+    },
   },
 };
 </script>
