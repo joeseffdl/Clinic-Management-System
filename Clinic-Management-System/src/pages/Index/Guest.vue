@@ -72,7 +72,6 @@ export default {
             await axios.post("http://localhost:5000/login", {
                 doctor_id: this.showId,
                 email : this.formData.email,
-                userType: 1
             });
 
         }catch (err) {

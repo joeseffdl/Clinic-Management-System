@@ -3,14 +3,14 @@
     <div class="q-pa-xl">
       <div class="fit">
         <q-table
-          :rows= "patientList"
+          :rows="patientList"
           :columns="columns"
           :filter="filter"
           no-data-label="I didn't find anything for you"
           no-results-label="The filter didn't uncover any results"
           row-key="patientList.patient_id"
           card-class="bg-accent text-primary"
-          bordered 
+          bordered
         >
           <!-- 
           Q-Table Add-ons
@@ -101,23 +101,25 @@
               ></q-card-section
             >
             <div>
-              <q-avatar class="q-mx-auto q-my-md flex flex-center" size="10em" color="primary">
-                <!-- <img src="https://www.nicepng.com/png/full/433-4338371_surprised-pikachu-meme.png"> -->
-                <!-- {{currentItem.patient_id}} -->
-                <q-img >
-                {{currentItem.patient_id}}
-                </q-img>
+              <q-avatar
+                class="q-mx-auto q-my-md flex flex-center"
+                size="10em"
+                color="primary"
+              >
+                <img
+                  :src="patientPic"
+                  @error="$event.target.src = 'icons\\byte_white.png'"
+                />
               </q-avatar>
             </div>
             <div
               v-for="(item, patient_id) in currentItem"
               :key="patient_id"
               class="q-my-md q-mx-lg"
-              style="overflow: hidden;" 
+              style="overflow: hidden"
             >
-              <span class="text-bold text-uppercase">{{ patient_id }}:</span>&nbsp;<span
-                >{{ item }}
-              </span>
+              <span class="text-bold text-uppercase">{{ patient_id }}:</span
+              >&nbsp;<span>{{ item }} </span>
             </div>
           </q-card>
         </q-card-section>
@@ -149,12 +151,18 @@
                 >ID: {{ currentItemData.patient_id }}
               </span>
               <q-uploader
-              v-model="currentItemData.patient_id"
-              class="q-mx-auto"
-              label="Upload files"
-              color="accent"
-              style="max-width: 100%;height:300px; box-shadow: 4px 5px rgba(0, 0, 0, 0.25);"
-              hide-upload-btn
+                name="patient1"
+                class="q-mx-auto"
+                label="Upload files"
+                color="accent"
+                style="
+                  max-width: 100%;
+                  height: 300px;
+                  box-shadow: 4px 5px rgba(0, 0, 0, 0.25);
+                "
+                hide-upload-btn
+                accept=".jpeg, .jpg, .png"
+                @added="selectFile"
               />
               <q-input v-model="currentItemData.patient_name" label="NAME" />
               <q-input
@@ -219,7 +227,7 @@
 
 <script>
 import { ref } from "vue";
-import axios from 'axios';
+import axios from "axios";
 
 const columns = [
   {
@@ -231,8 +239,8 @@ const columns = [
     format: (val) => `${val}`,
     sortable: true,
     headerClasses: "bg-primary text-secondary",
-    headerStyle: 'max-width: 800px',
-    width: '800px'
+    headerStyle: "max-width: 800px",
+    width: "800px",
   },
   {
     name: "sex",
@@ -243,8 +251,8 @@ const columns = [
     format: (val) => `${val}`,
     sortable: true,
     headerClasses: "bg-primary text-secondary",
-    headerStyle: 'max-width: 800px',
-    width: '800px'
+    headerStyle: "max-width: 800px",
+    width: "800px",
   },
   {
     name: "procedure",
@@ -255,14 +263,14 @@ const columns = [
     format: (val) => `${val}`,
     sortable: true,
     headerClasses: "bg-primary text-secondary",
-    headerStyle: 'max-width: 800px',
-    width: '800px'
+    headerStyle: "max-width: 800px",
+    width: "800px",
   },
   {
     name: "actions",
     label: "Actions",
     align: "center",
-    headerStyle: 'max-width: 800px',
+    headerStyle: "max-width: 800px",
     headerClasses: "bg-primary text-secondary",
   },
 ];
@@ -298,34 +306,35 @@ export default {
   },
 
   data() {
-    return{
-
+    return {
       patientList: [],
-
-    }
+      patientPic: "",
+      patientPic_update: "",
+      selectedFile: "",
+      picture_extension: "",
+    };
   },
 
-  created(){
+  created() {
     this.show_PatientProfile();
   },
 
   methods: {
-
     //View PatientList
+    
     async show_PatientProfile() {
       try {
-        const response = await axios.get("http://localhost:5000/patientProfile");
+        const response = await axios.get(
+          "http://localhost:5000/patientProfile"
+        );
         this.patientList = response.data;
 
-        if(this.patientList == [] ){
-          console.log('No Records Found')
+        if (this.patientList == []) {
+          console.log("No Records Found");
+        } else if (this.patientList == undefined) {
+          console.log("Error");
         }
-        else if (this.patientList == undefined){
-          console.log('Error')
-        }
-
-      } 
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     },
@@ -333,48 +342,107 @@ export default {
     view(row) {
       this.currentItem = row;
       this.viewToggle = true;
+      this.show_PatientPic();
     },
-    
-    //Update Patient Record in patientlist
-    async updatePatient_Data() {
+
+    async show_PatientPic() {
       try {
-        await axios.put(`http://localhost:5000/patientProfile/`+ this.currentItemData.patient_id,
-          {
-                patient_name: this.currentItemData.patient_name,
-                client_since: this.currentItemData.client_since,
-                sex: this.currentItemData.sex,
-                age: this.currentItemData.age,
-                occupation: this.currentItemData.occupation,
-                mobile_no: this.currentItemData.mobile_no,
-                tel_no: this.currentItemData.tel_no,
-                address: this.currentItemData.address,
-                recent_schedule: this.currentItemData.recent_schedule,
-                patient_procedure: this.currentItemData.patient_procedure,
-                diagnosis: this.currentItemData.diagnosis
-          }
+        const response = await axios.get(
+          `http://localhost:5000/patientProfile/` + this.currentItem.patient_id
         );
-        console.log("Updated Successfully!")
-        window.location.reload();
-      } 
-      catch (err) {
+        this.patientPic = response.data[0].patient_pic;
+      } catch (err) {
         console.log(err);
       }
+    },
+
+    async show_PatientPic_Update() {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/patientProfile/` + this.currentItemData.patient_id
+        );
+        this.patientPic_update = response.data[0].patient_pic;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+
+    //Update Patient Record in patientlist
+    selectFile(file) {
+      this.selectedFile = file[0];
+    },
+
+    async updatePatient_Data() {
+      const fd = new FormData();
+
+      fd.append("patient_name", this.currentItemData.patient_name);
+      fd.append("client_since", this.currentItemData.client_since);
+      fd.append("sex", this.currentItemData.sex);
+      fd.append("age", this.currentItemData.age);
+      fd.append("occupation", this.currentItemData.occupation);
+      fd.append("mobile_no", this.currentItemData.mobile_no);
+      fd.append("tel_no", this.currentItemData.tel_no);
+      fd.append("address", this.currentItemData.address);
+      fd.append("recent_schedule", this.currentItemData.recent_schedule);
+      fd.append("patient_procedure", this.currentItemData.patient_procedure);
+      fd.append("diagnosis", this.currentItemData.diagnosis);
+
+      if (this.selectedFile != "") {
+        if (this.selectedFile.type == "image/jpeg") {
+          this.picture_extension = ".jpeg";
+        } else if (this.selectedFile.type == "image/jpg") {
+          this.picture_extension = ".jpg";
+        } else if (this.selectedFile.type == "image/png") {
+          this.picture_extension = ".png";
+        } else {
+          console.log("Upload jpeg, jpg, and png only");
+        }
+        fd.append("patient", this.selectedFile);
+        const new_name =
+          "patient" + "-" + this.selectedFile.name + this.picture_extension;
+        fd.append("patient_pic", "patient_pictures\\" + new_name);
+      } else {
+        console.log(this.patientPic_update);
+        fd.append("patient_pic", this.patientPic_update);
+      }
+
+      this.$axios
+        .put(
+          `http://localhost:5000/patientProfile/` +
+            this.currentItemData.patient_id,
+          fd,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then(function () {
+          console.log("Updated Successfully!");
+          window.location.reload();
+        })
+        .catch(function () {
+          console.log("Something went wrong");
+        });
     },
 
     update(props) {
       this.currentItemData = { ...props };
       this.updateToggle = true;
+      this.show_PatientPic_Update();
     },
-
 
     //Delete Patient Record
     async deletePatient_Data() {
       try {
-        await axios.delete(`http://localhost:5000/patientProfile/` + this.currentItemData.patient_id);
-        console.log('Deleted Successfully!')
+        await axios.delete(
+          `http://localhost:5000/patientProfile/` +
+            this.currentItemData.patient_id
+        );
+        console.log("Deleted Successfully!");
         window.location.reload();
-      } 
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     },
@@ -397,11 +465,6 @@ export default {
           this.deletePatient_Data();
         });
     },
-    
-
-  }
-
-
+  },
 };
-
 </script>

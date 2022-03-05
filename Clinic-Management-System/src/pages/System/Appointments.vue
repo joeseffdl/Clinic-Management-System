@@ -31,7 +31,10 @@
           </q-toolbar>
           <q-card-section class="inset-shadow bg-secondary">
             <div>
-              {{ (event.sched_time ? event.sched_time + " - " : "") + event.sched_detail}}
+              {{
+                (event.sched_time ? event.sched_time + " - " : "") +
+                event.sched_detail
+              }}
             </div>
             <q-card-actions align="right">
               <q-btn v-close-popup flat label="OK" color="secondary" />
@@ -180,7 +183,7 @@
             >
               <template #day="{ scope: { timestamp } }">
                 <template
-                  v-for="event in eventsMap[timestamp.date]" 
+                  v-for="event in eventsMap[timestamp.date]"
                   :key="event['sched_id']"
                 >
                   <div
@@ -188,8 +191,8 @@
                     @click="showEvent(event)"
                   >
                     <div class="title q-calendar__ellipsis">
-                      {{ event['sched_title'] }}
-                      <q-tooltip>{{ event['sched_detail'] }}</q-tooltip>
+                      {{ event["sched_title"] }}
+                      <q-tooltip>{{ event["sched_detail"] }}</q-tooltip>
                     </div>
                   </div>
                 </template>
@@ -216,8 +219,7 @@ import "@quasar/quasar-ui-qcalendar/src/QCalendarMonth.sass";
 import NavigationBar from "src/components/NavigationBar.vue";
 
 import { defineComponent } from "vue";
-import axios from 'axios';
-
+import axios from "axios";
 
 const CURRENT_DAY = new Date();
 function getCurrentDay(day) {
@@ -233,7 +235,7 @@ export default defineComponent({
     NavigationBar,
     QCalendarMonth,
   },
-  
+
   setup() {
     return {
       options: {
@@ -272,37 +274,37 @@ export default defineComponent({
         ],
       },
       blue: {
-          '--calendar-border': '#64b5f6 1px solid',
-          '--calendar-border-dark': '#e3f2fd 1px solid',
-          '--calendar-border-section': '#90caf9 1px dashed',
-          '--calendar-border-section-dark': '#90caf9 1px dashed',
-          '--calendar-border-current': '#64b5f6 2px solid',
-          '--calendar-border-current-dark': '#2979ff 2px solid',
-          '--calendar-color': '#0d47a0',
-          '--calendar-color-dark': '#e3f2fd',
-          '--calendar-background': '#e3f2fd',
-          '--calendar-background-dark': '#0d47a0',
-          '--calendar-current-color': '#027BE3',
-          '--calendar-current-color-dark': '#2979ff',
-          '--calendar-current-background': '#00000000',
-          '--calendar-current-background-dark': '#0d47a0',
-          '--calendar-disabled-date-color': '#e3f2fd',
-          '--calendar-disabled-date-color-dark': '#bebebe',
-          '--calendar-disabled-date-background': '#90caf9',
-          '--calendar-disabled-date-background-dark': '#121212',
-          '--calendar-active-date-color': '#e3f2fd',
-          '--calendar-active-date-color-dark': '#ffff66',
-          '--calendar-active-date-background': '#2979ff',
-          '--calendar-active-date-background-dark': '#64b5f6',
-          '--calendar-outside-color': '#0d47a0',
-          '--calendar-outside-color-dark': '#bebebe',
-          '--calendar-outside-background': '#00000000',
-          '--calendar-outside-background-dark': '#121212',
-          '--calendar-selected-color': '#027BE3',
-          '--calendar-selected-color-dark': '#027BE3',
-          '--calendar-selected-background': '#cce7ff',
-          '--calendar-selected-background-dark': '#cce7ff', 
-        }
+        "--calendar-border": "#64b5f6 1px solid",
+        "--calendar-border-dark": "#e3f2fd 1px solid",
+        "--calendar-border-section": "#90caf9 1px dashed",
+        "--calendar-border-section-dark": "#90caf9 1px dashed",
+        "--calendar-border-current": "#64b5f6 2px solid",
+        "--calendar-border-current-dark": "#2979ff 2px solid",
+        "--calendar-color": "#0d47a0",
+        "--calendar-color-dark": "#e3f2fd",
+        "--calendar-background": "#e3f2fd",
+        "--calendar-background-dark": "#0d47a0",
+        "--calendar-current-color": "#027BE3",
+        "--calendar-current-color-dark": "#2979ff",
+        "--calendar-current-background": "#00000000",
+        "--calendar-current-background-dark": "#0d47a0",
+        "--calendar-disabled-date-color": "#e3f2fd",
+        "--calendar-disabled-date-color-dark": "#bebebe",
+        "--calendar-disabled-date-background": "#90caf9",
+        "--calendar-disabled-date-background-dark": "#121212",
+        "--calendar-active-date-color": "#e3f2fd",
+        "--calendar-active-date-color-dark": "#ffff66",
+        "--calendar-active-date-background": "#2979ff",
+        "--calendar-active-date-background-dark": "#64b5f6",
+        "--calendar-outside-color": "#0d47a0",
+        "--calendar-outside-color-dark": "#bebebe",
+        "--calendar-outside-background": "#00000000",
+        "--calendar-outside-background-dark": "#121212",
+        "--calendar-selected-color": "#027BE3",
+        "--calendar-selected-color-dark": "#027BE3",
+        "--calendar-selected-background": "#cce7ff",
+        "--calendar-selected-background-dark": "#cce7ff",
+      },
     };
   },
 
@@ -321,15 +323,14 @@ export default defineComponent({
         days: 1,
         bgcolor: "Red",
       },
-
+      dateNow: "",
       showDrId: [],
-      events:[],
-
+      events: [],
+ 
     };
   },
-  
-  computed: {
 
+  computed: {
     eventsMap() {
       const map = {};
       if (this.events.length > 0) {
@@ -338,7 +339,7 @@ export default defineComponent({
           if (event.duration_days !== 1) {
             let timestamp = parseTimestamp(event.sched_date);
             let days = event.duration_days;
-            
+
             do {
               timestamp = addToDate(timestamp, { day: 1 });
               if (!map[timestamp.date]) {
@@ -353,69 +354,62 @@ export default defineComponent({
     },
   },
 
-  
-  async created(){
+  async created() {
     this.getDoctor();
     this.getAppointments_Data();
   },
 
-
   methods: {
+    //Get Doctor ID
+    async getDoctor() {
+      try {
+        const response = await axios.get("http://localhost:5000/login");
+        this.showDrId = response.data[0].doctor_id;
 
-      //Get Doctor ID
-      async getDoctor(){
-        try {
-          const response = await axios.get("http://localhost:5000/login");
-          this.showDrId = response.data[0].doctor_id;
-    
-          if(this.showDrId == undefined ){
-            console.log('Unauthorized User!')
-          }
-        } 
-        catch (err) {
-          console.log(err);
+        if (this.showDrId == undefined) {
+          console.log("Unauthorized User!");
         }
-      },
-
-
-      //Show Appointments
-      async getAppointments_Data(){
-        try {
-          const response = await axios.get("http://localhost:5000/appointments");
-          this.events = response.data;
-    
-          if(this.events == undefined ){
-            console.log('No Records Found')
-          }
-
-        } 
-        catch (err) {
-          console.log(err);
-        }
-      },
-
-
-      //Insert new appointment
-      async addAppointment_Data(){
-        try{
-            await axios.post("http://localhost:5000/appointments", 
-            {
-              doctor_id: this.showDrId,
-              sched_title: this.eventsForm.name,
-              sched_detail: this.eventsForm.procedure,
-              sched_date: getCurrentDay(this.event.scope.timestamp.day),
-              sched_time: this.eventsForm.time,
-              duration_days: this.eventsForm.days,
-              bgcolor:this.eventsForm.bgcolor.toLowerCase(),
-            });
-            console.log("Appointment Successfully Added!")
-            window.location.reload();
-        }catch (err) {
-            console.log(err);
-          }
+      } catch (err) {
+        console.log(err);
+      }
     },
 
-      onSubmit() {
+    //Show Appointments
+    async getAppointments_Data() {
+      try {
+        const response = await axios.get("http://localhost:5000/appointments");
+        this.events = response.data;
+
+        if (this.events == undefined) {
+          console.log("No Records Found");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    //Insert new appointment
+    async addAppointment_Data() {
+     
+      try {
+        await axios.post("http://localhost:5000/appointments/" + getCurrentDay(this.event.scope.timestamp.day) + '/' + this.eventsForm.days, {
+          doctor_id: this.showDrId,
+          sched_title: this.eventsForm.name,
+          sched_detail: this.eventsForm.procedure,
+          sched_date: getCurrentDay(this.event.scope.timestamp.day),
+          sched_time: this.eventsForm.time,
+          duration_days: this.eventsForm.days,
+          bgcolor: this.eventsForm.bgcolor.toLowerCase(),
+        });
+
+        console.log("Appointment Successfully Added!");
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    onSubmit() {
       this.addEvent = false;
       this.addAppointment_Data();
     },
@@ -423,19 +417,19 @@ export default defineComponent({
     //Update Appointment
     async updateAppointment_Data() {
       try {
-        await axios.put(`http://localhost:5000/appointments/`+ this.event.sched_id,
+        await axios.put(
+          `http://localhost:5000/appointments/` + this.event.sched_id,
           {
             sched_title: this.event.sched_title,
             sched_detail: this.event.sched_detail,
             sched_time: this.event.sched_time,
             duration_days: this.event.duration_days,
-            bgcolor:this.event.bgcolor.toLowerCase(),
+            bgcolor: this.event.bgcolor.toLowerCase(),
           }
         );
-        console.log("Updated Successfully!")
+        console.log("Updated Successfully!");
         window.location.reload();
-      } 
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     },
@@ -449,19 +443,19 @@ export default defineComponent({
       this.updateAppointment_Data();
     },
 
-
     //Delete Appointment
     async deleteAppointment_Data() {
       try {
-        await axios.delete(`http://localhost:5000/appointments/` + this.event.sched_id);
-        console.log('Deleted Successfully!')
+        await axios.delete(
+          `http://localhost:5000/appointments/` + this.event.sched_id
+        );
+        console.log("Deleted Successfully!");
         window.location.reload();
-      } 
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
     },
-    
+
     deleteEvent(event) {
       // this.events = this.events.filter((item) => item !== event);
       this.events = this.deleteAppointment_Data();
@@ -477,9 +471,7 @@ export default defineComponent({
           color: "green",
         });
       }
-
     },
-    
 
     // Badge
     badgeClasses(event, type) {
@@ -489,14 +481,13 @@ export default defineComponent({
       };
     },
 
-
     // Calendar
     showEvent(event) {
-        this.event = event;
-        this.displayEvent = true;
-        console.log("showEvent clicked", event);
+      this.event = event;
+      this.displayEvent = true;
+      console.log("showEvent clicked", event);
     },
-    
+
     onToday() {
       this.$refs.calendar.moveToToday();
     },
@@ -504,7 +495,7 @@ export default defineComponent({
     onPrev() {
       this.$refs.calendar.prev();
     },
-    
+
     onNext() {
       this.$refs.calendar.next();
     },
@@ -518,7 +509,7 @@ export default defineComponent({
       //console.log(typeof(event.scope.timestamp.day))
     },
 
-    
+  
   },
 });
 </script>
